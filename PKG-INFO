@@ -1,0 +1,22 @@
+Metadata-Version: 1.0
+Name: OpenWasteTrace
+Version: 0.2
+Summary: Sistri Web Services Soap API wrapper.
+Home-page: http://www.openwastetrace.it
+Author: Paolo Melchiorre
+Author-email: paolo.melchiorre@madec.it
+License: GPLv3
+Download-URL: http://download.openwastetrace.it
+Description: A wrapper around Sistri's Web Services Soap API using Suds.
+Keywords: sistri soap suds wsdl wrapper
+Platform: Platform Independent
+Classifier: Development Status :: 3 - Alpha
+Classifier: Environment :: Console
+Classifier: Environment :: Web Environment
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: GNU General Public License (GPL)
+Classifier: Natural Language :: Italian
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires: suds
