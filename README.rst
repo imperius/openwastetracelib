@@ -1,9 +1,11 @@
-Open sistri trace
-=================
+Open Waste Trace
+================
 
 Libreria python per interfacciarsi a Sistri
 
-realizzata da: 
-Massimiliano De Cesare
-Paolo Melchiorre
-Gianluca Tortorella
+Realizzata da:
+
+- Massimiliano De Cesare
+- Paolo Melchiorre
+- Gianluca Tortorella
+
