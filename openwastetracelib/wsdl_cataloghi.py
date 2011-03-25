@@ -38,12 +38,12 @@ import db_mapper
 #import cataloghi
 #from cataloghi import *
 
-# TODO: echo =True e da elimnare in un ambiente di produzione
-dbengine = create_engine(config.DB_STRING, echo=False)
-meta = MetaData()
-meta.bind = dbengine
-Session = sessionmaker(bind=dbengine)
-session = Session()
+## TODO: echo =True e da elimnare in un ambiente di produzione
+#dbengine = create_engine(config.DB_STRING, echo=False)
+#meta = MetaData()
+#meta.bind = dbengine
+#Session = sessionmaker(bind=dbengine)
+#session = Session()
 
 # Connessione al Web services
 transport = HttpAuthUsingCert(config.CER_PATH, config.PEM_PATH)
@@ -75,7 +75,7 @@ for descrittorecatalogo in elencocataloghiresult:
 # Recupero le variabili di ogni DescrittoreCatalogo
     catalogonome=descrittorecatalogo.catalogo.__repr__()
 # Recupero il nome della classe relaitva al DescrittoreCatalogo
-    catalogoclasse=descrittorecatalogo.catalogo.__repr__().capitalize()
+    catalogoclasse=catalogonome.capitalize()
 # Metodi equivalenti per recuperare un oggetto avendo il suo nome come testo
 # http://stackoverflow.com/questions/1650338
 # http://docs.python.org/library/functions.html
@@ -94,9 +94,9 @@ for descrittorecatalogo in elencocataloghiresult:
         classenuova=classe(*emptyvariables)
         for field in fields:
             nome=field.findtext('nome').lower()
-            valore=field.findtext('valore')
+            valore=field.findtext('valore').encode('ascii','ignore')
             tipo=getattr(__builtin__,field.findtext('tipo')[:3].lower())
             classenuova.__setattr__(nome,tipo(valore))
         session.add(classenuova)
         #print classenuova
-#    session.commit()
+    session.commit()
