@@ -26,4 +26,12 @@ class Stati_scheda_sistri(Base):
        return "<Stati_scheda_sistri('%s','%s')>" % (self.id_stato_scheda_sistri,
                                                     self.stato_scheda_sistri)
 
+#class Stati_fisici_rifiuto(object):
+
+#    def __init__ (self, id_stato_fisico_rifiuto, descr_stato_fisico_rifiuto, codice_stato_fisico):
+#        # sfrid
+#        self.id_stato_fisico_rifiuto = id_stato_fisico_rifiuto
+#        self.descr_stato_fisico_rifiuto = descr_stato_fisico_rifiuto
+#        self.codice_stato_fisico = codice_stato_fisico
+
 Base.metadata.create_all()

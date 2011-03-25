@@ -38,7 +38,7 @@ CLASSIFIERS = [
 KEYWORDS = 'sistri soap suds wsdl wrapper'
 
 setup(name = 'OpenWasteTrace',
-      version = "0.2",
+      version = "0.3",
       description = 'Sistri Web Services Soap API wrapper.',
       long_description = LONG_DESCRIPTION,
       author = 'Paolo Melchiorre',

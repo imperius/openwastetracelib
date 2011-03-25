@@ -90,3 +90,98 @@ The I{test} module provides code for testing.
 #CataloghiElencoObject("TipoEsitoTrasporto",1,"Elenco di tutti gli oggetti di tipo TipoEsitoTrasporto")
 ## TipologieRaee
 #CataloghiElencoObject("TipologieRaee",1,"Elenco di tutti gli oggetti di tipo TipologieRaee")
+
+
+
+# ====
+# TEST
+# ====
+
+#import __builtin__
+#import cataloghi
+#catalogoclasse="Stati_scheda_sistri"
+#classe=getattr(cataloghi,catalogoclasse)
+#i=0
+#tipo=getattr(__builtin__,'String'[:3].lower())
+#nome='ID_STATO_SCHEDA_SISTRI'.lower()
+#valore='aaa'
+#nome2='STATO_SCHEDA_SISTRI'.lower()
+#valore2='bbb'
+#tipo2=getattr(__builtin__,'String'[:3].lower())
+#nomi=[]
+#tipi=[]
+#valori=[]
+#args=[]
+#nomi.append(nome)
+#nomi.append(nome2)
+#tipi.append(tipo)
+#tipi.append(tipo2)
+#valori.append(valore)
+#valori.append(valore2)
+#args.append("")
+#args.append("")
+#i=2
+#classevuota=classe(*args)
+#classevuota.__setattr__(nome.lower(),tipo(valore))
+
+##variabile=getattr(classe,nome.lower())
+##variabile=tipo(valore)
+##variabile2=getattr(classe,nome2.lower())
+##variabile2=tipo2(valore2)
+##variabili=[]
+##variabili.append(variabile)
+##variabili.append(variabile2)
+
+
+#classe(variabile=tipo(valore),variabile2=tipo2(valore2))
+#classe(stato_scheda_sistri="433646hjkdfs",id_stato_scheda_sistri="xcbc54")
+
+
+
+#c=classe('','')
+
+#t=classe('a','b')
+#session.add(t)
+#session.commit()
+
+# Test GetCataloghi
+#descrittorecatalogo = elencocataloghi[0]
+#nomeclasse=descrittorecatalogo.catalogo.__repr__().capitalize()
+## Metodi equivalenti per recuperare un oggetto avendo il suo nome come testo
+## classe=globals()[nomeclasse]
+## classe=getattr(globals()['cataloghi'],nomeclasse)
+#classe=getattr(cataloghi,nomeclasse)
+#table = session.query(classe).first()
+##table = session.query(Stati_scheda_sistri).first()
+#Catalogo=descrittorecatalogo.catalogo.__repr__()
+
+# Test XML
+#    for node in ElementTree.XML(catalogou):
+#        if node.tag == "records":
+#            record=[]
+#            for record in node.getchildren():
+#                for field in record.getchildren():
+#                    nome=field.findtext('nome')
+#                    valore=field.findtext('valore')
+#                    tipo=field.findtext('tipo')
+
+#<?xml version="1.0" encoding="UTF-8"?>
+#<catalogo>
+#	<identificativo>STATI_SCHEDA_SISTRI</identificativo>
+#	<versione>1</versione>
+#	<descrizione>null</descrizione>
+#	<records>
+#		<record>
+#			<field>
+#				<nome>ID_STATO_SCHEDA_SISTRI</nome>
+#				<valore>MD</valore>
+#				<tipo>string</tipo>
+#			</field>
+#			<field>
+#				<nome>STATO_SCHEDA_SISTRI</nome>
+#				<valore>MODIFICATA</valore>
+#				<tipo>string</tipo>
+#			</field>
+#		</record>
+#	</records>
+#</catalogo>

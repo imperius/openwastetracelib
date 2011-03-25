@@ -18,4 +18,4 @@
 The I{init} module provides base info.
 """
 
-VERSION = '0.2'
+VERSION = '0.3'
