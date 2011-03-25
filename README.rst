@@ -1,7 +1,7 @@
 Open Waste Trace
 ================
 
-Libreria python per interfacciarsi a Sistri
+Libreria python per interfacciarsi ai Web Services di Sistri.
 
 Realizzata da:
 
