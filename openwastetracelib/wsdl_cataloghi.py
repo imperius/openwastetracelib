@@ -35,15 +35,17 @@ import db_metadata
 from db_metadata import *
 from db_mapper import *
 import db_mapper
+
+
 #import cataloghi
 #from cataloghi import *
 
 ## TODO: echo =True e da elimnare in un ambiente di produzione
-#dbengine = create_engine(config.DB_STRING, echo=False)
-#meta = MetaData()
-#meta.bind = dbengine
-#Session = sessionmaker(bind=dbengine)
-#session = Session()
+dbengine = create_engine(config.DB_STRING, echo=False)
+meta = MetaData()
+meta.bind = dbengine
+Session = sessionmaker(bind=dbengine)
+session = Session()
 
 # Connessione al Web services
 transport = HttpAuthUsingCert(config.CER_PATH, config.PEM_PATH)

@@ -269,4 +269,82 @@ sottotipi_veicolo=Table('sottotipi_veicolo',meta,
                 Column('codice_sottotipo_veicolo',Integer,nullable=False,index=True),
                 )
 
+
+
+#################################################
+#   Anagrafiche                                                                                                #
+#################################################
+
+# Azienda
+azienda=Table('azienda',meta,
+                Column('Aid',Integer,nullable=False,primary_key=True,autoincrement=True),
+                Column('ragioneSociale',String(255),nullable=False,index=True),
+                Column('cognome',String(255),nullable=True),
+                Column('nome',String(255),nullable=True),
+                Column('formaGiuridica',String(255),nullable=True),
+                Column('formaGiuridicaDescr',String(255),nullable=True),
+                Column('tipoStatoImpresa',String(255),nullable=True),
+                Column('tipoStatoImpresaDescr',String(255),nullable=True),
+                Column('codiceFiscale',String(25),nullable=False,index=True),
+                Column('pIva',String(11),nullable=True,index=True),
+                Column('numeroIscrizioneAlbo',String(255),nullable=True),
+                Column('cciaaRea',String(255),nullable=True),
+                Column('numeroIscrizioneRea',String(255),nullable=True),
+                Column('codiceIstatAttPrincipale',String(255),nullable=True),
+                Column('dataIscrizioneStar',DateTime,nullable=True),
+                Column('codiceAtecoAttPrincipale',String(255),nullable=True),
+                Column('descrizioneAttPrincipale',String(255),nullable=True),
+                Column('versione',Integer,nullable=False),
+                Column('idSIS',String(255),nullable=False),
+                )
+
+# SedeLegale
+SedeLegale=Table('SedeLegale',meta,
+                Column('Slid',Integer,nullable=False,primary_key=True,autoincrement=True),
+                Column('tipoSede',String(255),nullable=False),
+                Column('tipoSedeDescr',String(255),nullable=False),
+                Column('nomeSede',String(255),nullable=False),
+                Column('codiceIstatLocalita',String(255),nullable=False),
+                Column('codiceCatastale',String(255),nullable=False),
+                Column('nazione',String(255),nullable=False),
+                Column('siglaNazione',String(255),nullable=False),
+                Column('indirizzo',String(255),nullable=False),
+                Column('nrCivico',String(255),nullable=False),
+                Column('cap',String(255),nullable=False),
+                Column('versione',Integer,nullable=False),
+                Column('idSIS',String(255),nullable=False),
+                ) #fixme: sottocategorie
+
+# Sede
+Sede=Table('Sede',meta,
+                Column('Slid',Integer,nullable=False,primary_key=True,autoincrement=True),
+                Column('tipoSede',String(255),nullable=False),
+                Column('tipoSedeDescr',String(255),nullable=False),
+                Column('nomeSede',String(255),nullable=False),
+                Column('codiceIstatLocalita',String(255),nullable=False),
+                Column('codiceCatastale',String(255),nullable=False),
+                Column('nazione',String(255),nullable=False),
+                Column('siglaNazione',String(255),nullable=False),
+                Column('indirizzo',String(255),nullable=False),
+                Column('nrCivico',String(255),nullable=True),
+                Column('cap',String(255),nullable=True),
+                Column('telefono',String(255),nullable=True),
+                Column('fax',String(255),nullable=True),
+                Column('numeroAddetti',Integer,nullable=True),
+                Column('cameraCommercio',String(255),nullable=True),
+                Column('cameraCommercioDescr',String(255),nullable=True),
+                Column('associazioneCategoria',String(255),nullable=True),
+                Column('associazioneCategoriaDescr',String(255),nullable=True),
+                Column('codiceIstatAttPrincipale',String(255),nullable=True),
+                Column('codiceAtecoAttPrincipale',String(255),nullable=True),
+                Column('descrizioneAttPrincipale',String(255),nullable=True),
+                Column('numeroIscrizioneRea',String(255),nullable=True),
+                Column('numeroUla',Float,nullable=True),
+                Column('latitudine',String,nullable=True),
+                Column('longitudine',String,nullable=True),
+                Column('versione',Integer,nullable=False),
+                Column('idSIS',String(255),nullable=False),
+                ) #fixme: sottocategorie
+
+
 meta.create_all()

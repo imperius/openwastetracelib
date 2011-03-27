@@ -328,3 +328,84 @@ class Sottotipi_veicolo(object):
         self.codice_sottotipo_veicolo = codice_sottotipo_veicolo
 #        session.add(self)
 #        session.commit()
+
+
+
+#################################################
+#   Anagrafiche                                                                                                #
+#################################################
+
+#Azienda
+class Azienda(object):
+
+    def __init__ (self,cognome,cognome,nome,formaGiuridica,formaGiuridicaDescr,tipoStatoImpresa,tipoStatoImpresaDescr,codiceFiscale,pIva,numeroIscrizioneAlbo,cciaaRea,numeroIscrizioneRea,codiceIstatAttPrincipale,dataIscrizioneStar,codiceAtecoAttPrincipale,descrizioneAttPrincipale,versione,idSIS):
+        self.ragioneSociale=ragioneSociale
+        self.cognome=ragioneSociale
+        self.nome=nome
+        self.formaGiuridica=formaGiuridica
+        self.formaGiuridicaDescr=formaGiuridicaDescr
+        self.tipoStatoImpresa=tipoStatoImpresa
+        self.tipoStatoImpresaDescr=tipoStatoImpresaDescr
+        self.codiceFiscale=codiceFiscale
+        self.pIva=pIva
+        self.numeroIscrizioneAlbo=numeroIscrizioneAlbo
+        self.cciaaRea=cciaaRea
+        self.numeroIscrizioneRea=numeroIscrizioneRea
+        self.codiceIstatAttPrincipale=codiceIstatAttPrincipale
+        self.dataIscrizioneStar=dataIscrizioneStar
+        self.codiceAtecoAttPrincipale=codiceAtecoAttPrincipale
+        self.descrizioneAttPrincipale=descrizioneAttPrincipale
+        self.versione=versione
+        self.idSIS=idSIS
+
+#SedeLegale
+class SedeLegale(object):
+
+    def __init__ (self,tipoSede,tipoSedeDescr,nomeSede,codiceIstatLocalita,codiceCatastale,nazione,siglaNazione,indirizzo,nrCivico,cap,versione,idSIS):
+        self.tipoSede=tipoSede
+        self.tipoSedeDescr=tipoSedeDescr
+        self.nomeSede=nomeSede
+        self.codiceIstatLocalita=codiceIstatLocalita
+        self.codiceCatastale=codiceCatastale
+        self.nazione=nazione
+        self.siglaNazione=siglaNazione
+        self.indirizzo=indirizzo
+        self.nrCivico=nrCivico
+        self.cap=cap
+        self.versione=versione
+        self.idSIS=idSIS
+
+
+#Sede
+class Sede(object):
+
+    def __init__ (self,tipoSede,tipoSedeDescr,nomeSede,codiceIstatLocalita,codiceCatastale,nazione,siglaNazione,indirizzo,nrCivico,cap,telefono,fax,
+                  numeroAddetti,cameraCommercio,cameraCommercioDescr,associazioneCategoria,associazioneCategoriaDescr,codiceIstatAttPrincipale,codiceAtecoAttPrincipale,
+                  descrizioneAttPrincipale,  numeroIscrizioneRea,numeroUla,latitudine, longitudine):
+        self.tipoSede=tipoSede
+        self.tipoSedeDescr=tipoSedeDescr
+        self.nomeSede=nomeSede
+        self.codiceIstatLocalita=codiceIstatLocalita
+        self.codiceCatastale=codiceCatastale
+        self.nazione=nazione
+        self.siglaNazione=siglaNazione
+        self.indirizzo=indirizzo
+        self.nrCivico=nrCivico
+        self.cap=cap
+        self.telefono=telefono
+        self.fax =fax
+        self.numeroAddetti=numeroAddetti
+        self.cameraCommercio=cameraCommercio
+        self.cameraCommercioDescr=cameraCommercioDescr
+        self.associazioneCategoria=associazioneCategoria
+        self.associazioneCategoriaDescr=associazioneCategoriaDescr
+        self.codiceIstatAttPrincipale=codiceIstatAttPrincipale
+        self.codiceAtecoAttPrincipale=codiceAtecoAttPrincipale
+        self.descrizioneAttPrincipale=descrizioneAttPrincipale
+        self.numeroIscrizioneRea=numeroIscrizioneRea
+        self.numeroUla=numeroUla
+        self.latitudine=latitudine
+        self.longitudine=longitudine
+        self.versione=versione
+        self.idSIS=idSIS
+

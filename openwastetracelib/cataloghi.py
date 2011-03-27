@@ -23,7 +23,7 @@ class Stati_scheda_sistri(Base):
         self.stato_scheda_sistri = stato_scheda_sistri
 
     def __repr__(self):
-       return "<Stati_scheda_sistri('%s','%s')>" % (self.id_stato_scheda_sistri,self.stato_scheda_sistri)
+        return "<Stati_scheda_sistri('%s','%s')>" % (self.id_stato_scheda_sistri,self.stato_scheda_sistri)
 
 class Stati_fisici_rifiuto(object):
     __tablename__ = 'stati_fisici_rifiuto'
@@ -39,8 +39,8 @@ class Stati_fisici_rifiuto(object):
         self.descr_stato_fisico_rifiuto = descr_stato_fisico_rifiuto
         self.codice_stato_fisico = codice_stato_fisico
 
-    def __repr__(self)
-       return "<Stati_fisici_rifiuto('%s','%s','%s')>" % (self.id_stato_fisico_rifiuto,self.descr_stato_fisico_rifiuto,self.codice_stato_fisico)
+    def __repr__(self):
+        return "<Stati_fisici_rifiuto('%s','%s','%s')>" % (self.id_stato_fisico_rifiuto,self.descr_stato_fisico_rifiuto,self.codice_stato_fisico)
 
 class Forme_giuridiche(object):
     __tablename__ = 'forme_giuridiche'
@@ -54,8 +54,8 @@ class Forme_giuridiche(object):
         self.id_tipo_forma_giuridica = id_tipo_forma_giuridica
         self.descrizione_forma_giuridica = descrizione_forma_giuridica
 
-    def __repr__(self)
-       return "<Forme_giuridiche('%s','%s')>" % (self.id_tipo_forma_giuridica,self.descrizione_forma_giuridica)
+    def __repr__(self):
+        return "<Forme_giuridiche('%s','%s')>" % (self.id_tipo_forma_giuridica,self.descrizione_forma_giuridica)
 
 class Tipi_reg_cronologico(object):
     __tablename__ = 'tipi_reg_cronologico'
@@ -71,8 +71,8 @@ class Tipi_reg_cronologico(object):
         self.descrizione_tipo_reg_crono = descrizione_tipo_reg_crono
         self.macro_categoria = macro_categoria
 
-    def __repr__(self)
-       return "<Tipi_reg_cronologico('%s','%s','%s')>" % (self.id_tipo_reg_cronologico,self.descrizione_tipo_reg_crono,self.macro_categoria)
+    def __repr__(self):
+        return "<Tipi_reg_cronologico('%s','%s','%s')>" % (self.id_tipo_reg_cronologico,self.descrizione_tipo_reg_crono,self.macro_categoria)
 
 class Operazioni_impianti(object):
     __tablename__ = 'operazioni_impianti'
@@ -90,8 +90,8 @@ class Operazioni_impianti(object):
         self.operazione_impianto = operazione_impianto
         self.ordinamento = ordinamento
 
-    def __repr__(self)
-       return "<Operazioni_impianti('%s','%s','%s','%s')>" % (self.id_operazione_impianto,self.id_tipo_operazione_impianto,self.operazione_impianto,self.ordinamento)
+    def __repr__(self):
+        return "<Operazioni_impianti('%s','%s','%s','%s')>" % (self.id_operazione_impianto,self.id_tipo_operazione_impianto,self.operazione_impianto,self.ordinamento)
 
 class Categorie_raee(object):
     __tablename__ = 'categorie_raee'
@@ -105,8 +105,8 @@ class Categorie_raee(object):
         self.id_categoria_raee = id_categoria_raee
         self.descrizione_categoria_raee = descrizione_categoria_raee
 
-    def __repr__(self)
-       return "<Categorie_raee('%s','%s')>" % (self.id_categoria_raee,self.descrizione_categoria_raee)
+    def __repr__(self):
+        return "<Categorie_raee('%s','%s')>" % (self.id_categoria_raee,self.descrizione_categoria_raee)
 
 class Tipi_veicolo(object):
     __tablename__ = 'tipi_veicolo'
@@ -124,8 +124,8 @@ class Tipi_veicolo(object):
         self.codice_tipo_veicolo = codice_tipo_veicolo
         self.flag_rimorchio = flag_rimorchio
 
-    def __repr__(self)
-       return "<Tipi_veicolo('%s','%s','%s','%s')>" % (self.id_tipo_veicolo,self.descrizione,self.codice_tipo_veicolo,self.flag_rimorchio)
+    def __repr__(self):
+        return "<Tipi_veicolo('%s','%s','%s','%s')>" % (self.id_tipo_veicolo,self.descrizione,self.codice_tipo_veicolo,self.flag_rimorchio)
 
 class Tipi_sede(object):
     __tablename__ = 'tipi_sede'
@@ -139,8 +139,8 @@ class Tipi_sede(object):
         self.id_tipo_sede = id_tipo_sede
         self.descrizione = descrizione
 
-    def __repr__(self)
-       return "<Tipi_sede('%s','%s')>" % (self.id_tipo_sede,self.descrizione)
+    def __repr__(self):
+        return "<Tipi_sede('%s','%s')>" % (self.id_tipo_sede,self.descrizione)
 
 class Tipi_registrazioni_crono(object):
     __tablename__ = 'tipi_registrazioni_crono'
@@ -154,8 +154,8 @@ class Tipi_registrazioni_crono(object):
         self.id_tipo_registrazione_crono = id_tipo_registrazione_crono
         self.descr_tipo_reg_crono = descr_tipo_reg_crono
 
-    def __repr__(self)
-       return "<Tipi_registrazioni_crono('%s','%s')>" % (self.id_tipo_registrazione_crono,self.descr_tipo_reg_crono)
+    def __repr__(self):
+        return "<Tipi_registrazioni_crono('%s','%s')>" % (self.id_tipo_registrazione_crono,self.descr_tipo_reg_crono)
 
 class Numeri_onu(object):
     __tablename__ = 'numeri_onu'
@@ -169,8 +169,8 @@ class Numeri_onu(object):
         self.id_numero_onu = id_numero_onu
         self.descrizione_numero_onu = descrizione_numero_onu
 
-    def __repr__(self)
-       return "<Numeri_onu('%s','%s')>" % (self.id_numero_onu,self.descrizione_numero_onu)
+    def __repr__(self):
+        return "<Numeri_onu('%s','%s')>" % (self.id_numero_onu,self.descrizione_numero_onu)
 
 class Localita_estere(object):
     __tablename__ = 'localita_estere'
@@ -186,8 +186,8 @@ class Localita_estere(object):
         self.nazione = nazione
         self.sigla_nazione = sigla_nazione
 
-    def __repr__(self)
-       return "<Localita_estere('%s','%s','%s')>" % (self.id_localita,self.nazione,self.sigla_nazione)
+    def __repr__(self):
+        return "<Localita_estere('%s','%s','%s')>" % (self.id_localita,self.nazione,self.sigla_nazione)
 
 class Associazioni_categoria(object):
     __tablename__ = 'associazioni_categoria'
@@ -207,8 +207,8 @@ class Associazioni_categoria(object):
         self.sigla_provincia = sigla_provincia
         self.sigla_cciaa = sigla_cciaa
 
-    def __repr__(self)
-       return "<Associazioni_categoria('%s','%s','%s','%s','%s')>" % (self.id_associazione_categoria,self.ass_categoria_nome,self.id_accordo,self.sigla_provincia,self.sigla_cciaa)
+    def __repr__(self):
+        return "<Associazioni_categoria('%s','%s','%s','%s','%s')>" % (self.id_associazione_categoria,self.ass_categoria_nome,self.id_accordo,self.sigla_provincia,self.sigla_cciaa)
 
 class Stati_registro_cronologico(object):
     __tablename__ = 'stati_registro_cronologico'
@@ -222,8 +222,8 @@ class Stati_registro_cronologico(object):
         self.id_stato_registro_cronologico = id_stato_registro_cronologico
         self.descrizione_stato_reg_crono = descrizione_stato_reg_crono
 
-    def __repr__(self)
-       return "<Stati_registro_cronologico('%s','%s')>" % (self.id_stato_registro_cronologico,self.descrizione_stato_reg_crono)
+    def __repr__(self):
+        return "<Stati_registro_cronologico('%s','%s')>" % (self.id_stato_registro_cronologico,self.descrizione_stato_reg_crono)
 
 class Tipi_imballaggi(object):
     __tablename__ = 'tipi_imballaggi'
@@ -239,8 +239,8 @@ class Tipi_imballaggi(object):
         self.tipo_imballaggio = tipo_imballaggio
         self.codice_imballaggio = codice_imballaggio
 
-    def __repr__(self)
-       return "<Tipi_imballaggi('%s','%s','%s')>" % (self.id_tipo_imballaggio,self.tipo_imballaggio,self.codice_imballaggio)
+    def __repr__(self):
+        return "<Tipi_imballaggi('%s','%s','%s')>" % (self.id_tipo_imballaggio,self.tipo_imballaggio,self.codice_imballaggio)
 
 class Sottocategorie_star(object):
     __tablename__ = 'sottocategorie_star'
@@ -256,8 +256,8 @@ class Sottocategorie_star(object):
         self.id_categoria_star = id_categoria_star
         self.descrizione_sottocategoria = descrizione_sottocategoria
 
-    def __repr__(self)
-       return "<Sottocategorie_star('%s','%s','%s')>" % (self.id_sottocategoria_star,self.id_categoria_star,self.descrizione_sottocategoria)
+    def __repr__(self):
+        return "<Sottocategorie_star('%s','%s','%s')>" % (self.id_sottocategoria_star,self.id_categoria_star,self.descrizione_sottocategoria)
 
 class Tipi_documento(object):
     __tablename__ = 'tipi_documento'
@@ -271,8 +271,8 @@ class Tipi_documento(object):
         self.id_tipo_documento = id_tipo_documento
         self.descrizione = descrizione
 
-    def __repr__(self)
-       return "<Tipi_documento('%s','%s')>" % (self.id_tipo_documento,self.descrizione)
+    def __repr__(self):
+        return "<Tipi_documento('%s','%s')>" % (self.id_tipo_documento,self.descrizione)
 
 class Classi_adr(object):
     __tablename__ = 'classi_adr'
@@ -286,8 +286,8 @@ class Classi_adr(object):
         self.id_classe_adr = id_classe_adr
         self.descrizione_classe_adr = descrizione_classe_adr
 
-    def __repr__(self)
-       return "<Classi_adr('%s','%s')>" % (self.id_classe_adr,self.descrizione_classe_adr)
+    def __repr__(self):
+        return "<Classi_adr('%s','%s')>" % (self.id_classe_adr,self.descrizione_classe_adr)
 
 class Ruoli_aziendali(object):
     __tablename__ = 'ruoli_aziendali'
@@ -301,8 +301,8 @@ class Ruoli_aziendali(object):
         self.id_ruolo_aziendale = id_ruolo_aziendale
         self.ruolo_aziendale = ruolo_aziendale
 
-    def __repr__(self)
-       return "<Ruoli_aziendali('%s','%s')>" % (self.id_ruolo_aziendale,self.ruolo_aziendale)
+    def __repr__(self):
+        return "<Ruoli_aziendali('%s','%s')>" % (self.id_ruolo_aziendale,self.ruolo_aziendale)
 
 class Stati_utente_idm(object):
     __tablename__ = 'stati_utente_idm'
@@ -314,8 +314,8 @@ class Stati_utente_idm(object):
         # suid
         self.id_stato_utente_idm = id_stato_utente_idm
 
-    def __repr__(self)
-       return "<Stati_utente_idm('%s')>" % (self.id_stato_utente_idm)
+    def __repr__(self):
+        return "<Stati_utente_idm('%s')>" % (self.id_stato_utente_idm)
 
 class Camere_commercio(object):
     __tablename__ = 'camere_commercio'
@@ -343,8 +343,8 @@ class Camere_commercio(object):
         self.telefono_persona_riferimento = telefono_persona_riferimento
         self.sigla_cciaa = sigla_cciaa
 
-    def __repr__(self)
-       return "<Camere_commercio('%s','%s','%s','%s','%s','%s','%s','%s','%s')>" % (self.id_camera_commercio,self.indirizzo,self.numero_civico,self.cap,self.nome_persona_riferimento,self.cognome_persona_riferimento,self.email_persona_riferimento,self.telefono_persona_riferimento,self.sigla_cciaa)
+    def __repr__(self):
+        return "<Camere_commercio('%s','%s','%s','%s','%s','%s','%s','%s','%s')>" % (self.id_camera_commercio,self.indirizzo,self.numero_civico,self.cap,self.nome_persona_riferimento,self.cognome_persona_riferimento,self.email_persona_riferimento,self.telefono_persona_riferimento,self.sigla_cciaa)
 
 class Tipi_esito_trasporto(object):
     __tablename__ = 'tipi_esito_trasporto'
@@ -358,8 +358,8 @@ class Tipi_esito_trasporto(object):
         self.id_esito_trasporto = id_esito_trasporto
         self.descr_esito_trasporto = descr_esito_trasporto
 
-    def __repr__(self)
-       return "<Tipi_esito_trasporto('%s','%s')>" % (self.id_esito_trasporto,self.descr_esito_trasporto)
+    def __repr__(self):
+        return "<Tipi_esito_trasporto('%s','%s')>" % (self.id_esito_trasporto,self.descr_esito_trasporto)
 
 class Stati_veicolo(object):
     __tablename__ = 'stati_veicolo'
@@ -373,8 +373,8 @@ class Stati_veicolo(object):
         self.id_stato_veicolo = id_stato_veicolo
         self.descrizione_stato_veicolo = descrizione_stato_veicolo
 
-    def __repr__(self)
-       return "<Stati_veicolo('%s','%s')>" % (self.id_stato_veicolo,self.descrizione_stato_veicolo)
+    def __repr__(self):
+        return "<Stati_veicolo('%s','%s')>" % (self.id_stato_veicolo,self.descrizione_stato_veicolo)
 
 class Cod_rec_1013(object):
     __tablename__ = 'cod_rec_1013'
@@ -388,8 +388,8 @@ class Cod_rec_1013(object):
         self.id_cod_rec_1013 = id_cod_rec_1013
         self.descrizione_cod_rec = descrizione_cod_rec
 
-    def __repr__(self)
-       return "<Cod_rec_1013('%s','%s')>" % (self.id_cod_rec_1013,self.descrizione_cod_rec)
+    def __repr__(self):
+        return "<Cod_rec_1013('%s','%s')>" % (self.id_cod_rec_1013,self.descrizione_cod_rec)
 
 class Stati_registrazioni_crono(object):
     __tablename__ = 'stati_registrazioni_crono'
@@ -403,8 +403,8 @@ class Stati_registrazioni_crono(object):
         self.id_stato_registrazione_crono = id_stato_registrazione_crono
         self.descrizione_stato_reg_crono = descrizione_stato_reg_crono
 
-    def __repr__(self)
-       return "<Stati_registrazioni_crono('%s','%s')>" % (self.id_stato_registrazione_crono,self.descrizione_stato_reg_crono)
+    def __repr__(self):
+        return "<Stati_registrazioni_crono('%s','%s')>" % (self.id_stato_registrazione_crono,self.descrizione_stato_reg_crono)
 
 class Tipi_trasporto(object):
     __tablename__ = 'tipi_trasporto'
@@ -418,8 +418,8 @@ class Tipi_trasporto(object):
         self.id_tipo_trasporto = id_tipo_trasporto
         self.descrizione_tipo_trasporto = descrizione_tipo_trasporto
 
-    def __repr__(self)
-       return "<Tipi_trasporto('%s','%s')>" % (self.id_tipo_trasporto,self.descrizione_tipo_trasporto)
+    def __repr__(self):
+        return "<Tipi_trasporto('%s','%s')>" % (self.id_tipo_trasporto,self.descrizione_tipo_trasporto)
 
 class Tipologie_raee(object):
     __tablename__ = 'tipologie_raee'
@@ -433,8 +433,8 @@ class Tipologie_raee(object):
         self.id_tipologia_raee = id_tipologia_raee
         self.descrizione_tipologia_raee = descrizione_tipologia_raee
 
-    def __repr__(self)
-       return "<Tipologie_raee('%s','%s')>" % (self.id_tipologia_raee,self.descrizione_tipologia_raee)
+    def __repr__(self):
+        return "<Tipologie_raee('%s','%s')>" % (self.id_tipologia_raee,self.descrizione_tipologia_raee)
 
 class Codici_cer_iii_livello(object):
     __tablename__ = 'codici_cer_iii_livello'
@@ -452,8 +452,8 @@ class Codici_cer_iii_livello(object):
         self.flag_pericoloso = flag_pericoloso
         self.flag_attivo = flag_attivo
 
-    def __repr__(self)
-       return "<Codici_cer_iii_livello('%s','%s','%s','%s')>" % (self.id_codice_cer_iii_livello,self.escrizione_iii_livello,self.flag_pericoloso,self.flag_attivo)
+    def __repr__(self):
+        return "<Codici_cer_iii_livello('%s','%s','%s','%s')>" % (self.id_codice_cer_iii_livello,self.escrizione_iii_livello,self.flag_pericoloso,self.flag_attivo)
 
 class Tipi_stato_impresa(object):
     __tablename__ = 'tipi_stato_impresa'
@@ -465,8 +465,8 @@ class Tipi_stato_impresa(object):
         # tsilid
         self.id_tipo_stato_impresa = id_tipo_stato_impresa
 
-    def __repr__(self)
-       return "<Tipi_stato_impresa('%s')>" % (self.id_tipo_stato_impresa)
+    def __repr__(self):
+        return "<Tipi_stato_impresa('%s')>" % (self.id_tipo_stato_impresa)
 
 class Caratteristiche_pericolo(object):
     __tablename__ = 'caratteristiche_pericolo'
@@ -480,8 +480,8 @@ class Caratteristiche_pericolo(object):
         self.id_caratteristica_pericolo = id_caratteristica_pericolo
         self.descr_car_pericolo = descr_car_pericolo
 
-    def __repr__(self)
-       return "<Caratteristiche_pericolo('%s','%s')>" % (self.id_caratteristica_pericolo,self.descr_car_pericolo)
+    def __repr__(self):
+        return "<Caratteristiche_pericolo('%s','%s')>" % (self.id_caratteristica_pericolo,self.descr_car_pericolo)
 
 class Sottotipi_veicolo(object):
     __tablename__ = 'sottotipi_veicolo'
@@ -497,7 +497,7 @@ class Sottotipi_veicolo(object):
         self.descrizione = descrizione
         self.codice_sottotipo_veicolo = codice_sottotipo_veicolo
 
-    def __repr__(self)
-       return "<Sottotipi_veicolo('%s','%s','%s')>" % (self.id_sottotipo_veicolo,self.descrizione,self.codice_sottotipo_veicolo)
+    def __repr__(self):
+        return "<Sottotipi_veicolo('%s','%s','%s')>" % (self.id_sottotipo_veicolo,self.descrizione,self.codice_sottotipo_veicolo)
 
 Base.metadata.create_all()
