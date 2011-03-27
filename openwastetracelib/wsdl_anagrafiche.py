@@ -48,16 +48,54 @@ session = Session()
 transport = HttpAuthUsingCert(config.CER_PATH, config.PEM_PATH)
 client = Client(config.WSDL_URL, transport=transport)
 
-# Recupero dell'elenco cataloghi
-aziendaS = client.service.GetAzienda(config.USER_ID,"","00090710690")
-a1=Azienda(ragioneSociale= aziendaS.ragioneSociale,
+def GetAzienda (codiceFiscaleAzienda):
+
+    # Recupero dell'elenco cataloghi
+    aziendaS = client.service.GetAzienda(config.USER_ID,"",codiceFiscaleAzienda)
+
+    a1=Azienda(ragioneSociale= aziendaS.ragioneSociale.__repr__(),
+               cognome=aziendaS.cognome.__repr__(),
+               nome=aziendaS.nome.__repr__(),
+               formaGiuridica=aziendaS.formaGiuridica.idCatalogo.__repr__(),
+               formaGiuridicaDescr=aziendaS.formaGiuridica.description.__repr__(),
+               tipoStatoImpresa=aziendaS.tipoStatoImpresa.idCatalogo.__repr__(),
+               tipoStatoImpresaDescr=aziendaS.tipoStatoImpresa.description.__repr__(),
+               codiceFiscale=aziendaS.codiceFiscale.__repr__(),
+               pIva=aziendaS.pIva.__repr__(),
+               numeroIscrizioneAlbo=aziendaS.numeroIscrizioneAlbo.__repr__(),
+               cciaaRea=aziendaS.cciaaRea.__repr__(),
+               numeroIscrizioneRea=aziendaS.numeroIscrizioneRea.__repr__(),
+               codiceIstatAttPrincipale=aziendaS.codiceIstatAttPrincipale.__repr__(),
+               dataIscrizioneStar=aziendaS.dataIscrizioneStar,   # nei campi datetime se c'e' la stringa none si incazza allora non faccio il repr
+               codiceAtecoAttPrincipale=aziendaS.codiceAtecoAttPrincipale.__repr__(),
+               descrizioneAttPrincipale=aziendaS.descrizioneAttPrincipale.__repr__(),
+               versione=2,   #fixme: aziendaS.versione.__repr__(), mi restituisce '2L' e non va bene
+               idSIS=aziendaS.idSIS.__repr__()
+               )
+#tipoSede,tipoSedeDescr,nomeSede,codiceIstatLocalita,codiceCatastale,nazione,siglaNazione,indirizzo,nrCivico,cap,versione,idSIS
+    SL=SedeLegale(tipoSede= aziendaS.sedeLegale.tipoSede.idCatalogo.__repr__(),
+               tipoSedeDescr=aziendaS.sedeLegale.tipoSede.description.__repr__(),
+               nomeSede=aziendaS.sedeLegale.nomeSede.__repr__(),
+               codiceIstatLocalita=aziendaS.sedeLegale.codiceIstatLocalita.__repr__(),
+               codiceCatastale=aziendaS.sedeLegale.codiceCatastale.__repr__(),
+               nazione=aziendaS.sedeLegale.nazione.__repr__(),
+               siglaNazione=aziendaS.sedeLegale.siglaNazione.__repr__(),
+               indirizzo=aziendaS.sedeLegale.indirizzo.__repr__(),
+               nrCivico=aziendaS.sedeLegale.nrCivico.__repr__(),
+               cap=aziendaS.sedeLegale.cap.__repr__(),
+               versione=2,   #fixme: aziendaS.versione.__repr__(), mi restituisce '2L' e non va bene
+               idSIS=aziendaS.sedeLegale.idSIS.__repr__()   #fixme
+               )
 
 
 
 
 
 
+    session.add(a1)
+    session.add(SL)
+    session.commit()
 
 
-           )
 
+GetAzienda ('00090710690')

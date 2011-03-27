@@ -338,30 +338,19 @@ class Sottotipi_veicolo(object):
 #Azienda
 class Azienda(object):
 
-    def __init__ (self,ragioneSociale,cognome,nome,formaGiuridica,formaGiuridicaDescr,tipoStatoImpresa,tipoStatoImpresaDescr,codiceFiscale,pIva,numeroIscrizioneAlbo,cciaaRea,numeroIscrizioneRea,codiceIstatAttPrincipale,dataIscrizioneStar,codiceAtecoAttPrincipale,descrizioneAttPrincipale,versione,idSIS):
+    def __init__ (self,ragioneSociale,codiceFiscale,versione,idSIS, **kwargs):
         self.ragioneSociale=ragioneSociale
-        self.cognome=ragioneSociale
-        self.nome=nome
-        self.formaGiuridica=formaGiuridica
-        self.formaGiuridicaDescr=formaGiuridicaDescr
-        self.tipoStatoImpresa=tipoStatoImpresa
-        self.tipoStatoImpresaDescr=tipoStatoImpresaDescr
         self.codiceFiscale=codiceFiscale
-        self.pIva=pIva
-        self.numeroIscrizioneAlbo=numeroIscrizioneAlbo
-        self.cciaaRea=cciaaRea
-        self.numeroIscrizioneRea=numeroIscrizioneRea
-        self.codiceIstatAttPrincipale=codiceIstatAttPrincipale
-        self.dataIscrizioneStar=dataIscrizioneStar
-        self.codiceAtecoAttPrincipale=codiceAtecoAttPrincipale
-        self.descrizioneAttPrincipale=descrizioneAttPrincipale
         self.versione=versione
         self.idSIS=idSIS
+        for key in kwargs:
+            self.__setattr__(key,kwargs[key] )
 
 #SedeLegale
 class SedeLegale(object):
 
-    def __init__ (self,tipoSede,tipoSedeDescr,nomeSede,codiceIstatLocalita,codiceCatastale,nazione,siglaNazione,indirizzo,nrCivico,cap,versione,idSIS):
+    def __init__ (self,tipoSede,tipoSedeDescr,nomeSede,codiceIstatLocalita,codiceCatastale,nazione,siglaNazione,indirizzo,nrCivico,cap,versione,idSIS,**kwargs):
+        # Campi non obbligatori: nrCivico,  cap
         self.tipoSede=tipoSede
         self.tipoSedeDescr=tipoSedeDescr
         self.nomeSede=nomeSede
@@ -370,18 +359,19 @@ class SedeLegale(object):
         self.nazione=nazione
         self.siglaNazione=siglaNazione
         self.indirizzo=indirizzo
-        self.nrCivico=nrCivico
-        self.cap=cap
         self.versione=versione
         self.idSIS=idSIS
+        for key in kwargs:
+            self.__setattr__(key,kwargs[key] )
 
 
 #Sede
 class Sede(object):
 
-    def __init__ (self,tipoSede,tipoSedeDescr,nomeSede,codiceIstatLocalita,codiceCatastale,nazione,siglaNazione,indirizzo,nrCivico,cap,telefono,fax,
-                  numeroAddetti,cameraCommercio,cameraCommercioDescr,associazioneCategoria,associazioneCategoriaDescr,codiceIstatAttPrincipale,codiceAtecoAttPrincipale,
-                  descrizioneAttPrincipale,  numeroIscrizioneRea,numeroUla,latitudine, longitudine):
+    def __init__ (self,tipoSede,tipoSedeDescr,nomeSede,codiceIstatLocalita,codiceCatastale,nazione,siglaNazione,indirizzo):
+        # Campi non obbligatori:
+        # nrCivico, cap, telefono, fax, numeroAddetti, cameraCommercio, cameraCommercioDescr, associazioneCategoria, associazioneCategoriaDescr,codiceIstatAttPrincipale,
+        # codiceAtecoAttPrincipale, descrizioneAttPrincipale, numeroIscrizioneRea, numeroUla=numeroUla, latitudine,longitudine
         self.tipoSede=tipoSede
         self.tipoSedeDescr=tipoSedeDescr
         self.nomeSede=nomeSede
@@ -390,22 +380,7 @@ class Sede(object):
         self.nazione=nazione
         self.siglaNazione=siglaNazione
         self.indirizzo=indirizzo
-        self.nrCivico=nrCivico
-        self.cap=cap
-        self.telefono=telefono
-        self.fax =fax
-        self.numeroAddetti=numeroAddetti
-        self.cameraCommercio=cameraCommercio
-        self.cameraCommercioDescr=cameraCommercioDescr
-        self.associazioneCategoria=associazioneCategoria
-        self.associazioneCategoriaDescr=associazioneCategoriaDescr
-        self.codiceIstatAttPrincipale=codiceIstatAttPrincipale
-        self.codiceAtecoAttPrincipale=codiceAtecoAttPrincipale
-        self.descrizioneAttPrincipale=descrizioneAttPrincipale
-        self.numeroIscrizioneRea=numeroIscrizioneRea
-        self.numeroUla=numeroUla
-        self.latitudine=latitudine
-        self.longitudine=longitudine
         self.versione=versione
         self.idSIS=idSIS
-
+        for key in kwargs:
+            self.__setattr__(key,kwargs[key] )
