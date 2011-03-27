@@ -338,7 +338,7 @@ class Sottotipi_veicolo(object):
 #Azienda
 class Azienda(object):
 
-    def __init__ (self,cognome,cognome,nome,formaGiuridica,formaGiuridicaDescr,tipoStatoImpresa,tipoStatoImpresaDescr,codiceFiscale,pIva,numeroIscrizioneAlbo,cciaaRea,numeroIscrizioneRea,codiceIstatAttPrincipale,dataIscrizioneStar,codiceAtecoAttPrincipale,descrizioneAttPrincipale,versione,idSIS):
+    def __init__ (self,ragioneSociale,cognome,nome,formaGiuridica,formaGiuridicaDescr,tipoStatoImpresa,tipoStatoImpresaDescr,codiceFiscale,pIva,numeroIscrizioneAlbo,cciaaRea,numeroIscrizioneRea,codiceIstatAttPrincipale,dataIscrizioneStar,codiceAtecoAttPrincipale,descrizioneAttPrincipale,versione,idSIS):
         self.ragioneSociale=ragioneSociale
         self.cognome=ragioneSociale
         self.nome=nome

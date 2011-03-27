@@ -49,5 +49,15 @@ transport = HttpAuthUsingCert(config.CER_PATH, config.PEM_PATH)
 client = Client(config.WSDL_URL, transport=transport)
 
 # Recupero dell'elenco cataloghi
-elencocataloghiresult = client.service.GetAzienda(config.USER_ID,"","00090710690")
+aziendaS = client.service.GetAzienda(config.USER_ID,"","00090710690")
+a1=Azienda(ragioneSociale= aziendaS.ragioneSociale,
+
+
+
+
+
+
+
+
+           )
 

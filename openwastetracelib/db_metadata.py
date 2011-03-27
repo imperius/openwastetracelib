@@ -276,7 +276,7 @@ sottotipi_veicolo=Table('sottotipi_veicolo',meta,
 #################################################
 
 # Azienda
-azienda=Table('azienda',meta,
+metadataAzienda=Table('azienda',meta,
                 Column('Aid',Integer,nullable=False,primary_key=True,autoincrement=True),
                 Column('ragioneSociale',String(255),nullable=False,index=True),
                 Column('cognome',String(255),nullable=True),
@@ -299,7 +299,7 @@ azienda=Table('azienda',meta,
                 )
 
 # SedeLegale
-SedeLegale=Table('SedeLegale',meta,
+metadataSedeLegale=Table('SedeLegale',meta,
                 Column('Slid',Integer,nullable=False,primary_key=True,autoincrement=True),
                 Column('tipoSede',String(255),nullable=False),
                 Column('tipoSedeDescr',String(255),nullable=False),
@@ -316,7 +316,7 @@ SedeLegale=Table('SedeLegale',meta,
                 ) #fixme: sottocategorie
 
 # Sede
-Sede=Table('Sede',meta,
+metadataSede=Table('Sede',meta,
                 Column('Slid',Integer,nullable=False,primary_key=True,autoincrement=True),
                 Column('tipoSede',String(255),nullable=False),
                 Column('tipoSedeDescr',String(255),nullable=False),

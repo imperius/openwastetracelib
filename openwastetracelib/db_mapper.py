@@ -54,3 +54,8 @@ mapperCodici_cer_iii_livello=mapper(Codici_cer_iii_livello, codici_cer_iii_livel
 mapperTipi_stato_impresa=mapper(Tipi_stato_impresa, tipi_stato_impresa)
 mapperCaratteristiche_pericolo=mapper(Caratteristiche_pericolo, caratteristiche_pericolo)
 mapperSottotipi_veicolo=mapper(Sottotipi_veicolo, sottotipi_veicolo)
+
+#Anagrafiche
+mapperAzienda=mapper(Azienda, metadataAzienda)
+mapperAziendaSedeLegale=mapper(SedeLegale, metadataSedeLegale)
+mapperAziendaSede=mapper(Sede, metadataSede)
