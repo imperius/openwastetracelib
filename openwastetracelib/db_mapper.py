@@ -56,6 +56,8 @@ mapperCaratteristiche_pericolo=mapper(Caratteristiche_pericolo, caratteristiche_
 mapperSottotipi_veicolo=mapper(Sottotipi_veicolo, sottotipi_veicolo)
 
 #Anagrafiche
-mapperAzienda=mapper(Azienda, metadataAzienda)
-mapperAziendaSedeLegale=mapper(SedeLegale, metadataSedeLegale)
+mapperAzienda=mapper(Azienda, metadataAzienda,
+                     properties=dict(RelSedeLegale=relation(SedeLegale), RelSedi=relation(Sede) ),
+                     )
+mapperAziendaSedeLegale=mapper(SedeLegale, metadataSedeLegale )
 mapperAziendaSede=mapper(Sede, metadataSede)

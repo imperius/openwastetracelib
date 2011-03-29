@@ -368,7 +368,7 @@ class SedeLegale(object):
 #Sede
 class Sede(object):
 
-    def __init__ (self,tipoSede,tipoSedeDescr,nomeSede,codiceIstatLocalita,codiceCatastale,nazione,siglaNazione,indirizzo):
+    def __init__ (self,tipoSede,tipoSedeDescr,nomeSede,codiceIstatLocalita,codiceCatastale,nazione,siglaNazione,indirizzo,versione,idSIS,**kwargs):
         # Campi non obbligatori:
         # nrCivico, cap, telefono, fax, numeroAddetti, cameraCommercio, cameraCommercioDescr, associazioneCategoria, associazioneCategoriaDescr,codiceIstatAttPrincipale,
         # codiceAtecoAttPrincipale, descrizioneAttPrincipale, numeroIscrizioneRea, numeroUla=numeroUla, latitudine,longitudine

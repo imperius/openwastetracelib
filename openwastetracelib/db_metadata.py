@@ -301,6 +301,7 @@ metadataAzienda=Table('azienda',meta,
 # SedeLegale
 metadataSedeLegale=Table('SedeLegale',meta,
                 Column('Slid',Integer,nullable=False,primary_key=True,autoincrement=True),
+                Column('SLCodAzienda',Integer,nullable=False),
                 Column('tipoSede',String(255),nullable=False),
                 Column('tipoSedeDescr',String(255),nullable=False),
                 Column('nomeSede',String(255),nullable=False),
@@ -313,11 +314,13 @@ metadataSedeLegale=Table('SedeLegale',meta,
                 Column('cap',String(255) ),
                 Column('versione',Integer,nullable=False),
                 Column('idSIS',String(255),nullable=False),
+                ForeignKeyConstraint(['SLCodAzienda'],['azienda.Aid'])
                 ) #Todo: sottocategorie
 
 # Sede
 metadataSede=Table('Sede',meta,
-                Column('Slid',Integer,nullable=False,primary_key=True,autoincrement=True),
+                Column('Sid',Integer,nullable=False,primary_key=True,autoincrement=True),
+                Column('SCodAzienda',Integer,nullable=False),
                 Column('tipoSede',String(255),nullable=False),
                 Column('tipoSedeDescr',String(255),nullable=False),
                 Column('nomeSede',String(255),nullable=False),
@@ -344,7 +347,9 @@ metadataSede=Table('Sede',meta,
                 Column('longitudine',String ),
                 Column('versione',Integer,nullable=False),
                 Column('idSIS',String(255),nullable=False),
+                ForeignKeyConstraint(['SCodAzienda'],['azienda.Aid'])
                 ) #Todo: sottocategorie
 
 
 meta.create_all()
+

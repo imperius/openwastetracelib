@@ -53,7 +53,7 @@ def GetAzienda (codiceFiscaleAzienda):
     # Recupero dell'elenco cataloghi
     aziendaS = client.service.GetAzienda(config.USER_ID,"",codiceFiscaleAzienda)
 
-    a1=Azienda(ragioneSociale= aziendaS.ragioneSociale.__repr__(),
+    a1=Azienda(ragioneSociale= str(aziendaS.ragioneSociale),
                cognome=aziendaS.cognome.__repr__(),
                nome=aziendaS.nome.__repr__(),
                formaGiuridica=aziendaS.formaGiuridica.idCatalogo.__repr__(),
@@ -72,6 +72,9 @@ def GetAzienda (codiceFiscaleAzienda):
                versione=2,   #fixme: aziendaS.versione.__repr__(), mi restituisce '2L' e non va bene
                idSIS=aziendaS.idSIS.__repr__()
                )
+    session.add(a1)
+
+
 #tipoSede,tipoSedeDescr,nomeSede,codiceIstatLocalita,codiceCatastale,nazione,siglaNazione,indirizzo,nrCivico,cap,versione,idSIS
     SL=SedeLegale(tipoSede= aziendaS.sedeLegale.tipoSede.idCatalogo.__repr__(),
                tipoSedeDescr=aziendaS.sedeLegale.tipoSede.description.__repr__(),
@@ -86,14 +89,46 @@ def GetAzienda (codiceFiscaleAzienda):
                versione=2,   #fixme: aziendaS.versione.__repr__(), mi restituisce '2L' e non va bene
                idSIS=aziendaS.sedeLegale.idSIS.__repr__()   #fixme
                )
-
-
-
-
-
-
-    session.add(a1)
+    a1.RelSedeLegale.append(SL)
     session.add(SL)
+
+
+
+    for s in aziendaS.sediSummary:
+        Sede1=Sede(
+            tipoSede = str(s.tipoSede.idCatalogo),
+            tipoSedeDescr = str(s.tipoSede.description),
+            nomeSede = str(s.nomeSede),
+            codiceIstatLocalita = str(s.codiceIstatLocalita),
+            codiceCatastale = str(s.codiceCatastale),
+            nazione = str(s.nazione),
+            siglaNazione = str(s.siglaNazione),
+            indirizzo = str(s.indirizzo),
+            nrCivico = str(s.nrCivico),
+            cap = str(s.cap),
+            #fixme: non dovrebbero essere commentati
+            #telefono = str(s.telefono),
+            #fax = str(s.fax),
+            #numeroAddetti = int(s.numeroAddetti),
+            #cameraCommercio = str(s.cameraCommercio),
+            #cameraCommercioDescr = str(s.cameraCommercioDescr),
+            #associazioneCategoria = str(s.associazioneCategoria),
+            #associazioneCategoriaDescr = str(s.associazioneCategoriaDescr),
+            #codiceIstatAttPrincipale = str(s.codiceIstatAttPrincipale),
+            #codiceAtecoAttPrincipale = str(s.codiceAtecoAttPrincipale),
+            #descrizioneAttPrincipale = str(s.descrizioneAttPrincipale),
+            #numeroIscrizioneRea = str(s.numeroIscrizioneRea),
+            #numeroUla = str(s.numeroUla),
+            #latitudine = str(s.latitudine),
+            #longitudine = str(s.longitudine),
+            #fixme: qui sotto non dovrebbe essere 1 ma s.versione
+            versione = 1,
+            idSIS = str(s.idSIS)
+            )
+        a1.RelSedi.append(Sede1)
+        session.add(Sede1)
+
+
     session.commit()
 
 
