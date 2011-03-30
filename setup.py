@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 """
  OpenWasteTrace
  Copyright (C) 2011 Paolo Melchiorre

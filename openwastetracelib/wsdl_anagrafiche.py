@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 # OpenWasteTrace
 # Copyright (C) 2011 Paolo Melchiorre
 #
@@ -46,7 +49,7 @@ session = Session()
 
 # Connessione al Web services
 transport = HttpAuthUsingCert(config.CER_PATH, config.PEM_PATH)
-client = Client(config.WSDL_URL, transport=transport)
+client = Client(config.WSDL_URL,transport=transport)
 
 def GetAzienda (codiceFiscaleAzienda):
 
@@ -128,9 +131,6 @@ def GetAzienda (codiceFiscaleAzienda):
         a1.RelSedi.append(Sede1)
         session.add(Sede1)
 
-
     session.commit()
-
-
 
 GetAzienda ('00090710690')

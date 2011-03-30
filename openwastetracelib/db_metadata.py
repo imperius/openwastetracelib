@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 # OpenWasteTrace
 # Copyright (C) 2011 Paolo Melchiorre
 #
@@ -31,46 +34,44 @@ session = Session()
 
 # INFO: sqlalchemy.exc.InvalidRequestError: VARCHAR requires a length when rendered on MySQL
 
-# elencocataloghi
-elencocataloghi=Table('elencocataloghi',meta,
-                Column('ceid',Integer,nullable=False,primary_key=True,autoincrement=True),
+##########
+#Cataloghi
+##########
+
+metadata_descrittorecatalogo=Table('descrittorecatalogo',meta,
+                Column('dcid',Integer,nullable=False,primary_key=True,autoincrement=True),
                 Column('catalogo',String(255),nullable=False,index=True),
                 Column('versione',Numeric,nullable=False),
                 Column('descrizione',String(255),nullable=True),
                 )
 
-# stati_scheda_sistri
-stati_scheda_sistri=Table('stati_scheda_sistri',meta,
+metadata_stati_scheda_sistri=Table('stati_scheda_sistri',meta,
                 Column('sssid',Integer,nullable=False,primary_key=True,autoincrement=True),
                 Column('id_stato_scheda_sistri',String(255),nullable=False,index=True),
                 Column('stato_scheda_sistri',String(255),nullable=False),
                 )
 
-# stati_fisici_rifiuto
-stati_fisici_rifiuto=Table('stati_fisici_rifiuto',meta,
+metadata_stati_fisici_rifiuto=Table('stati_fisici_rifiuto',meta,
                 Column('sfrid',Integer,nullable=False,primary_key=True,autoincrement=True),
                 Column('id_stato_fisico_rifiuto',String(255),nullable=False,index=True),
                 Column('descr_stato_fisico_rifiuto',String(255),nullable=False),
                 Column('codice_stato_fisico',String(255),nullable=False),
                 )
 
-# forme_giuridiche
-forme_giuridiche=Table('forme_giuridiche',meta,
+metadata_forme_giuridiche=Table('forme_giuridiche',meta,
                 Column('fgid',Integer,nullable=False,primary_key=True,autoincrement=True),
                 Column('id_tipo_forma_giuridica',String(255),nullable=False,index=True),
                 Column('descrizione_forma_giuridica',String(255),nullable=False),
                 )
 
-# tipi_reg_cronologico
-tipi_reg_cronologico=Table('tipi_reg_cronologico',meta,
+metadata_tipi_reg_cronologico=Table('tipi_reg_cronologico',meta,
                 Column('trcid',Integer,nullable=False,primary_key=True,autoincrement=True),
                 Column('id_tipo_reg_cronologico',String(255),nullable=False,index=True),
                 Column('descrizione_tipo_reg_crono',String(255),nullable=False),
                 Column('macro_categoria',String(255),nullable=False),
                 )
 
-# operazioni_impianti
-operazioni_impianti=Table('operazioni_impianti',meta,
+metadata_operazioni_impianti=Table('operazioni_impianti',meta,
                 Column('oiid',Integer,nullable=False,primary_key=True,autoincrement=True),
                 Column('id_operazione_impianto',String(255),nullable=False,index=True),
                 Column('id_tipo_operazione_impianto',String(255),nullable=False),
@@ -78,15 +79,13 @@ operazioni_impianti=Table('operazioni_impianti',meta,
                 Column('ordinamento',Integer,nullable=False),
                 )
 
-# categorie_raee
-categorie_raee=Table('categorie_raee',meta,
+metadata_categorie_raee=Table('categorie_raee',meta,
                 Column('crid',Integer,nullable=False,primary_key=True,autoincrement=True),
                 Column('id_categoria_raee',String(255),nullable=False,index=True),
                 Column('descrizione_categoria_raee',String(255),nullable=False),
                 )
 
-# tipi_veicolo
-tipi_veicolo=Table('tipi_veicolo',meta,
+metadata_tipi_veicolo=Table('tipi_veicolo',meta,
                 Column('tvid',Integer,nullable=False,primary_key=True,autoincrement=True),
                 Column('id_tipo_veicolo',String(255),nullable=False,index=True),
                 Column('descrizione',String(255),nullable=False),
@@ -94,37 +93,32 @@ tipi_veicolo=Table('tipi_veicolo',meta,
                 Column('flag_rimorchio',Integer,nullable=False),
                 )
 
-# tipi_sede
-tipi_sede=Table('tipi_sede',meta,
+metadata_tipi_sede=Table('tipi_sede',meta,
                 Column('tsid',Integer,nullable=False,primary_key=True,autoincrement=True),
                 Column('id_tipo_sede',String(255),nullable=False,index=True),
                 Column('descrizione',String(255),nullable=False),
                 )
 
-# tipi_registrazioni_crono
-tipi_registrazioni_crono=Table('tipi_registrazioni_crono',meta,
+metadata_tipi_registrazioni_crono=Table('tipi_registrazioni_crono',meta,
                 Column('trcid',Integer,nullable=False,primary_key=True,autoincrement=True),
                 Column('id_tipo_registrazione_crono',String(255),nullable=False,index=True),
                 Column('descr_tipo_reg_crono',String(255),nullable=False),
                 )
 
-# numeri_onu
-numeri_onu=Table('numeri_onu',meta,
+metadata_numeri_onu=Table('numeri_onu',meta,
                 Column('noid',Integer,nullable=False,primary_key=True,autoincrement=True),
                 Column('id_numero_onu',String(255),nullable=False,index=True),
                 Column('descrizione_numero_onu',String(255),nullable=False),
                 )
 
-# localita_estere
-localita_estere=Table('localita_estere',meta,
+metadata_localita_estere=Table('localita_estere',meta,
                 Column('leid',Integer,nullable=False,primary_key=True,autoincrement=True),
                 Column('id_localita',Integer,nullable=False,index=True),
                 Column('nazione',String(255),nullable=False),
                 Column('sigla_nazione',String(255),nullable=False),
                 )
 
-# associazioni_categoria
-associazioni_categoria=Table('associazioni_categoria',meta,
+metadata_associazioni_categoria=Table('associazioni_categoria',meta,
                 Column('acid',Integer,nullable=False,primary_key=True,autoincrement=True),
                 Column('id_associazione_categoria',Integer,nullable=False,index=True),
                 Column('ass_categoria_nome',String(255),nullable=False),
@@ -133,58 +127,50 @@ associazioni_categoria=Table('associazioni_categoria',meta,
                 Column('sigla_cciaa',String(255),nullable=False),
                 )
 
-# stati_registro_cronologico
-stati_registro_cronologico=Table('stati_registro_cronologico',meta,
+metadata_stati_registro_cronologico=Table('stati_registro_cronologico',meta,
                 Column('srcid',Integer,nullable=False,primary_key=True,autoincrement=True),
                 Column('id_stato_registro_cronologico',String(255),nullable=False,index=True),
                 Column('descrizione_stato_reg_crono',String(255),nullable=False),
                 )
 
-# tipi_imballaggi
-tipi_imballaggi=Table('tipi_imballaggi',meta,
+metadata_tipi_imballaggi=Table('tipi_imballaggi',meta,
                 Column('tiid',Integer,nullable=False,primary_key=True,autoincrement=True),
                 Column('id_tipo_imballaggio',Integer,nullable=False,index=True),
                 Column('tipo_imballaggio',String(255),nullable=False),
                 Column('codice_imballaggio',String(255),nullable=False),
                 )
 
-# sottocategorie_star
-sottocategorie_star=Table('sottocategorie_star',meta,
+metadata_sottocategorie_star=Table('sottocategorie_star',meta,
                 Column('ssid',Integer,nullable=False,primary_key=True,autoincrement=True),
                 Column('id_sottocategoria_star',String(255),nullable=False,index=True),
                 Column('id_categoria_star',String(255),nullable=False),
                 Column('descrizione_sottocategoria',String(255),nullable=False),
                 )
 
-# tipi_documento
-tipi_documento=Table('tipi_documento',meta,
+metadata_tipi_documento=Table('tipi_documento',meta,
                 Column('ssid',Integer,nullable=False,primary_key=True,autoincrement=True),
                 Column('id_tipo_documento',String(255),nullable=False,index=True),
                 Column('descrizione',String(255),nullable=False),
                 )
 
-# classi_adr
-classi_adr=Table('classi_adr',meta,
+metadata_classi_adr=Table('classi_adr',meta,
                 Column('caid',Integer,nullable=False,primary_key=True,autoincrement=True),
                 Column('id_classe_adr',String(255),nullable=False,index=True),
                 Column('descrizione_classe_adr',String(255),nullable=False),
                 )
 
-# ruoli_aziendali
-ruoli_aziendali=Table('ruoli_aziendali',meta,
+metadata_ruoli_aziendali=Table('ruoli_aziendali',meta,
                 Column('raid',Integer,nullable=False,primary_key=True,autoincrement=True),
                 Column('id_ruolo_aziendale',String(255),nullable=False,index=True),
                 Column('ruolo_aziendale',String(255),nullable=False),
                 )
 
-# stati_utente_idm
-stati_utente_idm=Table('stati_utente_idm',meta,
+metadata_stati_utente_idm=Table('stati_utente_idm',meta,
                 Column('suid',Integer,nullable=False,primary_key=True,autoincrement=True),
                 Column('id_stato_utente_idm',String(255),nullable=False,index=True),
                 )
 
-# camere_commercio
-camere_commercio=Table('camere_commercio',meta,
+metadata_camere_commercio=Table('camere_commercio',meta,
                 Column('ccid',Integer,nullable=False,primary_key=True,autoincrement=True),
                 Column('id_camera_commercio',Integer,nullable=False,index=True),
                 Column('indirizzo',String(255),nullable=False,index=True),
@@ -197,50 +183,43 @@ camere_commercio=Table('camere_commercio',meta,
                 Column('sigla_cciaa',String(255),nullable=False,index=True),
                 )
 
-# tipi_esito_trasporto
-tipi_esito_trasporto=Table('tipi_esito_trasporto',meta,
+metadata_tipi_esito_trasporto=Table('tipi_esito_trasporto',meta,
                 Column('tetid',Integer,nullable=False,primary_key=True,autoincrement=True),
                 Column('id_esito_trasporto',String(255),nullable=False,index=True),
                 Column('descr_esito_trasporto',String(255),nullable=False,index=True),
                 )
 
-# stati_veicolo
-stati_veicolo=Table('stati_veicolo',meta,
+metadata_stati_veicolo=Table('stati_veicolo',meta,
                 Column('svid',Integer,nullable=False,primary_key=True,autoincrement=True),
                 Column('id_stato_veicolo',String(255),nullable=False,index=True),
                 Column('descrizione_stato_veicolo',String(255),nullable=False,index=True),
                 )
 
-# cod_rec_1013
-cod_rec_1013=Table('cod_rec_1013',meta,
+metadata_cod_rec_1013=Table('cod_rec_1013',meta,
                 Column('crid',Integer,nullable=False,primary_key=True,autoincrement=True),
                 Column('id_cod_rec_1013',String(255),nullable=False,index=True),
                 Column('descrizione_cod_rec',String(255),nullable=False,index=True),
                 )
 
-# stati_registrazioni_crono
-stati_registrazioni_crono=Table('stati_registrazioni_crono',meta,
+metadata_stati_registrazioni_crono=Table('stati_registrazioni_crono',meta,
                 Column('srcid',Integer,nullable=False,primary_key=True,autoincrement=True),
                 Column('id_stato_registrazione_crono',String(255),nullable=False,index=True),
                 Column('descrizione_stato_reg_crono',String(255),nullable=False,index=True),
                 )
 
-# tipi_trasporto
-tipi_trasporto=Table('tipi_trasporto',meta,
+metadata_tipi_trasporto=Table('tipi_trasporto',meta,
                 Column('ttid',Integer,nullable=False,primary_key=True,autoincrement=True),
                 Column('id_tipo_trasporto',Integer,nullable=False,index=True),
                 Column('descrizione_tipo_trasporto',String(255),nullable=False,index=True),
                 )
 
-# tipologie_raee
-tipologie_raee=Table('tipologie_raee',meta,
+metadata_tipologie_raee=Table('tipologie_raee',meta,
                 Column('trid',Integer,nullable=False,primary_key=True,autoincrement=True),
                 Column('id_tipologia_raee',String(255),nullable=False,index=True),
                 Column('descrizione_tipologia_raee',String(255),nullable=False,index=True),
                 )
 
-# codici_cer_iii_livello
-codici_cer_iii_livello=Table('codici_cer_iii_livello',meta,
+metadata_codici_cer_iii_livello=Table('codici_cer_iii_livello',meta,
                 Column('cclid',Integer,nullable=False,primary_key=True,autoincrement=True),
                 Column('id_codice_cer_iii_livello',String(255),nullable=False,index=True),
                 Column('escrizione_iii_livello',String(255),nullable=False,index=True),
@@ -248,58 +227,51 @@ codici_cer_iii_livello=Table('codici_cer_iii_livello',meta,
                 Column('flag_attivo',Integer,nullable=False,index=True),
                 )
 
-# tipi_stato_impresa
-tipi_stato_impresa=Table('tipi_stato_impresa',meta,
+metadata_tipi_stato_impresa=Table('tipi_stato_impresa',meta,
                 Column('tsilid',Integer,nullable=False,primary_key=True,autoincrement=True),
                 Column('id_tipo_stato_impresa',String(255),nullable=False,index=True),
                 )
 
-# caratteristiche_pericolo
-caratteristiche_pericolo=Table('caratteristiche_pericolo',meta,
+metadata_caratteristiche_pericolo=Table('caratteristiche_pericolo',meta,
                 Column('cpid',Integer,nullable=False,primary_key=True,autoincrement=True),
                 Column('id_caratteristica_pericolo',String(255),nullable=False,index=True),
                 Column('descr_car_pericolo',String(255),nullable=False,index=True),
                 )
 
-# sottotipi_veicolo
-sottotipi_veicolo=Table('sottotipi_veicolo',meta,
+metadata_sottotipi_veicolo=Table('sottotipi_veicolo',meta,
                 Column('svid',Integer,nullable=False,primary_key=True,autoincrement=True),
                 Column('id_sottotipo_veicolo',String(255),nullable=False,index=True),
                 Column('descrizione',String(255),nullable=False,index=True),
                 Column('codice_sottotipo_veicolo',Integer,nullable=False,index=True),
                 )
 
+############
+#Anagrafiche
+############
 
-
-#################################################
-#   Anagrafiche                                                                                                #
-#################################################
-
-# Azienda
-metadataAzienda=Table('azienda',meta,
+metadata_azienda=Table('azienda',meta,
                 Column('Aid',Integer,nullable=False,primary_key=True,autoincrement=True),
                 Column('ragioneSociale',String(255),nullable=False,index=True),
-                Column('cognome',String(255) ),
-                Column('nome',String(255) ),
-                Column('formaGiuridica',String(255) ),
-                Column('formaGiuridicaDescr',String(255) ),
-                Column('tipoStatoImpresa',String(255) ),
-                Column('tipoStatoImpresaDescr',String(255) ),
+                Column('cognome',String(255)),
+                Column('nome',String(255)),
+                Column('formaGiuridica',String(255)),
+                Column('formaGiuridicaDescr',String(255)),
+                Column('tipoStatoImpresa',String(255)),
+                Column('tipoStatoImpresaDescr',String(255)),
                 Column('codiceFiscale',String(25),nullable=False,index=True),
                 Column('pIva',String(11) ,index=True),
-                Column('numeroIscrizioneAlbo',String(255) ),
-                Column('cciaaRea',String(255) ),
-                Column('numeroIscrizioneRea',String(255) ),
-                Column('codiceIstatAttPrincipale',String(255) ),
-                Column('dataIscrizioneStar',DateTime ),
-                Column('codiceAtecoAttPrincipale',String(255) ),
-                Column('descrizioneAttPrincipale',String(255) ),
+                Column('numeroIscrizioneAlbo',String(255)),
+                Column('cciaaRea',String(255)),
+                Column('numeroIscrizioneRea',String(255)),
+                Column('codiceIstatAttPrincipale',String(255)),
+                Column('dataIscrizioneStar',DateTime),
+                Column('codiceAtecoAttPrincipale',String(255)),
+                Column('descrizioneAttPrincipale',String(255)),
                 Column('versione',Integer,nullable=False),
                 Column('idSIS',String(255),nullable=False),
-                )
+                ) #Todo
 
-# SedeLegale
-metadataSedeLegale=Table('SedeLegale',meta,
+metadata_sedelegale=Table('sedelegale',meta,
                 Column('Slid',Integer,nullable=False,primary_key=True,autoincrement=True),
                 Column('SLCodAzienda',Integer,nullable=False),
                 Column('tipoSede',String(255),nullable=False),
@@ -310,15 +282,14 @@ metadataSedeLegale=Table('SedeLegale',meta,
                 Column('nazione',String(255),nullable=False),
                 Column('siglaNazione',String(255),nullable=False),
                 Column('indirizzo',String(255),nullable=False),
-                Column('nrCivico',String(255) ),
-                Column('cap',String(255) ),
+                Column('nrCivico',String(255)),
+                Column('cap',String(255)),
                 Column('versione',Integer,nullable=False),
                 Column('idSIS',String(255),nullable=False),
                 ForeignKeyConstraint(['SLCodAzienda'],['azienda.Aid'])
                 ) #Todo: sottocategorie
 
-# Sede
-metadataSede=Table('Sede',meta,
+metadata_sede=Table('sede',meta,
                 Column('Sid',Integer,nullable=False,primary_key=True,autoincrement=True),
                 Column('SCodAzienda',Integer,nullable=False),
                 Column('tipoSede',String(255),nullable=False),
@@ -329,27 +300,71 @@ metadataSede=Table('Sede',meta,
                 Column('nazione',String(255),nullable=False),
                 Column('siglaNazione',String(255),nullable=False),
                 Column('indirizzo',String(255),nullable=False),
-                Column('nrCivico',String(255) ),
-                Column('cap',String(255) ),
-                Column('telefono',String(255) ),
-                Column('fax',String(255) ),
-                Column('numeroAddetti',Integer ),
-                Column('cameraCommercio',String(255) ),
-                Column('cameraCommercioDescr',String(255) ),
-                Column('associazioneCategoria',String(255) ),
-                Column('associazioneCategoriaDescr',String(255) ),
-                Column('codiceIstatAttPrincipale',String(255) ),
-                Column('codiceAtecoAttPrincipale',String(255) ),
-                Column('descrizioneAttPrincipale',String(255) ),
-                Column('numeroIscrizioneRea',String(255) ),
-                Column('numeroUla',Float ),
-                Column('latitudine',String ),
-                Column('longitudine',String ),
+                Column('nrCivico',String(255)),
+                Column('cap',String(255)),
+                Column('telefono',String(255)),
+                Column('fax',String(255)),
+                Column('numeroAddetti',Integer),
+                Column('cameraCommercio',String(255)),
+                Column('cameraCommercioDescr',String(255)),
+                Column('associazioneCategoria',String(255)),
+                Column('associazioneCategoriaDescr',String(255)),
+                Column('codiceIstatAttPrincipale',String(255)),
+                Column('codiceAtecoAttPrincipale',String(255)),
+                Column('descrizioneAttPrincipale',String(255)),
+                Column('numeroIscrizioneRea',String(255)),
+                Column('numeroUla',Float),
+                Column('latitudine',String(255)),
+                Column('longitudine',String(255)),
                 Column('versione',Integer,nullable=False),
                 Column('idSIS',String(255),nullable=False),
                 ForeignKeyConstraint(['SCodAzienda'],['azienda.Aid'])
                 ) #Todo: sottocategorie
 
-
 meta.create_all()
 
+#####
+#TODO
+#####
+#catalogo
+#categoriaiscrizione
+#datidelegante
+#documentdata
+#documentdataperfirma
+#documentdata_base
+#doublenumber
+#elencomovimentazioni
+#elencoregistrazionicrono
+#filtromovimentazioni
+#filtroregistrazioni
+#flag
+#hashesperfirma
+#longnumber
+#movimentazione
+#parametriaggiuntivi
+#registrazioneassociata
+#registrazionecrono
+#registrazionecronocarico
+#registrazionecrono_base
+#registrazionecrono_summary
+#registrazionecrono_zipped
+#registrocronologico
+#sisexception
+#schedasistri
+#schedasistri_base
+#schedasistri_destinatario
+#schedasistri_prod_trasp_cp
+#schedasistri_produttore
+#schedasistri_trasportatore
+#schedasistri_summary
+#schedasistri_zipped
+#sede_summary
+#statoprocessamento
+#storicoazienda
+#storicosede
+#storicosedelegale
+#token
+#tratta_base
+#unitaoperativa
+#utente
+#veicolo

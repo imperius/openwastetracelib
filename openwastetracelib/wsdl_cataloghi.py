@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 # OpenWasteTrace
 # Copyright (C) 2011 Paolo Melchiorre
 #
@@ -35,8 +38,6 @@ import db_metadata
 from db_metadata import *
 from db_mapper import *
 import db_mapper
-
-
 #import cataloghi
 #from cataloghi import *
 
@@ -54,24 +55,25 @@ client = Client(config.WSDL_URL, transport=transport)
 # Recupero dell'elenco cataloghi
 elencocataloghiresult = client.service.GetElencoCataloghi(config.USER_ID)
 
-## ImportaElencoCataloghi
-## ======================
-## Importazione dell'elenco dei cataloghi.
-##
-## Ciclo su ogni DescrittoreCatalogo della lista
-#for descrittorecatalogo in elencocataloghiresult:
-## Recupero le variabili di ogni DescrittoreCatalogo
-#    catalogo=descrittorecatalogo.catalogo.__repr__()
-#    versione=int(descrittorecatalogo.versione)
-#    descrizione=descrittorecatalogo.descrizione.__repr__()
-## Memorizzazione dell'elenco cataloghi
-#    ElencoCataloghi(catalogo,versione,descrizione)
-##    print descrittorecatalogo
+# ImportaElencoCataloghi
+# ======================
+# Importazione dell'elenco dei cataloghi.
+
+# Ciclo su ogni DescrittoreCatalogo della lista
+for descrittorecatalogo in elencocataloghiresult:
+# Recupero le variabili di ogni DescrittoreCatalogo
+    catalogo=descrittorecatalogo.catalogo.__repr__()
+    versione=int(descrittorecatalogo.versione)
+    descrizione=descrittorecatalogo.descrizione.__repr__()
+# Memorizzazione dell'elenco cataloghi
+    nuovoDescrittoreCatalogo=DescrittoreCatalogo(catalogo,versione,descrizione)
+    session.add(nuovoDescrittoreCatalogo)
+session.commit()
 
 # ImportaCataloghi
 # ================
 # Importazione dei valori dei cataloghi
-#
+
 # Ciclo su ogni DescrittoreCatalogo della lista
 for descrittorecatalogo in elencocataloghiresult:
 # Recupero le variabili di ogni DescrittoreCatalogo
@@ -84,21 +86,22 @@ for descrittorecatalogo in elencocataloghiresult:
 #    classe=globals()[nomeclasse]
 #    classe=getattr(globals()['cataloghi'],nomeclasse)
     classe=getattr(db_objects,catalogoclasse)
-#    table = session.query(classe).first()
 # Recupero il catalogo in formato xml e lo mostro
     catalogoxml = client.service.GetCatalogo(config.USER_ID,catalogonome).encode("utf-8")
-#    print catalogou
     xmltree = ElementTree.XML(catalogoxml)
     records=xmltree.find('records')
     for record in records.findall('record'):
         fields=record.findall('field')
-        emptyvariables=["" for i in range(len(fields))]
+        emptyvariables=[u'' for i in range(len(fields))]
         classenuova=classe(*emptyvariables)
         for field in fields:
             nome=field.findtext('nome').lower()
-            valore=field.findtext('valore').encode('ascii','ignore')
-            tipo=getattr(__builtin__,field.findtext('tipo')[:3].lower())
-            classenuova.__setattr__(nome,tipo(valore))
+            valore=field.findtext('valore')
+#            tipo=getattr(__builtin__,field.findtext('tipo')[:3].lower())
+            tipo=field.findtext('tipo')[:3].lower()
+            if tipo=='int':
+                valore=int(valore)
+#            classenuova.__setattr__(nome,tipo(valore))
+            classenuova.__setattr__(nome,valore)
         session.add(classenuova)
-        #print classenuova
     session.commit()
