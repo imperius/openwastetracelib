@@ -96,7 +96,6 @@ def GetAzienda (codiceFiscaleAzienda):
     session.add(SL)
 
 
-
     for s in aziendaS.sediSummary:
         Sede1=Sede(
             tipoSede = str(s.tipoSede.idCatalogo),
@@ -133,4 +132,17 @@ def GetAzienda (codiceFiscaleAzienda):
 
     session.commit()
 
-GetAzienda ('00090710690')
+def GetSede(IDSisSede):
+
+    # Dato un idsis della sede restituisce tutti i dati completi di quella sede,
+    # Atenzione risponde solo le l'utente e' abilito per quella sede
+
+    Sede = client.service.GetSede(config.USER_ID,"",IDSisSede)
+
+
+def GetVeicoli(IDSisSede):
+
+    # Dato un idsis della sede restituisce tutti i dati completi di quella sede,
+    # Atenzione risponde solo le l'utente e' abilito per quella sede
+
+    Sede = client.service.GetVeicoli(config.USER_ID,"",IDSisSede)
