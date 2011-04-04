@@ -268,7 +268,7 @@ metadata_azienda=Table('azienda',meta,
                 Column('codiceAtecoAttPrincipale',String(255)),
                 Column('descrizioneAttPrincipale',String(255)),
                 Column('versione',Integer,nullable=False),
-                Column('idSIS',String(255),nullable=False),
+                Column('idSIS',String(255),nullable=False,index=True,unique=True),
                 ) #Todo
 
 metadata_sedelegale=Table('sedelegale',meta,
@@ -285,7 +285,7 @@ metadata_sedelegale=Table('sedelegale',meta,
                 Column('nrCivico',String(255)),
                 Column('cap',String(255)),
                 Column('versione',Integer,nullable=False),
-                Column('idSIS',String(255),nullable=False),
+                Column('idSIS',String(255),nullable=False,index=True,unique=True),
                 ForeignKeyConstraint(['SLCodAzienda'],['azienda.Aid'])
                 ) #Todo: sottocategorie
 
@@ -317,7 +317,7 @@ metadata_sede=Table('sede',meta,
                 Column('latitudine',String(255)),
                 Column('longitudine',String(255)),
                 Column('versione',Integer,nullable=False),
-                Column('idSIS',String(255),nullable=False),
+                Column('idSIS',String(255),nullable=False,index=True,unique=True),
                 ForeignKeyConstraint(['SCodAzienda'],['azienda.Aid'])
                 ) #Todo: sottocategorie
 

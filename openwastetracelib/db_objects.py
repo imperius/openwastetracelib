@@ -289,6 +289,8 @@ class SedeLegale(object):
         self.nazione=nazione
         self.siglaNazione=siglaNazione
         self.indirizzo=indirizzo
+        self.nrCivico=nrCivico
+        self.cap=cap
         self.versione=versione
         self.idSIS=idSIS
         for key in kwargs:
