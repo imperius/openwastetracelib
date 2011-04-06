@@ -271,8 +271,6 @@ metadata_azienda=Table('azienda',meta,
                 )
 
 metadata_sedelegale=Table('sedelegale',meta,
-                Column('Slid',Integer,nullable=False,primary_key=True,autoincrement=True),
-                Column('SLCodAzienda',String,nullable=False),
                 Column('tipoSede',String(255),nullable=False),
                 Column('tipoSedeDescr',String(255),nullable=False),
                 Column('nomeSede',String(255),nullable=False),
@@ -283,10 +281,30 @@ metadata_sedelegale=Table('sedelegale',meta,
                 Column('indirizzo',String(255),nullable=False),
                 Column('nrCivico',String(255)),
                 Column('cap',String(255)),
+                Column('codAzienda',String(255),index=True),
                 Column('versione',Integer,nullable=False),
-                Column('idSIS',String(255),nullable=False,index=True,unique=True),
-                ForeignKeyConstraint(['SLCodAzienda'],['azienda.Aid'])
-                )
+                Column('idSIS',String(255),nullable=False,index=True,unique=True,primary_key=True),
+                ForeignKeyConstraint(['codAzienda'],['azienda.idSIS'])
+                )# fixme:manca la categoria
+
+
+metadata_sede_summary=Table('sedesummary',meta,
+                Column('tipoSede',String(255),nullable=False),
+                Column('tipoSedeDescr',String(255),nullable=False),
+                Column('nomeSede',String(255),nullable=False),
+                Column('codiceIstatLocalita',String(255),nullable=False),
+                Column('codiceCatastale',String(255),nullable=False),
+                Column('nazione',String(255),nullable=False),
+                Column('siglaNazione',String(255),nullable=False),
+                Column('indirizzo',String(255),nullable=False),
+                Column('nrCivico',String(255)),
+                Column('cap',String(255)),
+                Column('codAzienda',String(255),index=True),
+                Column('versione',Integer,nullable=False),
+                Column('idSIS',String(255),nullable=False,index=True,unique=True,primary_key=True),
+                ForeignKeyConstraint(['codAzienda'],['azienda.idSIS'])
+                ) #Todo: sottocategorie
+
 
 #metadata_sede=Table('sede',meta,
                 #Column('Sid',Integer,nullable=False,primary_key=True,autoincrement=True),

@@ -21,13 +21,13 @@ WSDL_URL = "http://213.92.79.43:9090/intranet/pubblica/wsdl.xml"
 USER_ID = "gabriele.dangelo8571"
 codiceFiscaleAzienda = "00090710690"
 #Paolo
-CER_PATH = "/home/melpao/Dropbox/Madec/GestioneEcologia/Sistri/Interoperabilita/Certificati/Certificato.cer"
-PEM_PATH = "/home/melpao/Dropbox/Madec/GestioneEcologia/Sistri/Interoperabilita/Certificati/Private.pem"
-DB_STRING = "mysql+mysqldb://root:mysql@192.168.1.2:3306/openwastetrace?charset=utf8&use_unicode=0"
+#CER_PATH = "home/melpao/Dropbox/Madec/GestioneEcologia/Sistri/Interoperabilita/Certificati/Certificato.cer"
+#PEM_PATH = "/home/melpao/Dropbox/Madec/GestioneEcologia/Sistri/Interoperabilita/Certificati/Private.pem"
+#DB_STRING = "mysql+mysqldb://root:mysql@192.168.1.2:3306/openwastetrace?charset=utf8&use_unicode=0"
 #Massimiliano
-#CER_PATH = "/home/massi/Dropbox/MAdec/GestioneEcologia/Sistri/Interoperabilita/Certificati/Certificato.cer"
-#PEM_PATH = "/home/massi/Dropbox/MAdec/GestioneEcologia/Sistri/Interoperabilita/Certificati/Private.pem"
-#DB_STRING = "postgres://postgres:matusa@localhost:5433/sistri"
+CER_PATH = "/home/massi/Dropbox/MAdec/GestioneEcologia/Sistri/Interoperabilita/Certificati/Certificato.cer"
+PEM_PATH = "/home/massi/Dropbox/MAdec/GestioneEcologia/Sistri/Interoperabilita/Certificati/Private.pem"
+DB_STRING = "postgres://postgres:matusa@localhost:5433/sistri"
 
 
 """
