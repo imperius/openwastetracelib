@@ -29,26 +29,34 @@ def owsAzienda (codiceFiscale):
     owsGetUpSedeLegale (az, sl)
     owsGetUpSedeSummary (az, sedesummary)
 
+#def owsGetUpAzienda (az):
+    #data un oggetto azienda restituisce l'oggetto azienda eventualmente aggiornato, si occupa del salvataggio sul db.
+    #test=session.query(Azienda).filter (Azienda.codiceFiscale == az.codiceFiscale)
+    #if test.count()==0:
+        ##non c'e' --> aggiungo
+        #aznew=az
+        #session.add(aznew)
+        #session.commit()
+    #else:
+        ##intanto per ora prendo per buono quello del database.
+        #aznew=test.one()
+        ##c'e' controlla il numero di versione
+        #if az.versione!=test.one().versione:
+            ##aggiorna il record, si copia il vecchio id sul nuovo, e sostituice l'oggetto
+            #az.Aid=test.one().Aid
+            #aznew=az
+            #session.merge(aznew)
+            #session.commit()
+    ##in aznew c'e' sicuramente l'oggetto giusto
+    #return aznew
+
 def owsGetUpAzienda (az):
     #data un oggetto azienda restituisce l'oggetto azienda eventualmente aggiornato, si occupa del salvataggio sul db.
-    test=session.query(Azienda).filter (Azienda.codiceFiscale == az.codiceFiscale)
-    if test.count()==0:
-        #non c'e' --> aggiungo
-        aznew=az
-        session.add(aznew)
-        session.commit()
-    else:
-        #intanto per ora prendo per buono quello del database.
-        aznew=test.one()
-        #c'e' controlla il numero di versione
-        if az.versione!=test.one().versione:
-            #aggiorna il record, si copia il vecchio id sul nuovo, e sostituice l'oggetto
-            az.Aid=test.one().Aid
-            aznew=az
-            session.merge(aznew)
-            session.commit()
+    session.merge(az)
+    session.commit()
     #in aznew c'e' sicuramente l'oggetto giusto
-    return aznew
+    return az
+
 
 
 def owsGetUpSedeLegale (az, sl):
