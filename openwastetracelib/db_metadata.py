@@ -248,7 +248,7 @@ metadata_sottotipi_veicolo=Table('sottotipi_veicolo',meta,
 ############
 #Anagrafiche
 ############
-                #Column('Aid',Integer,nullable=False,unique=True,autoincrement=True),
+
 metadata_azienda=Table('azienda',meta,
                 Column('ragioneSociale',String(255),nullable=False,index=True),
                 Column('cognome',String(255)),
@@ -268,25 +268,25 @@ metadata_azienda=Table('azienda',meta,
                 Column('descrizioneAttPrincipale',String(255)),
                 Column('versione',Integer,nullable=False),
                 Column('idSIS',String(255),nullable=False,index=True,unique=True,primary_key=True),
-                ) #Todo
+                )
 
-#metadata_sedelegale=Table('sedelegale',meta,
-                #Column('Slid',Integer,nullable=False,primary_key=True,autoincrement=True),
-                #Column('SLCodAzienda',String,nullable=False),
-                #Column('tipoSede',String(255),nullable=False),
-                #Column('tipoSedeDescr',String(255),nullable=False),
-                #Column('nomeSede',String(255),nullable=False),
-                #Column('codiceIstatLocalita',String(255),nullable=False),
-                #Column('codiceCatastale',String(255),nullable=False),
-                #Column('nazione',String(255),nullable=False),
-                #Column('siglaNazione',String(255),nullable=False),
-                #Column('indirizzo',String(255),nullable=False),
-                #Column('nrCivico',String(255)),
-                #Column('cap',String(255)),
-                #Column('versione',Integer,nullable=False),
-                #Column('idSIS',String(255),nullable=False,index=True,unique=True),
-                #ForeignKeyConstraint(['SLCodAzienda'],['azienda.Aid'])
-                #) #Todo: sottocategorie
+metadata_sedelegale=Table('sedelegale',meta,
+                Column('Slid',Integer,nullable=False,primary_key=True,autoincrement=True),
+                Column('SLCodAzienda',String,nullable=False),
+                Column('tipoSede',String(255),nullable=False),
+                Column('tipoSedeDescr',String(255),nullable=False),
+                Column('nomeSede',String(255),nullable=False),
+                Column('codiceIstatLocalita',String(255),nullable=False),
+                Column('codiceCatastale',String(255),nullable=False),
+                Column('nazione',String(255),nullable=False),
+                Column('siglaNazione',String(255),nullable=False),
+                Column('indirizzo',String(255),nullable=False),
+                Column('nrCivico',String(255)),
+                Column('cap',String(255)),
+                Column('versione',Integer,nullable=False),
+                Column('idSIS',String(255),nullable=False,index=True,unique=True),
+                ForeignKeyConstraint(['SLCodAzienda'],['azienda.Aid'])
+                )
 
 #metadata_sede=Table('sede',meta,
                 #Column('Sid',Integer,nullable=False,primary_key=True,autoincrement=True),

@@ -277,7 +277,6 @@ class Azienda(object):
         for key in kwargs:
             self.__setattr__(key,kwargs[key] )
 
-
 class SedeLegale(object):
 
     def __init__ (self,tipoSede,tipoSedeDescr,nomeSede,codiceIstatLocalita,codiceCatastale,nazione,siglaNazione,indirizzo,nrCivico,cap,versione,idSIS,**kwargs):

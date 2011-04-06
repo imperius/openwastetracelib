@@ -17,7 +17,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
 #Funsioni che appartengo a questa area:
 #GetVersioneAnagraficaAzienda() - fatta
 #GetVersioneAnagrafica()
@@ -28,7 +27,6 @@
 #GetAutorizzazioniSedePartner()
 #GetVeicoli()
 #GetToken()
-
 
 """
 The I{wsdl cataloghi} module provides connection to GetElencoCataloghi method.
@@ -41,11 +39,8 @@ from xml.etree import cElementTree as ElementTree
 from https_cert import HttpAuthUsingCert
 from suds.client import Client
 
-
 import config
 from db_objects import *
-
-
 
 #import cataloghi
 #from cataloghi import *
@@ -57,10 +52,8 @@ transport = HttpAuthUsingCert(config.CER_PATH, config.PEM_PATH)
 client = Client(config.WSDL_URL,transport=transport)
 
 def GetAzienda (codiceFiscaleAzienda):
-
-    # Recupero dell'elenco cataloghi
+    """Recupero dell'elenco cataloghi"""
     aziendaS = client.service.GetAzienda(config.USER_ID,"",codiceFiscaleAzienda)
-
     az=Azienda(ragioneSociale= aziendaS.ragioneSociale.__repr__(),
                cognome=aziendaS.cognome.__repr__(),
                nome=aziendaS.nome.__repr__(),
@@ -80,10 +73,7 @@ def GetAzienda (codiceFiscaleAzienda):
                versione=2,   #fixme: aziendaS.versione.__repr__(), mi restituisce '2L' e non va bene
                idSIS=aziendaS.idSIS.__repr__()
                )
-
-
-
-#tipoSede,tipoSedeDescr,nomeSede,codiceIstatLocalita,codiceCatastale,nazione,siglaNazione,indirizzo,nrCivico,cap,versione,idSIS
+    #tipoSede,tipoSedeDescr,nomeSede,codiceIstatLocalita,codiceCatastale,nazione,siglaNazione,indirizzo,nrCivico,cap,versione,idSIS
     sl=SedeLegale(tipoSede= aziendaS.sedeLegale.tipoSede.idCatalogo.__repr__(),
                tipoSedeDescr=aziendaS.sedeLegale.tipoSede.description.__repr__(),
                nomeSede=aziendaS.sedeLegale.nomeSede.__repr__(),
@@ -97,8 +87,6 @@ def GetAzienda (codiceFiscaleAzienda):
                versione=2,   #fixme: aziendaS.versione.__repr__(), mi restituisce '2L' e non va bene
                idSIS=aziendaS.sedeLegale.idSIS.__repr__()   #fixme
                )
-
-
     sedisummary=[]
     for s in aziendaS.sediSummary:
         Sede1=Sede(
@@ -132,22 +120,18 @@ def GetAzienda (codiceFiscaleAzienda):
             idSIS = str(s.idSIS)
             )
         sedisummary.append (Sede1)
-
     return az, sl, sedisummary
 
-
-
 def GetSede(IDSisSede):
-
-    # Dato un idsis della sede restituisce tutti i dati completi di quella sede,
-    # Atenzione risponde solo le l'utente e' abilito per quella sede
-
+    """
+    Dato un idsis della sede restituisce tutti i dati completi di quella sede,
+    Atenzione risponde solo le l'utente e' abilito per quella sede
+    """
     Sede = client.service.GetSede(config.USER_ID,"",IDSisSede)
 
-
 def GetVeicoli(IDSisSede):
-
-    # Dato un idsis della sede restituisce tutti i dati completi di quella sede,
-    # Atenzione risponde solo le l'utente e' abilito per quella sede
-
+    """
+    Dato un idsis della sede restituisce tutti i dati completi di quella sede,
+    Atenzione risponde solo le l'utente e' abilito per quella sede
+    """
     Sede = client.service.GetVeicoli(config.USER_ID,"",IDSisSede)

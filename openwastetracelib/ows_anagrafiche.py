@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 from db_metadata import *
 from db_mapper import *
 
-import wsdl_anagrafiche  as wa
+import wsdl_anagrafiche as wa
 
 dbengine = create_engine(config.DB_STRING, echo=False)
 meta = MetaData()
