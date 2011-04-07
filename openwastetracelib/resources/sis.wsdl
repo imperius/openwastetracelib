@@ -1,0 +1,4282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="SIS_WSDL" targetNamespace="http://www.sistri.it/SIS_WSDL/" xmlns:tns="http://www.sistri.it/SIS_WSDL/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.sistri.it/SIS_WSDL/">            
+    
+            <xsd:complexType name="SISException">
+            	<xsd:sequence>
+            		<xsd:element name="errorCode" nillable="false" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element name="errorMessage" nillable="true" type="xsd:string"/>
+            	</xsd:sequence>
+            </xsd:complexType>
+    
+            <xsd:complexType name="Catalogo">
+            	<xsd:sequence>
+            		<xsd:element name="idCatalogo" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="description" nillable="true" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+    
+
+            <xsd:complexType name="DescrittoreCatalogo">
+            	<xsd:sequence>
+            		<xsd:element name="catalogo" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element name="versione" nillable="true" type="xsd:string"/>
+            		<xsd:element name="descrizione" nillable="true" type="xsd:string"/>
+
+            	</xsd:sequence>
+            </xsd:complexType>
+            
+            
+            <xsd:element name="GetElencoCataloghiRequest">
+
+                <xsd:complexType>
+                	<xsd:sequence>
+                		<xsd:element name="identity" type="xsd:string">
+                		</xsd:element>
+
+                	</xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetElencoCataloghiResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+
+            			<xsd:element maxOccurs="unbounded" minOccurs="0" name="out" nillable="true" type="tns:DescrittoreCatalogo"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetElencoCataloghi_fault" type="tns:SISException"/>
+           
+            <xsd:element name="GetVersioneCatalogoRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+                        <xsd:element name="identity" type="xsd:string">
+             			</xsd:element>
+
+            			<xsd:element name="catalogo" type="xsd:string"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetVersioneCatalogoResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+
+            			<xsd:element name="versioneCatalogo" nillable="true" type="xsd:string"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetVersioneCatalogo_fault" type="tns:SISException">
+
+            </xsd:element>
+            
+            <xsd:element name="GetCatalogoRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+                        <xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+
+
+            			<xsd:element name="catalogo" type="xsd:string"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetCatalogoResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+
+            			<xsd:element name="xmlString" nillable="true" type="xsd:string"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetCatalogo_fault" type="tns:SISException">
+
+            </xsd:element>
+    
+            <xsd:complexType name="RegistrazioneCrono_Base">
+            	<xsd:sequence>
+
+            		<xsd:element name="codiceCerIIILivello" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element name="statoFisicoRifiuto" type="tns:Catalogo">
+            		</xsd:element>
+
+            		<xsd:element minOccurs="0" name="codRec_1013" nillable="true" type="tns:Catalogo">
+            		</xsd:element>
+
+
+            		<xsd:element minOccurs="0" name="quantita" nillable="true" type="tns:LongNumber">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="descrizioneRifiuto" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="numeroNotifica" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="numeroSerieSpedizione" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="annotazioni" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="flagVeicoli_Dlgs_209_2003" nillable="true" type="tns:Flag">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="flagVeicoli_Dlgs_Art231_152_2006" nillable="true" type="tns:Flag">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="numeroVeicoliConferiti" nillable="true" type="tns:LongNumber">
+            		</xsd:element>
+
+            		<xsd:element minOccurs="0" name="categoriaRAEE" nillable="true" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="tipologiaRAEE" nillable="true" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="flagRiutilizzoAppIntera" nillable="true" type="tns:Flag">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="flagOpRecuperoEnergia" nillable="true" type="tns:Flag">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="flagOpRecuperoMateria" nillable="true" type="tns:Flag">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="operazioneImpianto" nillable="true" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="idSISSede_impiantoOrigine" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="versioneSede_impiantoOrigine" nillable="true" type="tns:LongNumber"/>
+            		<xsd:element minOccurs="0" name="idSISSede_impiantoDestinazione" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="versioneSede_impiantoDestinazione" nillable="true" type="tns:LongNumber"/>
+            		<xsd:element minOccurs="0" name="descrizioneAltroStatoFisico" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element maxOccurs="unbounded" minOccurs="0" name="caratteristicaPericolo" nillable="true" type="tns:Catalogo">
+            		</xsd:element>
+
+            		<xsd:element minOccurs="0" name="idSISSede_consegnatoA" nillable="true" type="xsd:string"/>
+             		<xsd:element minOccurs="0" name="versioneSede_consegnatoA" nillable="true" type="tns:LongNumber"/>
+            	</xsd:sequence>
+            </xsd:complexType>
+    
+            <xsd:complexType name="FiltroRegistrazioni">
+            	<xsd:sequence>
+            		<xsd:element minOccurs="0" name="tipoRegistrazioneCrono" nillable="true" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="statoRegistrazioniCrono" nillable="true" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="codiceCerIIILivello" nillable="true" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="dataEoraRegistrazioneInizio" nillable="true" type="xsd:dateTime">
+
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="dataEoraRegistrazioneFine" nillable="true" type="xsd:dateTime">
+
+            		</xsd:element>
+            	</xsd:sequence>
+            </xsd:complexType>
+    
+            <xsd:complexType name="RegistrazioneCrono">
+            	<xsd:sequence>
+            		<xsd:element name="registrazioneCrono_base" type="tns:RegistrazioneCrono_Base">
+            		</xsd:element>
+            		<xsd:element name="tipoRegistrazioneCrono" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element name="statoRegistrazioniCrono" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="codiceFiscaleFirmatarioRegistrazione" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element name="idSISRegistroCrono" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="dataRegistrazione" nillable="true" type="xsd:dateTime">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="quantitaResidua" nillable="true" type="tns:LongNumber">
+            		</xsd:element>
+            		<xsd:element maxOccurs="unbounded" minOccurs="0" name="idSISSchedeAssociate" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element maxOccurs="unbounded" minOccurs="0" name="registrazioniCronoAssociate" nillable="true" type="tns:RegistrazioneAssociata">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="codiceRegistrazione" nillable="true" type="xsd:string">
+            		</xsd:element>
+                    <xsd:element minOccurs="0" name="pesoVerificatoADestino" nillable="true" type="tns:LongNumber"/>
+                    <xsd:element minOccurs="0" name="flagConferitoDaPrivato" nillable="true" type="tns:Flag">
+            		</xsd:element>
+                    <xsd:element name="versione" type="tns:LongNumber"/>
+                    <xsd:element name="idSIS" type="xsd:string"/>
+
+
+            	</xsd:sequence>
+            </xsd:complexType>
+
+            <xsd:complexType name="RegistrazioneCrono_summary">
+            	<xsd:sequence>
+            		<xsd:element name="codiceCerIIILivello" type="tns:Catalogo">
+            		</xsd:element>
+            		
+            		<xsd:element name="tipoRegistrazioneCrono" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element name="statoRegistrazioniCrono" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="codiceFiscaleFirmatarioRegistrazione" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element name="idSISRegistroCrono" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="dataRegistrazione" nillable="true" type="xsd:dateTime">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="quantitaResidua" nillable="true" type="tns:LongNumber">
+            		</xsd:element>
+            		<xsd:element maxOccurs="unbounded" minOccurs="0" name="idSISSchedeAssociate" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element maxOccurs="unbounded" minOccurs="0" name="registrazioniCronoAssociate" nillable="true" type="tns:RegistrazioneAssociata">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="codiceRegistrazione" nillable="true" type="xsd:string">
+            		</xsd:element>
+                    <xsd:element minOccurs="0" name="versione" nillable="true" type="tns:LongNumber"/>
+                    <xsd:element name="idSIS" type="xsd:string"/>
+            	</xsd:sequence>
+            </xsd:complexType>
+    
+            <xsd:complexType name="RegistrazioneCronoCarico">
+            	<xsd:sequence>
+                    <xsd:element name="quantitaDaScaricare" type="tns:LongNumber">
+            		</xsd:element>
+
+                    <xsd:element name="idSISRegistrazioneCronoCarico" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="GetElencoRegistrazioniCronoResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element maxOccurs="1" minOccurs="1" name="elencoRegistrazioni" type="tns:ElencoRegistrazioniCrono"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetElencoRegistrazioniCrono_fault" type="tns:SISException"/>
+        
+            <xsd:element name="GetElencoRegistrazioniCronoRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="idSISRegistroCrono" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element minOccurs="0" name="filtroRegistrazioni" nillable="true" type="tns:FiltroRegistrazioni">
+            			</xsd:element>
+            			<xsd:element minOccurs="0" name="startItemPosition" nillable="true" type="tns:LongNumber">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetElencoRegistrazioniCrono_zippedResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element maxOccurs="unbounded" minOccurs="0" name="registrazioniCrono" nillable="true" type="tns:RegistrazioneCrono_zipped"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetElencoRegistrazioniCrono_zipped_fault" type="tns:SISException"/>
+        
+            <xsd:element name="GetElencoRegistrazioniCrono_zippedRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="idSISRegistroCrono" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element minOccurs="0" name="filtroRegistrazioni" nillable="true" type="tns:FiltroRegistrazioni">
+            			</xsd:element>
+            			<xsd:element minOccurs="0" name="startItemPosition" nillable="true" type="tns:LongNumber">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetRegistrazioneCronoRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+                        <xsd:element name="identity" type="xsd:string">
+             			</xsd:element>
+                		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="idSISRegistrazioneCrono" type="xsd:string">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetRegistrazioneCronoResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="registrazioneCrono" type="tns:RegistrazioneCrono"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetRegistrazioneCrono_fault" type="tns:SISException"/>
+            <xsd:element name="PutRegistrazioneCronoCaricoResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="idSISRegistrazioneCrono" type="xsd:string"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="PutRegistrazioneCronoScaricoResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="idSISRegistrazioneCrono" type="xsd:string"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="UpdateRegistrazioneCronoCaricoResponse">
+                <xsd:complexType>
+                	<xsd:sequence>
+                		<xsd:element name="versione" type="tns:LongNumber">
+                		</xsd:element>
+                	</xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="UpdateRegistrazioneCronoScaricoResponse">
+                <xsd:complexType>
+                	<xsd:sequence>
+                		<xsd:element name="versione" type="tns:LongNumber">
+                		</xsd:element>
+                	</xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="PutRegistrazioneCronoCaricoRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="idSISRegistroCrono" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element name="registrazione" type="tns:RegistrazioneCrono_Base">
+            			</xsd:element>
+            			<xsd:element minOccurs="0" name="UUID_Transazione" nillable="true" type="xsd:string">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="PutRegistrazioneCronoScaricoRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="idSISRegistroCrono" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element maxOccurs="unbounded" minOccurs="1" name="registrazioniCronoCarico" type="tns:RegistrazioneCronoCarico">
+            			</xsd:element>
+            			<xsd:element name="registrazione" type="tns:RegistrazioneCrono_Base">
+            			</xsd:element>
+
+            			<xsd:element minOccurs="0" name="UUID_Transazione" nillable="true" type="xsd:string">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="UpdateRegistrazioneCronoCaricoRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="idSISRegistrazioneCrono" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element name="registrazione" type="tns:RegistrazioneCrono_Base">
+            			</xsd:element>
+            			<xsd:element name="versionToUpdate" type="tns:LongNumber">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="UpdateRegistrazioneCronoScaricoRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="idSISRegistrazioneCrono" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element maxOccurs="unbounded" minOccurs="0" name="registrazioniCronoCarico" nillable="true" type="tns:RegistrazioneCronoCarico">
+            			</xsd:element>
+            			<xsd:element name="registrazione" type="tns:RegistrazioneCrono_Base">
+            			</xsd:element>
+
+            			<xsd:element name="versionToUpdate" type="tns:LongNumber">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="PutRegistrazioneCronoCarico_fault" type="tns:SISException"/>
+            <xsd:element name="PutRegistrazioneCronoScarico_fault" type="tns:SISException"/>
+            <xsd:element name="UpdateRegistrazioneCronoCarico_fault" type="tns:SISException"/>
+            <xsd:element name="UpdateRegistrazioneCronoScarico_fault" type="tns:SISException"/>
+        
+    
+        
+    
+    
+    
+            <xsd:complexType name="RegistroCronologico">
+            	<xsd:sequence>
+            		<xsd:element name="statoRegistroCronologico" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element name="idSISSede" type="xsd:string"/>
+            		<xsd:element name="tipoRegCronologico" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element minOccurs="1" name="ultimoNumero" type="tns:LongNumber">
+            		</xsd:element>
+            		<xsd:element minOccurs="1" name="codiceRegistroCronologico" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element name="dataUltimoNumero" type="xsd:dateTime">
+
+            		</xsd:element>
+            		<xsd:element name="versione" type="tns:LongNumber">
+            		</xsd:element>
+            		<xsd:element name="idSIS" type="xsd:string"/>
+            		<xsd:element name="sottocategoria" type="tns:Catalogo">
+            		</xsd:element>
+
+                    <xsd:element minOccurs="0" name="nomeUnitaOperativa" nillable="true" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+    
+            <xsd:complexType name="StoricoSede">
+            	<xsd:sequence>
+
+
+            		<xsd:element name="codiceIstatLocalita" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element name="codiceCatastale" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element name="nazione" type="xsd:string"/>
+            		<xsd:element name="siglaNazione" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element name="indirizzo" type="xsd:string"/>
+            		<xsd:element minOccurs="0" name="nrCivico" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="cap" nillable="true" type="xsd:string">
+            		</xsd:element>
+
+            		<xsd:element minOccurs="0" name="numeroAddetti" nillable="true" type="tns:LongNumber">
+            		</xsd:element>
+            		<xsd:element name="versione" type="tns:LongNumber">
+            		</xsd:element>
+            		<xsd:element name="idSIS" type="xsd:string"/>
+
+            		<xsd:element name="storicoAzienda" type="tns:StoricoAzienda"/>
+            	</xsd:sequence>
+            </xsd:complexType>
+            
+        
+            <xsd:complexType name="StoricoSedeLegale">
+            	<xsd:sequence>
+                    <xsd:element name="versione" type="tns:LongNumber"/>
+                    <xsd:element name="idSIS" type="xsd:string"/>
+            	</xsd:sequence>
+            </xsd:complexType>
+    
+    
+            <xsd:complexType name="Sede_summary">
+            	<xsd:sequence>
+            		<xsd:element name="tipoSede" type="tns:Catalogo"/>
+            		<xsd:element name="nomeSede" type="xsd:string"/>
+            		<xsd:element name="codiceIstatLocalita" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element name="codiceCatastale" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element name="nazione" type="xsd:string"/>
+                    <xsd:element name="siglaNazione" type="xsd:string"/>
+                    <xsd:element name="indirizzo" type="xsd:string"/>
+            		<xsd:element minOccurs="0" name="nrCivico" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="cap" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element maxOccurs="unbounded" minOccurs="0" name="sottocategorie" nillable="true" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element name="versione" type="tns:LongNumber">
+            		</xsd:element>
+            		<xsd:element name="idSIS" type="xsd:string"/>
+
+            	</xsd:sequence>
+            </xsd:complexType>
+            
+            <xsd:complexType name="SedeLegale">
+            	<xsd:sequence>
+            		<xsd:element name="tipoSede" type="tns:Catalogo"/>
+            		<xsd:element name="nomeSede" type="xsd:string"/>
+            		<xsd:element name="codiceIstatLocalita" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element name="codiceCatastale" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element name="nazione" type="xsd:string"/>
+                    <xsd:element name="siglaNazione" type="xsd:string"/>
+                    <xsd:element name="indirizzo" type="xsd:string"/>
+            		<xsd:element minOccurs="0" name="nrCivico" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="cap" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element maxOccurs="unbounded" minOccurs="0" name="sottocategorie" nillable="true" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element name="versione" type="tns:LongNumber">
+            		</xsd:element>
+
+            		<xsd:element name="idSIS" type="xsd:string"/>
+
+            	</xsd:sequence>
+            </xsd:complexType>
+            
+            <xsd:complexType name="Sede">
+            	<xsd:sequence>
+            		<xsd:element name="tipoSede" type="tns:Catalogo"/>
+            		<xsd:element name="nomeSede" type="xsd:string"/>
+            		<xsd:element name="codiceIstatLocalita" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element name="codiceCatastale" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element name="nazione" type="xsd:string"/>
+                    <xsd:element name="siglaNazione" type="xsd:string"/>
+                    <xsd:element name="indirizzo" type="xsd:string"/>
+            		<xsd:element minOccurs="0" name="nrCivico" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="cap" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="telefono" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="fax" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="numeroAddetti" nillable="true" type="tns:LongNumber">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="cameraCommercio" nillable="true" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="associazioneCategoria" nillable="true" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="codiceIstatAttPrincipale" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="codiceAtecoAttPrincipale" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="descrizioneAttPrincipale" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="numeroIscrizioneRea" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="numeroUla" nillable="true" type="tns:DoubleNumber">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="latitudine" nillable="true" type="tns:DoubleNumber">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="longitudine" nillable="true" type="tns:DoubleNumber">
+            		</xsd:element>
+
+            		<xsd:element maxOccurs="unbounded" minOccurs="0" name="sottocategorie" nillable="true" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element name="versione" type="tns:LongNumber">
+            		</xsd:element>
+            		<xsd:element name="idSIS" type="xsd:string"/>
+
+            	</xsd:sequence>
+            </xsd:complexType>
+    
+            <xsd:complexType name="Azienda">
+            	<xsd:sequence>
+            		<xsd:element name="ragioneSociale" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="cognome" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="nome" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="formaGiuridica" nillable="true" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="tipoStatoImpresa" nillable="true" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element name="codiceFiscale" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="pIva" nillable="true" type="xsd:string">
+            		</xsd:element>
+
+            		<xsd:element minOccurs="0" name="numeroIscrizioneAlbo" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="cciaaRea" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="numeroIscrizioneRea" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="codiceIstatAttPrincipale" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="dataIscrizioneStar" nillable="true" type="xsd:dateTime">
+
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="codiceAtecoAttPrincipale" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="descrizioneAttPrincipale" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element name="versione" type="tns:LongNumber">
+            		</xsd:element>
+            		<xsd:element name="idSIS" type="xsd:string"/>
+                    <xsd:element name="sedeLegale" type="tns:SedeLegale"/>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="sediSummary" nillable="true" type="tns:Sede_summary">
+            		</xsd:element>
+
+            	</xsd:sequence>
+            </xsd:complexType>
+    
+            <xsd:complexType name="StoricoAzienda">
+            	<xsd:sequence>
+            		<xsd:element name="ragioneSociale" type="xsd:string">
+            		</xsd:element>
+                    <xsd:element name="codiceFiscale" type="xsd:string">
+            		</xsd:element>
+                    <xsd:element minOccurs="0" name="numeroIscrizioneAlbo" nillable="true" type="xsd:string">
+            		</xsd:element>
+                    <xsd:element minOccurs="0" name="codiceIstatAttPrincipale" nillable="true" type="xsd:string">
+            		</xsd:element>
+                    <xsd:element minOccurs="0" name="nome_rappr_legale" nillable="true" type="xsd:string">
+            		</xsd:element>
+                    <xsd:element minOccurs="0" name="cognome_rappr_legale" nillable="true" type="xsd:string">
+            		</xsd:element>
+
+                    <xsd:element minOccurs="0" name="codiceFiscale_rappr_legale" nillable="true" type="xsd:string">
+            		</xsd:element>
+
+
+
+
+
+
+
+
+
+
+            		<xsd:element name="versione" type="tns:LongNumber">
+            		</xsd:element>
+            		<xsd:element name="idSIS" type="xsd:string"/>
+                    <xsd:element name="storicoSedeLegale" type="tns:StoricoSedeLegale"/>
+
+
+            	</xsd:sequence>
+            </xsd:complexType>
+    
+            <xsd:complexType name="Veicolo">
+            	<xsd:sequence>
+            		<xsd:element name="tipoVeicolo" type="tns:Catalogo"/>
+            		<xsd:element minOccurs="0" name="sottotipoVeicolo" nillable="true" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element name="statoVeicolo" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element name="targa" type="xsd:string"/>
+            		<xsd:element minOccurs="0" name="annoImmatricolazione" nillable="true" type="tns:LongNumber">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="marca" nillable="true" type="xsd:string"/>
+            		<xsd:element minOccurs="0" name="modello" nillable="true" type="xsd:string"/>
+            		<xsd:element maxOccurs="unbounded" minOccurs="0" name="codiciCerIIILivello" nillable="true" type="tns:Catalogo"/>
+            	</xsd:sequence>
+            </xsd:complexType>
+    
+            <xsd:complexType name="Utente">
+            	<xsd:sequence>
+            		<xsd:element name="statoUtenteIDM" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element name="dataStato" type="xsd:dateTime">
+
+            		</xsd:element>
+            		<xsd:element name="ruoloAziendale" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element name="nome" type="xsd:string"/>
+            		<xsd:element name="cognome" type="xsd:string"/>
+            		<xsd:element name="codiceFiscale" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="dataCessazioneServizio" nillable="true" type="xsd:dateTime">
+
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="email" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="telefono" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="fax" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="cellulare" nillable="true" type="xsd:string">
+            		</xsd:element>
+
+            		<xsd:element name="idSISSede" type="xsd:string"/>
+            		<xsd:element name="identityAssociata" type="xsd:string"/>
+            	</xsd:sequence>
+            </xsd:complexType>
+    
+            <xsd:complexType name="Token">
+            	<xsd:sequence>
+            		<xsd:element name="status" type="xsd:string"/>
+            		<xsd:element name="serialNumber" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="deviceSize" nillable="true" type="tns:LongNumber"/>
+            		<xsd:element minOccurs="0" name="swTokenVersion" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="swAppsVersion" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="veicolo" nillable="true" type="tns:Veicolo"/>
+            		<xsd:element maxOccurs="unbounded" minOccurs="0" name="utenti" nillable="true" type="tns:Utente"/>
+            	</xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="GetVersioneAnagraficaAziendaResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="versioneAnagraficaAzienda" type="tns:LongNumber"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetVersioneAnagraficaAziendaRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+                        <xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                 		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="codiceFiscaleAzienda" type="xsd:string">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="GetVersioneAnagraficaAzienda_fault" type="tns:SISException"/>
+            <xsd:element name="GetVersioneAnagraficaResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="versioneAnagrafica" type="tns:LongNumber"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetVersioneAnagraficaRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+                        <xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                 		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="idSIS" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element name="tipoAnagrafica" type="xsd:string">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="GetVersioneAnagrafica_fault" type="tns:SISException"/>
+            <xsd:element name="GetAziendaResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="azienda" type="tns:Azienda"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetAziendaRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+                        <xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="codiceFiscaleAzienda" type="xsd:string">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="GetAzienda_fault" type="tns:SISException"/>
+            <xsd:element name="GetSedeResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="sede" type="tns:Sede"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetSedeRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+                        <xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="idSIS" type="xsd:string">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="GetSede_fault" type="tns:SISException"/>
+            <xsd:element name="GetRegistroCronologicoResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element maxOccurs="unbounded" minOccurs="0" name="registriCronologici" nillable="true" type="tns:RegistroCronologico"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetRegistroCronologicoRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+                        <xsd:element name="identity" type="xsd:string">
+             			</xsd:element>
+                		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="idSISSede" type="xsd:string">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="GetRegistroCronologico_fault" type="tns:SISException"/>
+            <xsd:element name="GetSediAziendePartnerResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element maxOccurs="unbounded" minOccurs="0" name="sediAziendePartner" nillable="true" type="tns:Sede_summary"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetSediAziendePartnerRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+                        <xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="idSISSede" type="xsd:string">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="GetSediAziendePartner_fault" type="tns:SISException"/>
+            <xsd:element name="GetVeicoliResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element maxOccurs="unbounded" minOccurs="0" name="veicoli" nillable="true" type="tns:Veicolo"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetVeicoliRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+                        <xsd:element name="identity" type="xsd:string">
+             			</xsd:element>
+                 		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="idSISSede" type="xsd:string">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="GetVeicoli_fault" type="tns:SISException"/>
+            <xsd:element name="GetTokensResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element maxOccurs="unbounded" minOccurs="0" name="tokens" nillable="true" type="tns:Token"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetTokensRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+                        <xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="idSISSede" type="xsd:string">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="GetTokens_fault" type="tns:SISException"/>
+        
+            <xsd:complexType name="FiltroMovimentazioni">
+            	<xsd:sequence>
+            		<xsd:element minOccurs="0" name="dataEoraMovimentazioneInizio" nillable="true" type="xsd:dateTime">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="dataEoraMovimentazioneFine" nillable="true" type="xsd:dateTime">
+
+            		</xsd:element>
+
+            		<xsd:element minOccurs="0" name="movimentazioniDaMostrare" nillable="true" type="xsd:string"/>
+            	</xsd:sequence>
+            </xsd:complexType>
+    
+            <xsd:complexType name="Movimentazione">
+            	<xsd:sequence>
+            		<xsd:element name="idSISTRI" type="xsd:string"/>
+            		<xsd:element name="movimentazioneNumeroSerie" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element name="dataMovimentazione" type="xsd:dateTime">
+
+            		</xsd:element>
+            		<xsd:element name="versione" type="tns:LongNumber">
+            		</xsd:element>
+            		<xsd:element name="idSIS" type="xsd:string"/>
+            		<xsd:element maxOccurs="unbounded" minOccurs="0" name="idSISSchedeAssociate" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element maxOccurs="unbounded" minOccurs="0" name="tratteTrasporto" nillable="true" type="tns:Tratta_Base"/>
+            	</xsd:sequence>
+            </xsd:complexType>
+    
+            <xsd:complexType name="SchedaSISTRI_Destinatario">
+            	<xsd:sequence>
+            		<xsd:element minOccurs="0" name="quantitaRicevuta" nillable="true" type="tns:LongNumber">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="flagIncenerimento" nillable="true" type="tns:Flag">
+            		</xsd:element>
+
+
+
+
+            		<xsd:element minOccurs="0" name="esitoTrasporto" nillable="true" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element name="flagAttesaVerificaAnalitica" type="tns:Flag"/>
+            	</xsd:sequence>
+            </xsd:complexType>
+    
+            <xsd:complexType name="SchedaSISTRI_Prod_Trasp_CP">
+            	<xsd:sequence>
+            		<xsd:element name="codiceCerIIILivello" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element maxOccurs="unbounded" minOccurs="0" name="caratteristichePericolo" nillable="true" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="descrizioneRifiuto" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element name="statoFisicoRifiuto" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element name="quantita" type="tns:LongNumber">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="numeroColli" nillable="true" type="tns:LongNumber">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="flagPesoADestino" nillable="true" type="tns:Flag">
+            		</xsd:element>
+            		<xsd:element name="operazioneImpianto" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="tipoImballaggio" nillable="true" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element name="flagPrescrizioniParticolari" type="tns:Flag">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="descrizionePrescrizioni" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="flagTrasportoADR" nillable="true" type="tns:Flag">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="classeADR" nillable="true" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="numeroONU" nillable="true" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="altroTipoImballaggio" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="numeroCertificato" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="laboratorio" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="dataCertificato" nillable="true" type="xsd:dateTime">
+
+            		</xsd:element>
+
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="listaAllegati" nillable="true" type="tns:DocumentData_Base"/>
+                    <xsd:element name="idSISSede_destinatario" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="versioneSede_destinatario" nillable="true" type="tns:LongNumber"/>
+            		<xsd:element minOccurs="0" name="autorizzazione" nillable="true" type="xsd:string">
+            		</xsd:element>
+
+            		<xsd:element minOccurs="0" name="numeroNotifica" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="numeroSerieSpedizione" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element name="targaAutomezzo" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="targaRimorchio" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="annotazioniConducente" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="dataInizioPianificata" nillable="true" type="xsd:dateTime">
+
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="dataFinePianificata" nillable="true" type="xsd:dateTime">
+
+            		</xsd:element>
+
+            		<xsd:element minOccurs="0" name="dataOraCarico" nillable="true" type="xsd:dateTime">
+
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="annotazioniCarico" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="dataOraScarico" nillable="true" type="xsd:dateTime">
+
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="annotazioniScarico" nillable="true" type="xsd:string">
+            		</xsd:element>
+
+            		<xsd:element name="conducente" type="xsd:string"/>
+
+            	</xsd:sequence>
+            </xsd:complexType>
+    
+            <xsd:complexType name="SchedaSISTRI_Produttore">
+            	<xsd:sequence>
+            		<xsd:element name="codiceCerIIILivello" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element maxOccurs="unbounded" minOccurs="0" name="caratteristichePericolo" nillable="true" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="descrizioneRifiuto" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element name="statoFisicoRifiuto" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element name="quantita" type="tns:LongNumber">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="numeroColli" nillable="true" type="tns:LongNumber">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="flagPesoADestino" nillable="true" type="tns:Flag">
+            		</xsd:element>
+            		<xsd:element name="operazioneImpianto" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="tipoImballaggio" nillable="true" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element name="flagPrescrizioniParticolari" type="tns:Flag">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="descrizionePrescrizioni" nillable="true" type="xsd:string">
+            		</xsd:element>
+                    <xsd:element minOccurs="0" name="flagTrasportoADR" nillable="true" type="tns:Flag">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="classeADR" nillable="true" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="numeroONU" nillable="true" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="flagDLGS_209_2003" nillable="true" type="tns:Flag">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="flagDLGS_ART231_152_2006" nillable="true" type="tns:Flag">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="numeroVeicoli" nillable="true" type="tns:LongNumber">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="numeroCertificato" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="laboratorio" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="dataCertificato" nillable="true" type="xsd:dateTime">
+
+            		</xsd:element>
+
+
+
+
+
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="listaAllegati" nillable="true" type="tns:DocumentData_Base"/>
+                    <xsd:element minOccurs="0" name="codRec_1013" nillable="true" type="tns:Catalogo">
+            		</xsd:element>
+
+            		<xsd:element minOccurs="0" name="numeroNotifica" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="numeroSerieSpedizione" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="idSISSede_trasportatore" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="versioneSede_trasportatore" nillable="true" type="tns:LongNumber"/>
+            		<xsd:element name="idSISSede_destinatario" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="versioneSede_destinatario" nillable="true" type="tns:LongNumber"/>
+
+            		<xsd:element minOccurs="0" name="autorizzazione" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="quantita_150101" nillable="true" type="tns:LongNumber">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="quantita_150104" nillable="true" type="tns:LongNumber">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="quantita_150102" nillable="true" type="tns:LongNumber">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="quantita_150107" nillable="true" type="tns:LongNumber">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="quantita_150103" nillable="true" type="tns:LongNumber">
+            		</xsd:element>
+
+
+
+
+            		<xsd:element minOccurs="0" name="altroTipoImballaggio" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="quantitaTotale_150106" nillable="true" type="tns:LongNumber">
+            		</xsd:element>
+
+            	</xsd:sequence>
+            </xsd:complexType>
+    
+            <xsd:complexType name="SchedaSISTRI_Trasportatore">
+            	<xsd:sequence>
+
+
+            		<xsd:element minOccurs="0" name="targaAutomezzo" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="targaRimorchio" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="annotazioniConducente" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="dataInizioPianificata" nillable="true" type="xsd:dateTime">
+
+            		</xsd:element>
+
+            		<xsd:element minOccurs="0" name="dataOraCarico" nillable="true" type="xsd:dateTime">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="annotazioniCarico" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="dataOraScarico" nillable="true" type="xsd:dateTime">
+
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="annotazioniScarico" nillable="true" type="xsd:string">
+            		</xsd:element>
+
+            		<xsd:element minOccurs="0" name="dataFinePianificata" nillable="true" type="xsd:dateTime">
+
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="conducente" nillable="true" type="xsd:string">
+            		</xsd:element>
+                    <xsd:element minOccurs="0" name="percorso" nillable="true" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="progressivoTratta" nillable="true" type="tns:LongNumber">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="idSISSede_origineTratta" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="versioneSede_origineTratta" nillable="true" type="tns:LongNumber"/>
+            		<xsd:element minOccurs="0" name="idSISSede_destinazioneTratta" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="versioneSede_destinazioneTratta" nillable="true" type="tns:LongNumber"/>
+            		<xsd:element minOccurs="0" name="responsabileCarico" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="responsabileScarico" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="identificativoCarro" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="numeroTracce" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="identificativoNave" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="comandanteNave" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="tipoTrasporto" nillable="true" type="tns:Catalogo">
+            		</xsd:element>
+
+            	</xsd:sequence>
+            </xsd:complexType>
+    
+            <xsd:complexType name="SchedaSISTRI_Base">
+            	<xsd:sequence>
+
+
+            		<xsd:element name="tipoRegCronologico" type="tns:Catalogo">
+            		</xsd:element>
+
+            		<xsd:element minOccurs="0" name="annotazioni" nillable="true" type="xsd:string">
+            		</xsd:element>
+
+            		<xsd:element minOccurs="0" name="schedaSISTRI_produttore" nillable="true" type="tns:SchedaSISTRI_Produttore">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="schedaSISTRI_trasportatore" nillable="true" type="tns:SchedaSISTRI_Trasportatore">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="schedaSISTRI_destinatario" nillable="true" type="tns:SchedaSISTRI_Destinatario">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="schedaSISTRI_prod_trasp_cp" nillable="true" type="tns:SchedaSISTRI_Prod_Trasp_CP">
+            		</xsd:element>
+
+            		<xsd:element maxOccurs="unbounded" minOccurs="0" name="idSISSedi_intermediari" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element maxOccurs="unbounded" minOccurs="0" name="versioniSedi_intermediari" nillable="true" type="tns:LongNumber"/>
+
+            		<xsd:element minOccurs="0" name="idSISSede_consorzio" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="versioneSede_consorzio" nillable="true" type="tns:LongNumber"/>
+            		<xsd:element minOccurs="0" name="idSISSede_unitaLocale" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="versioneSede_unitaLocale" nillable="true" type="tns:LongNumber"/>
+            		<xsd:element minOccurs="0" name="nomePersonaDaContattare" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="cognomePersonaDaContattare" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="telefonoPersonaDaContattare" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="emailPersonaDaContattare" nillable="true" type="xsd:string"/>
+            	</xsd:sequence>
+            </xsd:complexType>
+    
+            <xsd:complexType name="SchedaSISTRI">
+            	<xsd:sequence>
+            		<xsd:element name="schedaSISTRI_base" type="tns:SchedaSISTRI_Base">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="codiceFiscaleFirmatarioScheda" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element name="statoSchedaSistri" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element name="versione" type="tns:LongNumber">
+            		</xsd:element>
+            		<xsd:element name="idSIS" type="xsd:string"/>
+            		<xsd:element name="idSISMovimentazione" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element maxOccurs="unbounded" minOccurs="0" name="idSISRegistrazioniCrono" nillable="true" type="xsd:string">
+            		</xsd:element>
+
+            		<xsd:element name="idSISSede_legale" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="versioneSede_legale" nillable="true" type="tns:LongNumber"/>
+
+                    <xsd:element minOccurs="0" name="idSISSede_FirmatarioScheda" nillable="true" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="versioneSede_FirmatarioScheda" nillable="true" type="tns:LongNumber"/>
+                    <xsd:element minOccurs="0" name="dataCreazione" nillable="true" type="xsd:dateTime">
+            		</xsd:element>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            		<xsd:element minOccurs="0" name="dataFirma" nillable="true" type="xsd:dateTime">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="dataModifica" nillable="true" type="xsd:dateTime">
+            		</xsd:element>
+
+            	</xsd:sequence>
+            </xsd:complexType>
+            
+            <xsd:complexType name="SchedaSISTRI_summary">
+            	<xsd:sequence>
+            		<xsd:element minOccurs="0" name="codiceFiscaleFirmatarioScheda" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element name="statoSchedaSistri" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="versione" nillable="true" type="tns:LongNumber">
+            		</xsd:element>
+            		<xsd:element name="idSIS" type="xsd:string"/>
+            		<xsd:element name="idSISMovimentazione" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element maxOccurs="unbounded" minOccurs="0" name="idSISRegistrazioniCrono" nillable="true" type="xsd:string">
+            		</xsd:element>
+
+            		<xsd:element name="idSISSede_legale" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="versioneSede_legale" nillable="true" type="tns:LongNumber"/>
+
+                    <xsd:element minOccurs="0" name="idSISSede_FirmatarioScheda" nillable="true" type="xsd:string"/>
+            		<xsd:element minOccurs="0" name="versioneSede_FirmatarioScheda" nillable="true" type="tns:LongNumber"/>
+                    <xsd:element minOccurs="0" name="dataCreazione" nillable="true" type="xsd:dateTime">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="dataFirma" nillable="true" type="xsd:dateTime">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="dataModifica" nillable="true" type="xsd:dateTime">
+            		</xsd:element>
+            		<xsd:element name="tipoRegCronologico" type="tns:Catalogo">
+            		</xsd:element>
+
+            	</xsd:sequence>
+            </xsd:complexType>
+            
+            <xsd:element name="GetElencoMovimentazioniResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element maxOccurs="1" minOccurs="1" name="elencoMovimentazioni" type="tns:ElencoMovimentazioni"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetElencoMovimentazioniRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+
+            			<xsd:element minOccurs="0" name="filtroMovimentazioni" nillable="true" type="tns:FiltroMovimentazioni">
+            			</xsd:element>
+            			<xsd:element minOccurs="0" name="startItemPosition" nillable="true" type="tns:LongNumber">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="GetElencoMovimentazioni_fault" type="tns:SISException"/>
+            <xsd:element name="GetMovimentazioneRifiutoResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="movimentazione" type="tns:Movimentazione"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetMovimentazioneRifiutoRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+                        <xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                 		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="idSISMovimentazione" type="xsd:string">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="GetMovimentazioneRifiuto_fault" type="tns:SISException"/>
+            <xsd:element name="GetVersioneMovimentazioneResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="versione" type="tns:LongNumber"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetVersioneMovimentazioneRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+                        <xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                 		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="idSISMovimentazione" type="xsd:string">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="GetVersioneMovimentazione_fault" type="tns:SISException"/>
+            <xsd:element name="GetElencoSchedeSISTRIResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element maxOccurs="unbounded" minOccurs="0" name="schedeSISTRI" nillable="true" type="tns:SchedaSISTRI_summary"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetElencoSchedeSISTRIRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+                        <xsd:element name="identity" type="xsd:string">
+             			</xsd:element>
+                 		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="idSISMovimentazione" type="xsd:string">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="GetElencoSchedeSISTRI_fault" type="tns:SISException"/>
+            <xsd:element name="GetElencoSchedeSISTRI_zippedResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element maxOccurs="unbounded" minOccurs="0" name="schedeSISTRI" nillable="true" type="tns:SchedaSISTRI_zipped"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetElencoSchedeSISTRI_zippedRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+                        <xsd:element name="identity" type="xsd:string">
+             			</xsd:element>
+                 		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="idSISMovimentazione" type="xsd:string">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="GetElencoSchedeSISTRI_zipped_fault" type="tns:SISException"/>
+            <xsd:element name="GetSchedaSISTRIResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="schedaSISTRI" type="tns:SchedaSISTRI"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetSchedaSISTRIRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+                        <xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="idSISScheda" type="xsd:string">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="GetSchedaSISTRI_fault" type="tns:SISException"/>
+            <xsd:element name="PutSchedaSISTRI_ProduttoreResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="idSISScheda" type="xsd:string"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="PutSchedaSISTRI_ProduttoreRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="tratteTrasporto" nillable="true" type="tns:Tratta_Base">
+            			</xsd:element>
+                        <xsd:element name="scheda" type="tns:SchedaSISTRI_Base">
+            			</xsd:element>
+            			<xsd:element minOccurs="0" name="UUID_Transazione" nillable="true" type="xsd:string">
+            			</xsd:element>
+
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="PutSchedaSISTRI_Produttore_fault" type="tns:SISException"/>
+            <xsd:element name="PutSchedaSISTRI_Trasportatore_DestinatarioResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="idSISScheda" type="xsd:string"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="PutSchedaSISTRI_Trasportatore_DestinatarioRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi">
+            			</xsd:element>
+            			<xsd:element name="idSISMovimentazione" type="xsd:string">
+            			</xsd:element>
+                        <xsd:element minOccurs="0" name="progressivoTratta" nillable="true" type="tns:LongNumber">
+            			</xsd:element>
+                        <xsd:element name="scheda" type="tns:SchedaSISTRI_Base">
+            			</xsd:element>
+            			<xsd:element minOccurs="0" name="UUID_Transazione" nillable="true" type="xsd:string">
+            			</xsd:element>
+
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="PutSchedaSISTRI_Trasportatore_Destinatario_fault" type="tns:SISException"/>
+            <xsd:element name="UpdateSchedaSISTRIResponse">
+                <xsd:complexType>
+                	<xsd:sequence>
+                		<xsd:element name="versione" type="tns:LongNumber">
+                		</xsd:element>
+                	</xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="UpdateSchedaSISTRIRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                 		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="idSISScheda" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element name="scheda" type="tns:SchedaSISTRI_Base">
+            			</xsd:element>
+            			<xsd:element name="versionToUpdate" type="tns:LongNumber">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="UpdateSchedaSISTRI_fault" type="tns:SISException"/>
+        
+            <xsd:complexType name="LongNumber">
+            	<xsd:sequence>
+            		<xsd:element name="long" type="xsd:long"/>
+            	</xsd:sequence>
+            </xsd:complexType>
+    
+            <xsd:complexType name="DoubleNumber">
+            	<xsd:sequence>
+            		<xsd:element name="double" type="xsd:double"/>
+            	</xsd:sequence>
+            </xsd:complexType>
+    
+            <xsd:complexType name="Flag">
+            	<xsd:sequence>
+            		<xsd:element name="boolean" type="xsd:boolean"/>
+            	</xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="GetVersioneSISResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="out" type="xsd:string"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetVersioneSIS_fault" type="tns:SISException"/>
+            <xsd:element name="GetVersioneSISRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="DeleteSchedaSISTRIResponse" nillable="true" type="xsd:string">
+            </xsd:element>
+            <xsd:element name="DeleteSchedaSISTRI_fault" type="tns:SISException"/>
+            <xsd:element name="DeleteSchedaSISTRIRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+                        <xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                 		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="idSISScheda" type="xsd:string">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="DeleteRegistrazioneCronoResponse" nillable="true" type="xsd:string">
+            </xsd:element>
+            <xsd:element name="DeleteRegistrazioneCronoRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+                        <xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                 		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+                        <xsd:element name="idSISRegistrazioneCrono" type="xsd:string">
+            			</xsd:element>
+
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="DeleteRegistrazioneCrono_fault" type="tns:SISException">
+            </xsd:element>
+    
+            <xsd:complexType name="ElencoRegistrazioniCrono">
+            	<xsd:sequence>
+            		<xsd:element maxOccurs="unbounded" minOccurs="0" name="registrazioniCronoSummary" nillable="true" type="tns:RegistrazioneCrono_summary">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="startItemPosition" nillable="true" type="tns:LongNumber">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="endItemPosition" nillable="true" type="tns:LongNumber">
+            		</xsd:element>
+            		<xsd:element name="itemsRitornati" type="tns:LongNumber">
+            		</xsd:element>
+            		<xsd:element name="itemsIndividuati" type="tns:LongNumber">
+            		</xsd:element>
+            		<xsd:element maxOccurs="unbounded" minOccurs="0" name="info" nillable="true" type="xsd:string"/>
+            	</xsd:sequence>
+            </xsd:complexType>
+            
+            <xsd:complexType name="ElencoMovimentazioni">
+            	<xsd:sequence>
+            		<xsd:element maxOccurs="unbounded" minOccurs="0" name="movimentazioni" nillable="true" type="tns:Movimentazione"/>
+            		<xsd:element minOccurs="0" name="startItemPosition" nillable="true" type="tns:LongNumber">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="endItemPosition" nillable="true" type="tns:LongNumber">
+            		</xsd:element>
+            		<xsd:element name="itemsRitornati" type="tns:LongNumber">
+            		</xsd:element>
+            		<xsd:element name="itemsIndividuati" type="tns:LongNumber">
+            		</xsd:element>
+            		<xsd:element maxOccurs="unbounded" minOccurs="0" name="info" nillable="true" type="xsd:string"/>
+            	</xsd:sequence>
+            </xsd:complexType>
+
+            <xsd:element name="GetDocsSchedaResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+
+            			<xsd:element name="echo_idSISScheda" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element maxOccurs="unbounded" minOccurs="0" name="documentData" nillable="true" type="tns:DocumentData">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetDocsSchedaRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                 		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="idSISScheda" type="xsd:string">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="GetDocsRegistrazioneResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+
+            			<xsd:element name="echo_idSISRegistrazioneCrono" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element maxOccurs="unbounded" minOccurs="0" name="documentData" nillable="true" type="tns:DocumentData">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetDocsRegistrazioneRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                 		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="idSISRegistrazioneCrono" type="xsd:string">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+        
+            <xsd:complexType name="DocumentData">
+            	<xsd:sequence>
+            		<xsd:element name="idSISDocumento" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element name="hash" type="xsd:string"/>
+            		<xsd:element name="tipoDocumento" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element name="versione" type="xsd:string"/>
+            		<xsd:element name="nomeFile" type="xsd:string"/>
+            		<xsd:element name="encodedDocument" type="xsd:string"/>
+            	</xsd:sequence>
+            </xsd:complexType>
+        
+            <xsd:complexType name="DocumentData_Base">
+            	<xsd:sequence>
+            		<xsd:element name="idSISDocumento" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element name="hash" type="xsd:string"/>
+            		<xsd:element name="tipoDocumento" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element name="versione" type="xsd:string"/>
+            		<xsd:element name="nomeFile" type="xsd:string"/>
+            	</xsd:sequence>
+            </xsd:complexType>
+        
+            <xsd:complexType name="DocumentDataPerFirma">
+            	<xsd:sequence>
+                    <xsd:element name="encodedDoc" type="xsd:string">
+            		</xsd:element>
+                    <xsd:element name="hash" type="xsd:string"/>
+
+
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="hashesAllegati" nillable="true" type="tns:HashesPerFirma"/>
+                    <xsd:element name="istanteTemporaleGenerazioneDoc" type="tns:LongNumber">
+            		</xsd:element>
+
+            	</xsd:sequence>
+            </xsd:complexType>
+
+            <xsd:element name="AssociaRegistrazioneSchedaResponse" nillable="true" type="xsd:string">
+
+            </xsd:element>
+            <xsd:element name="AssociaRegistrazioneSchedaRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                 		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="idSISRegistrazioneCrono" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element name="idSISScheda" type="xsd:string">
+            			</xsd:element>
+
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="GetDocsScheda_fault" type="tns:SISException"/>
+            <xsd:element name="GetDocsRegistrazione_fault" type="tns:SISException"/>
+            <xsd:element name="AssociaRegistrazioneScheda_fault" type="tns:SISException"/>
+            <xsd:element name="GetVersioneSchedaResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+
+            			<xsd:element name="versione" type="tns:LongNumber"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetVersioneScheda_fault" type="tns:SISException">
+
+            </xsd:element>
+            <xsd:element name="GetVersioneSchedaRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                 		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="idSISScheda" type="xsd:string">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="GetVersioneRegistrazioneResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+
+            			<xsd:element name="versione" type="tns:LongNumber"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetVersioneRegistrazioneRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                 		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="idSISRegistrazioneCrono" type="xsd:string">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="GetVersioneRegistrazione_fault" type="tns:SISException"/>
+            <xsd:element name="RimuoviAssociazioneRegistrazioneSchedaResponse" nillable="true" type="xsd:string">
+
+            </xsd:element>
+            <xsd:element name="RimuoviAssociazioneRegistrazioneSchedaRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                 		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="idSISRegistrazioneCrono" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element name="idSISScheda" type="xsd:string">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="RimuoviAssociazioneRegistrazioneScheda_fault" type="tns:SISException"/>
+            <xsd:element name="GetMovimentazioneByIdSchedaResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+
+            			<xsd:element name="movimentazione" type="tns:Movimentazione"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetMovimentazioneByIdSchedaRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="idSISScheda" type="xsd:string">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="GetMovimentazioneByIdScheda_fault" type="tns:SISException"/>
+            <xsd:element name="GetSchedaPerFirmaResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+
+            			<xsd:element name="echo_idSISScheda" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element name="documentDataPerFirma" type="tns:DocumentDataPerFirma">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetSchedaPerFirmaRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="idSISScheda" type="xsd:string">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="GetSchedaPerFirma_fault" type="tns:SISException">
+            </xsd:element>
+
+            <xsd:element name="GetRegistrazionePerFirmaResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+
+            			<xsd:element name="echo_idSISRegistrazione" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element name="documentDataPerFirma" type="tns:DocumentDataPerFirma">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetRegistrazionePerFirmaRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="idSISRegistrazioneCrono" type="xsd:string">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="GetRegistrazionePerFirma_fault" type="tns:SISException">
+            </xsd:element>
+
+            <xsd:element name="FirmaSchedaResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+
+            			<xsd:element name="versione" type="tns:LongNumber"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="FirmaSchedaRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="idSISScheda" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element name="hashScheda" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element name="hashScheda_FIRMATAdaIdentity" type="xsd:string">
+            			</xsd:element>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="hashesAllegati" nillable="true" type="tns:HashesPerFirma">
+            			</xsd:element>
+                        <xsd:element name="certificatoX509_identity" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element name="istanteTemporaleGenerazioneDoc" type="tns:LongNumber">
+            			</xsd:element>
+
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="FirmaScheda_fault" type="tns:SISException"/>
+            <xsd:element name="FirmaRegistrazioneResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+
+            			<xsd:element name="versione" type="tns:LongNumber"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="FirmaRegistrazioneRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                 		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="idSISRegistrazioneCrono" type="xsd:string">
+            			</xsd:element>
+                        <xsd:element name="hashRegistrazione" type="xsd:string">
+            			</xsd:element>
+                        <xsd:element name="hashRegistrazione_FIRMATAdaIdentity" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element name="certificatoX509_identity" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element name="istanteTemporaleGenerazioneDoc" type="tns:LongNumber">
+            			</xsd:element>
+
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="FirmaRegistrazione_fault" type="tns:SISException"/>
+            <xsd:element name="UploadAllegatoSchedaResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+
+            			<xsd:element name="idSISDocumento" type="xsd:string"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="UploadAllegatoSchedaRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="idSISScheda" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element name="allegato" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element name="tipoAllegato" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element name="nomeFile" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element minOccurs="0" name="numeroCertificato" nillable="true" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element minOccurs="0" name="dataCertificato" nillable="true" type="xsd:dateTime">
+            			</xsd:element>
+            			<xsd:element minOccurs="0" name="laboratorio" nillable="true" type="xsd:string">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="UploadAllegatoScheda_fault" type="tns:SISException"/>
+        
+            <xsd:complexType name="HashesPerFirma">
+            	<xsd:sequence>
+            		<xsd:element name="idSISDocumento" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element name="hashDocumento" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="hashDocumento_FIRMATAdaIdentity" nillable="true" type="xsd:string"/>
+            	</xsd:sequence>
+            </xsd:complexType>
+            
+            <xsd:element name="GetSchedaPerAnnullamentoResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="echo_idSISScheda" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element name="documentDataPerFirma" type="tns:DocumentDataPerFirma">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetSchedaPerAnnullamentoRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                 		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="idSISScheda" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element name="causale" type="xsd:string">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="GetSchedaPerAnnullamento_fault" type="tns:SISException"/>
+            
+            <xsd:element name="GetSchedaFirmataPerUpdateResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="echo_idSISScheda" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element name="documentDataPerFirma" type="tns:DocumentDataPerFirma">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetSchedaFirmataPerUpdateRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                 		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="idSISScheda" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element name="scheda" type="tns:SchedaSISTRI_Base">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="GetSchedaFirmataPerUpdate_fault" type="tns:SISException"/>
+            
+            <xsd:element name="GetRegistrazionePerAnnullamentoResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+
+            			<xsd:element name="echo_idSISRegistrazione" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element name="documentDataPerFirma" type="tns:DocumentDataPerFirma">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetRegistrazionePerAnnullamentoRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                 		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="idSISRegistrazioneCrono" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element name="causale" type="xsd:string">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="GetRegistrazionePerAnnullamento_fault" type="tns:SISException"/>
+            <xsd:element name="AnnullaSchedaResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="versione" type="tns:LongNumber"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="AnnullaSchedaRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                 		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="idSISScheda" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element name="hashScheda" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element name="hashScheda_FIRMATAdaIdentity" type="xsd:string">
+            			</xsd:element>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="hashesAllegati" nillable="true" type="tns:HashesPerFirma">
+            			</xsd:element>
+                        <xsd:element name="certificatoX509_identity" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element name="istanteTemporaleGenerazioneDoc" type="tns:LongNumber">
+            			</xsd:element>
+            			<xsd:element name="causale" type="xsd:string"> </xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType>
+			</xsd:element>
+            <xsd:element name="AnnullaScheda_fault" type="tns:SISException">
+            </xsd:element>
+
+            <xsd:element name="UpdateSchedaFirmataResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="versione" type="tns:LongNumber"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="UpdateSchedaFirmataRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                 		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="idSISScheda" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element name="hashScheda" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element name="hashScheda_FIRMATAdaIdentity" type="xsd:string">
+            			</xsd:element>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="hashesAllegati" nillable="true" type="tns:HashesPerFirma">
+            			</xsd:element>
+                        <xsd:element name="certificatoX509_identity" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element name="istanteTemporaleGenerazioneDoc" type="tns:LongNumber">
+            			</xsd:element>
+            			<xsd:element name="scheda" type="tns:SchedaSISTRI_Base"> </xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType>
+			</xsd:element>
+            <xsd:element name="UpdateSchedaFirmata_fault" type="tns:SISException">
+            </xsd:element>
+            
+            <xsd:element name="AnnullaRegistrazioneResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+
+            			<xsd:element name="versione" type="tns:LongNumber"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="AnnullaRegistrazioneRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="idSISRegistrazioneCrono" type="xsd:string">
+            			</xsd:element>
+                        <xsd:element name="hashRegistrazione" type="xsd:string">
+            			</xsd:element>
+                        <xsd:element name="hashRegistrazione_FIRMATAdaIdentity" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element name="certificatoX509_identity" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element name="istanteTemporaleGenerazioneDoc" type="tns:LongNumber">
+            			</xsd:element>
+            			<xsd:element name="causale" type="xsd:string"> </xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType>
+			</xsd:element>
+            <xsd:element name="AnnullaRegistrazione_fault" type="tns:SISException">
+            </xsd:element>
+
+            <xsd:element name="DeleteAllegatoSchedaResponse" nillable="true" type="xsd:string">
+
+            </xsd:element>
+            <xsd:element name="DeleteAllegatoSchedaRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="idSISScheda" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element name="idSISDocumento" type="xsd:string">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="DeleteAllegatoScheda_fault" type="tns:SISException"/>
+            <xsd:element name="GetPdfMovimentazioneResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+
+                        <xsd:element name="echo_idSISMovimentazione" type="xsd:string">
+            			</xsd:element>
+                        <xsd:element name="encodedDocument" type="xsd:string">
+            			</xsd:element>
+
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetPdfMovimentazioneRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="idSISMovimentazione" type="xsd:string">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="GetPdfMovimentazione_fault" type="tns:SISException"/>
+            <xsd:element name="checkTransazioneSchedaResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+
+            			<xsd:element minOccurs="0" name="idSISScheda" nillable="true" type="xsd:string"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="checkTransazioneSchedaRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                 		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="UUID_Transazione" type="xsd:string">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="checkTransazioneScheda_fault" type="tns:SISException"/>
+            <xsd:element name="checkTransazioneRegistrazioneResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+
+            			<xsd:element minOccurs="0" name="idSISRegistrazioneCrono" nillable="true" type="xsd:string"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="checkTransazioneRegistrazioneRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="UUID_Transazione" type="xsd:string">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="checkTransazioneRegistrazione_fault" type="tns:SISException"/>
+            <xsd:element name="InsertSedePartnerResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+
+            			<xsd:element name="idSISSedePartner" type="xsd:string"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="InsertSedePartnerRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="codiceFiscaleAzienda" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element name="ragioneSocialeAzienda" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element name="indirizzoSede" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element minOccurs="0" name="codiceCatastaleSede" nillable="true" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element minOccurs="0" name="localitaEsteraSede" nillable="true" type="tns:Catalogo">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="InsertSedePartner_fault" type="tns:SISException"/>
+            <xsd:element name="RichiediCodiciPerMovimentazioniBiancheResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+
+            			<xsd:element maxOccurs="unbounded" minOccurs="1" name="movimentazioni" type="tns:Movimentazione"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="RichiediCodiciPerMovimentazioniBiancheRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="howMany" type="tns:LongNumber">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="RichiediCodiciPerMovimentazioniBianche_fault" type="tns:SISException"/>
+            <xsd:element name="RecuperaIdSISMovimentazioneResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+
+            			<xsd:element name="idSISMovimentazione" type="xsd:string"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="RecuperaIdSISMovimentazioneRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+                        <xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+                        <xsd:element name="movimentazione_idSISTRI" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element name="movimentazione_NumeroSerie" type="xsd:string">
+            			</xsd:element>
+
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="RecuperaIdSISMovimentazione_fault" type="tns:SISException"/>
+            <xsd:element name="PutSchedaSISTRI_Produttore_BIANCAResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+
+            			<xsd:element name="idSISScheda" type="xsd:string"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="PutSchedaSISTRI_Produttore_BIANCARequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+            			<xsd:element name="idSISMovimentazione" type="xsd:string">
+            			</xsd:element>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="tratteTrasporto" nillable="true" type="tns:Tratta_Base">
+            			</xsd:element>
+                        <xsd:element name="scheda" type="tns:SchedaSISTRI_Base">
+            			</xsd:element>
+            			<xsd:element minOccurs="0" name="UUID_Transazione" nillable="true" type="xsd:string">
+            			</xsd:element>
+
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="PutSchedaSISTRI_Produttore_BIANCA_fault" type="tns:SISException"/>
+        
+            <xsd:complexType name="Tratta_Base">
+            	<xsd:sequence>
+            		<xsd:element name="progressivo" type="tns:LongNumber">
+            		</xsd:element>
+            		<xsd:element name="idSISSede_trasportatore" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="versioneSede_trasportatore" nillable="true" type="tns:LongNumber"/>
+            		<xsd:element name="flagOperatoreLogistico" type="tns:Flag">
+            		</xsd:element>
+            	</xsd:sequence>
+            </xsd:complexType>
+    
+            <xsd:complexType name="RegistrazioneAssociata">
+            	<xsd:sequence>
+                    <xsd:element name="idSISRegistrazioneCrono" type="xsd:string"/>
+                    <xsd:element name="quantitaMovimentata" type="tns:LongNumber">
+            		</xsd:element>
+
+            	</xsd:sequence>
+            </xsd:complexType>
+    
+            <xsd:complexType name="UnitaOperativa">
+            	<xsd:sequence>
+            		<xsd:element minOccurs="0" name="nomeUnitaOperativa" nillable="true" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element name="idSIS" type="xsd:string"/>
+            		<xsd:element name="versione" type="tns:LongNumber"/>
+            	</xsd:sequence>
+            </xsd:complexType>
+    
+            <xsd:complexType name="CategoriaIscrizione">
+            	<xsd:sequence>
+            		<xsd:element name="sottocategoria" type="tns:Catalogo">
+            		</xsd:element>
+            		<xsd:element name="idSIS_sottocategoria" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element minOccurs="0" name="unitaOperativa" nillable="true" type="tns:UnitaOperativa"/>
+            	</xsd:sequence>
+            </xsd:complexType>
+    
+            <xsd:complexType name="DatiDelegante">
+            	<xsd:sequence>
+            		<xsd:element name="idSIS_sottocategoriaDelegata" type="xsd:string">
+            		</xsd:element>
+            		<xsd:element maxOccurs="unbounded" minOccurs="0" name="infoAggiuntive" nillable="true" type="xsd:string"/>
+            	</xsd:sequence>
+            </xsd:complexType>
+    
+            <xsd:complexType name="ParametriAggiuntivi">
+            	<xsd:sequence>
+            		<xsd:element minOccurs="0" name="datiDelegante" nillable="true" type="tns:DatiDelegante">
+            		</xsd:element>
+            		<xsd:element maxOccurs="unbounded" minOccurs="0" name="proprietaAggiuntive" nillable="true" type="xsd:string"/>
+            	</xsd:sequence>
+            </xsd:complexType>
+
+            <xsd:element name="RecuperaCategorieIscrizioneResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+
+                        <xsd:element name="echo_idSISSede" type="xsd:string">
+            			</xsd:element>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="categorieIscrizione" nillable="true" type="tns:CategoriaIscrizione">
+            			</xsd:element>
+
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="RecuperaCategorieIscrizioneRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+                		<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi"/>
+
+            			<xsd:element name="idSISSede" type="xsd:string">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="RecuperaCategorieIscrizione_fault" type="tns:SISException"/>
+        
+            <xsd:complexType name="SchedaSISTRI_zipped">
+            	<xsd:sequence>
+                    <xsd:element name="versione" type="tns:LongNumber"/>
+                    <xsd:element name="idSIS" type="xsd:string"/>
+            	</xsd:sequence>
+            </xsd:complexType>
+            
+            <xsd:complexType name="RegistrazioneCrono_zipped">
+            	<xsd:sequence>
+            		<xsd:element name="versione" type="tns:LongNumber">
+            		</xsd:element>
+            		<xsd:element name="idSIS" type="xsd:string"/>
+            	</xsd:sequence>
+            </xsd:complexType>
+    
+            <xsd:complexType name="StatoProcessamento">
+            	<xsd:sequence>
+            		<xsd:element name="statusCode" type="xsd:string"/>
+            		<xsd:element minOccurs="0" name="statusMessage" nillable="true" type="xsd:string"/>
+            	</xsd:sequence>
+            </xsd:complexType>
+
+            <xsd:element name="UploadPercorsoFerroviarioResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+
+            			<xsd:element name="idSISPercorso" type="xsd:string"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="UploadPercorsoFerroviario_fault" type="tns:SISException">
+
+            </xsd:element>
+            <xsd:element name="UploadPercorsoFerroviarioRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element name="idSISScheda" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element name="percorso" type="xsd:string">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="CheckStatoProcessamentoPercorsoResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+
+            			<xsd:element name="statoProcessamento" type="tns:StatoProcessamento"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="CheckStatoProcessamentoPercorso_fault" type="tns:SISException">
+
+            </xsd:element>
+            <xsd:element name="CheckStatoProcessamentoPercorsoRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element name="idSISPercorso" type="xsd:string">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="GetStoricoSedeResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+
+            			<xsd:element name="storicoSede" type="tns:StoricoSede"/>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetStoricoSedeRequest">
+            	<xsd:complexType>
+            		<xsd:sequence>
+            			<xsd:element name="identity" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element minOccurs="0" name="parametriAggiuntivi" nillable="true" type="tns:ParametriAggiuntivi">
+            			</xsd:element>
+            			<xsd:element name="idSISSede" type="xsd:string">
+            			</xsd:element>
+            			<xsd:element name="versioneSede" type="tns:LongNumber">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType></xsd:element>
+            <xsd:element name="GetStoricoSede_fault" type="tns:SISException"/>
+        </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="RecuperaCategorieIscrizione_faultMsg">
+    <wsdl:part name="fault" element="tns:RecuperaCategorieIscrizione_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetCatalogo_faultMsg">
+    <wsdl:part name="fault" element="tns:GetCatalogo_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="PutSchedaSISTRI_Trasportatore_DestinatarioRequest">
+    <wsdl:part name="parameters" element="tns:PutSchedaSISTRI_Trasportatore_DestinatarioRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="AnnullaRegistrazione_faultMsg">
+    <wsdl:part name="fault" element="tns:AnnullaRegistrazione_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetRegistroCronologicoRequest">
+    <wsdl:part name="parameters" element="tns:GetRegistroCronologicoRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="checkTransazioneSchedaResponse">
+    <wsdl:part name="parameters" element="tns:checkTransazioneSchedaResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="RecuperaCategorieIscrizioneResponse">
+    <wsdl:part name="parameters" element="tns:RecuperaCategorieIscrizioneResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="UpdateSchedaSISTRIResponse">
+    <wsdl:part name="parameters" element="tns:UpdateSchedaSISTRIResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="UpdateRegistrazioneCronoCaricoRequest">
+    <wsdl:part name="parameters" element="tns:UpdateRegistrazioneCronoCaricoRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetDocsRegistrazione_faultMsg">
+    <wsdl:part name="fault" element="tns:GetDocsRegistrazione_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetElencoRegistrazioniCrono_zippedResponse">
+    <wsdl:part name="parameters" element="tns:GetElencoRegistrazioniCrono_zippedResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetSediAziendePartnerResponse">
+    <wsdl:part name="parameters" element="tns:GetSediAziendePartnerResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetTokens_faultMsg">
+    <wsdl:part name="fault" element="tns:GetTokens_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="DeleteSchedaSISTRIRequest">
+    <wsdl:part name="parameters" element="tns:DeleteSchedaSISTRIRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="UpdateRegistrazioneCronoCaricoResponse">
+    <wsdl:part name="parameters" element="tns:UpdateRegistrazioneCronoCaricoResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetElencoSchedeSISTRI_faultMsg">
+    <wsdl:part name="fault" element="tns:GetElencoSchedeSISTRI_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetCatalogoResponse">
+    <wsdl:part name="parameters" element="tns:GetCatalogoResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="PutSchedaSISTRI_Produttore_BIANCAResponse">
+    <wsdl:part name="parameters" element="tns:PutSchedaSISTRI_Produttore_BIANCAResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetRegistroCronologicoResponse">
+    <wsdl:part name="parameters" element="tns:GetRegistroCronologicoResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetRegistrazionePerFirmaResponse">
+    <wsdl:part name="parameters" element="tns:GetRegistrazionePerFirmaResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetElencoCataloghiRequest">
+    <wsdl:part name="parameters" element="tns:GetElencoCataloghiRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetElencoCataloghiResponse">
+    <wsdl:part name="parameters" element="tns:GetElencoCataloghiResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetElencoMovimentazioni_faultMsg">
+    <wsdl:part name="fault" element="tns:GetElencoMovimentazioni_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="UpdateSchedaSISTRI_faultMsg">
+    <wsdl:part name="fault" element="tns:UpdateSchedaSISTRI_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetAziendaRequest">
+    <wsdl:part name="parameters" element="tns:GetAziendaRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetSediAziendePartnerRequest">
+    <wsdl:part name="parameters" element="tns:GetSediAziendePartnerRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetRegistrazioneCronoResponse">
+    <wsdl:part name="parameters" element="tns:GetRegistrazioneCronoResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CheckStatoProcessamentoPercorsoRequest">
+    <wsdl:part name="parameters" element="tns:CheckStatoProcessamentoPercorsoRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="AnnullaRegistrazioneResponse">
+    <wsdl:part name="parameters" element="tns:AnnullaRegistrazioneResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CheckStatoProcessamentoPercorsoResponse">
+    <wsdl:part name="parameters" element="tns:CheckStatoProcessamentoPercorsoResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="DeleteRegistrazioneCronoRequest">
+    <wsdl:part name="parameters" element="tns:DeleteRegistrazioneCronoRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="RecuperaIdSISMovimentazioneRequest">
+    <wsdl:part name="parameters" element="tns:RecuperaIdSISMovimentazioneRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetVersioneRegistrazione_faultMsg">
+    <wsdl:part name="fault" element="tns:GetVersioneRegistrazione_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="InsertSedePartner_faultMsg">
+    <wsdl:part name="fault" element="tns:InsertSedePartner_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetStoricoSede_faultMsg">
+    <wsdl:part name="fault" element="tns:GetStoricoSede_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetDocsSchedaRequest">
+    <wsdl:part name="parameters" element="tns:GetDocsSchedaRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetMovimentazioneRifiuto_faultMsg">
+    <wsdl:part name="fault" element="tns:GetMovimentazioneRifiuto_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="RichiediCodiciPerMovimentazioniBiancheResponse">
+    <wsdl:part name="parameters" element="tns:RichiediCodiciPerMovimentazioniBiancheResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetVersioneSISRequest">
+    <wsdl:part name="parameters" element="tns:GetVersioneSISRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="FirmaScheda_faultMsg">
+    <wsdl:part name="fault" element="tns:FirmaScheda_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="RimuoviAssociazioneRegistrazioneScheda_faultMsg">
+    <wsdl:part name="fault" element="tns:RimuoviAssociazioneRegistrazioneScheda_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetSchedaPerAnnullamentoRequest">
+    <wsdl:part name="parameters" element="tns:GetSchedaPerAnnullamentoRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetDocsRegistrazioneResponse">
+    <wsdl:part name="parameters" element="tns:GetDocsRegistrazioneResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="UploadPercorsoFerroviario_faultMsg">
+    <wsdl:part name="fault" element="tns:UploadPercorsoFerroviario_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetRegistrazionePerAnnullamentoRequest">
+    <wsdl:part name="parameters" element="tns:GetRegistrazionePerAnnullamentoRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetVersioneCatalogo_faultMsg">
+    <wsdl:part name="fault" element="tns:GetVersioneCatalogo_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="InsertSedePartnerResponse">
+    <wsdl:part name="parameters" element="tns:InsertSedePartnerResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="PutRegistrazioneCronoCaricoResponse">
+    <wsdl:part name="parameters" element="tns:PutRegistrazioneCronoCaricoResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="UpdateRegistrazioneCronoScarico_faultMsg">
+    <wsdl:part name="fault" element="tns:UpdateRegistrazioneCronoScarico_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetVersioneAnagraficaAziendaRequest">
+    <wsdl:part name="parameters" element="tns:GetVersioneAnagraficaAziendaRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetSedeRequest">
+    <wsdl:part name="parameters" element="tns:GetSedeRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetVersioneMovimentazione_faultMsg">
+    <wsdl:part name="fault" element="tns:GetVersioneMovimentazione_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetRegistrazioneCronoRequest">
+    <wsdl:part name="parameters" element="tns:GetRegistrazioneCronoRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="DeleteAllegatoSchedaResponse">
+    <wsdl:part name="parameters" element="tns:DeleteAllegatoSchedaResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="DeleteAllegatoScheda_faultMsg">
+    <wsdl:part name="fault" element="tns:DeleteAllegatoScheda_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetRegistrazioneCrono_faultMsg">
+    <wsdl:part name="fault" element="tns:GetRegistrazioneCrono_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetElencoSchedeSISTRIRequest">
+    <wsdl:part name="parameters" element="tns:GetElencoSchedeSISTRIRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetAziendaResponse">
+    <wsdl:part name="parameters" element="tns:GetAziendaResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetRegistrazionePerFirmaRequest">
+    <wsdl:part name="parameters" element="tns:GetRegistrazionePerFirmaRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="InsertSedePartnerRequest">
+    <wsdl:part name="parameters" element="tns:InsertSedePartnerRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="UpdateRegistrazioneCronoScaricoRequest">
+    <wsdl:part name="parameters" element="tns:UpdateRegistrazioneCronoScaricoRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetSchedaPerFirmaResponse">
+    <wsdl:part name="parameters" element="tns:GetSchedaPerFirmaResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="PutRegistrazioneCronoScaricoResponse">
+    <wsdl:part name="parameters" element="tns:PutRegistrazioneCronoScaricoResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="AnnullaSchedaRequest">
+    <wsdl:part name="parameters" element="tns:AnnullaSchedaRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetElencoRegistrazioniCronoRequest">
+    <wsdl:part name="parameters" element="tns:GetElencoRegistrazioniCronoRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="DeleteRegistrazioneCronoResponse">
+    <wsdl:part name="parameters" element="tns:DeleteRegistrazioneCronoResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="PutRegistrazioneCronoScaricoRequest">
+    <wsdl:part name="parameters" element="tns:PutRegistrazioneCronoScaricoRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetTokensRequest">
+    <wsdl:part name="parameters" element="tns:GetTokensRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="UploadPercorsoFerroviarioResponse">
+    <wsdl:part name="parameters" element="tns:UploadPercorsoFerroviarioResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="PutRegistrazioneCronoCaricoRequest">
+    <wsdl:part name="parameters" element="tns:PutRegistrazioneCronoCaricoRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetElencoSchedeSISTRI_zipped_faultMsg">
+    <wsdl:part name="fault" element="tns:GetElencoSchedeSISTRI_zipped_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetStoricoSedeRequest">
+    <wsdl:part name="parameters" element="tns:GetStoricoSedeRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="FirmaRegistrazioneRequest">
+    <wsdl:part name="parameters" element="tns:FirmaRegistrazioneRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="RimuoviAssociazioneRegistrazioneSchedaResponse">
+    <wsdl:part name="parameters" element="tns:RimuoviAssociazioneRegistrazioneSchedaResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="UpdateRegistrazioneCronoCarico_faultMsg">
+    <wsdl:part name="fault" element="tns:UpdateRegistrazioneCronoCarico_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="PutSchedaSISTRI_Trasportatore_DestinatarioResponse">
+    <wsdl:part name="parameters" element="tns:PutSchedaSISTRI_Trasportatore_DestinatarioResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="AssociaRegistrazioneScheda_faultMsg">
+    <wsdl:part name="fault" element="tns:AssociaRegistrazioneScheda_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetElencoSchedeSISTRI_zippedRequest">
+    <wsdl:part name="parameters" element="tns:GetElencoSchedeSISTRI_zippedRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetElencoRegistrazioniCronoResponse">
+    <wsdl:part name="parameters" element="tns:GetElencoRegistrazioniCronoResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetElencoSchedeSISTRI_zippedResponse">
+    <wsdl:part name="parameters" element="tns:GetElencoSchedeSISTRI_zippedResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetSchedaPerFirma_faultMsg">
+    <wsdl:part name="fault" element="tns:GetSchedaPerFirma_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="checkTransazioneScheda_faultMsg">
+    <wsdl:part name="fault" element="tns:checkTransazioneScheda_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetSchedaFirmataPerUpdateRequest">
+    <wsdl:part name="parameters" element="tns:GetSchedaFirmataPerUpdateRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetVersioneSIS_faultMsg">
+    <wsdl:part name="fault" element="tns:GetVersioneSIS_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetElencoRegistrazioniCrono_zippedRequest">
+    <wsdl:part name="parameters" element="tns:GetElencoRegistrazioniCrono_zippedRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="RecuperaCategorieIscrizioneRequest">
+    <wsdl:part name="parameters" element="tns:RecuperaCategorieIscrizioneRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetMovimentazioneByIdSchedaRequest">
+    <wsdl:part name="parameters" element="tns:GetMovimentazioneByIdSchedaRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="DeleteRegistrazioneCrono_faultMsg">
+    <wsdl:part name="fault" element="tns:DeleteRegistrazioneCrono_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="PutRegistrazioneCronoScarico_faultMsg">
+    <wsdl:part name="fault" element="tns:PutRegistrazioneCronoScarico_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetMovimentazioneByIdScheda_faultMsg">
+    <wsdl:part name="fault" element="tns:GetMovimentazioneByIdScheda_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="UpdateSchedaFirmata_faultMsg">
+    <wsdl:part name="fault" element="tns:UpdateSchedaFirmata_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetElencoMovimentazioniRequest">
+    <wsdl:part name="parameters" element="tns:GetElencoMovimentazioniRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="PutSchedaSISTRI_Produttore_BIANCA_faultMsg">
+    <wsdl:part name="fault" element="tns:PutSchedaSISTRI_Produttore_BIANCA_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="UpdateSchedaFirmataRequest">
+    <wsdl:part name="parameters" element="tns:UpdateSchedaFirmataRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetSchedaPerFirmaRequest">
+    <wsdl:part name="parameters" element="tns:GetSchedaPerFirmaRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetRegistrazionePerFirma_faultMsg">
+    <wsdl:part name="fault" element="tns:GetRegistrazionePerFirma_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="RichiediCodiciPerMovimentazioniBiancheRequest">
+    <wsdl:part name="parameters" element="tns:RichiediCodiciPerMovimentazioniBiancheRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="UpdateRegistrazioneCronoScaricoResponse">
+    <wsdl:part name="parameters" element="tns:UpdateRegistrazioneCronoScaricoResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetRegistrazionePerAnnullamentoResponse">
+    <wsdl:part name="parameters" element="tns:GetRegistrazionePerAnnullamentoResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="DeleteSchedaSISTRI_faultMsg">
+    <wsdl:part name="fault" element="tns:DeleteSchedaSISTRI_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetDocsSchedaResponse">
+    <wsdl:part name="parameters" element="tns:GetDocsSchedaResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetVersioneAnagraficaRequest">
+    <wsdl:part name="parameters" element="tns:GetVersioneAnagraficaRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetTokensResponse">
+    <wsdl:part name="parameters" element="tns:GetTokensResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="UploadAllegatoScheda_faultMsg">
+    <wsdl:part name="fault" element="tns:UploadAllegatoScheda_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="PutSchedaSISTRI_Trasportatore_Destinatario_faultMsg">
+    <wsdl:part name="fault" element="tns:PutSchedaSISTRI_Trasportatore_Destinatario_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="PutRegistrazioneCronoCarico_faultMsg">
+    <wsdl:part name="fault" element="tns:PutRegistrazioneCronoCarico_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="RecuperaIdSISMovimentazione_faultMsg">
+    <wsdl:part name="fault" element="tns:RecuperaIdSISMovimentazione_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CheckStatoProcessamentoPercorso_faultMsg">
+    <wsdl:part name="fault" element="tns:CheckStatoProcessamentoPercorso_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="RichiediCodiciPerMovimentazioniBianche_faultMsg">
+    <wsdl:part name="fault" element="tns:RichiediCodiciPerMovimentazioniBianche_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="FirmaSchedaResponse">
+    <wsdl:part name="parameters" element="tns:FirmaSchedaResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetVersioneCatalogoRequest">
+    <wsdl:part name="parameters" element="tns:GetVersioneCatalogoRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="UpdateSchedaSISTRIRequest">
+    <wsdl:part name="parameters" element="tns:UpdateSchedaSISTRIRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="PutSchedaSISTRI_Produttore_BIANCARequest">
+    <wsdl:part name="parameters" element="tns:PutSchedaSISTRI_Produttore_BIANCARequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetSediAziendePartner_faultMsg">
+    <wsdl:part name="fault" element="tns:GetSediAziendePartner_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetPdfMovimentazioneResponse">
+    <wsdl:part name="parameters" element="tns:GetPdfMovimentazioneResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="FirmaRegistrazioneResponse">
+    <wsdl:part name="parameters" element="tns:FirmaRegistrazioneResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetMovimentazioneRifiutoRequest">
+    <wsdl:part name="parameters" element="tns:GetMovimentazioneRifiutoRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetVersioneAnagraficaAzienda_faultMsg">
+    <wsdl:part name="fault" element="tns:GetVersioneAnagraficaAzienda_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="checkTransazioneRegistrazione_faultMsg">
+    <wsdl:part name="fault" element="tns:checkTransazioneRegistrazione_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetSedeResponse">
+    <wsdl:part name="parameters" element="tns:GetSedeResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="AssociaRegistrazioneSchedaRequest">
+    <wsdl:part name="parameters" element="tns:AssociaRegistrazioneSchedaRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetVeicoliRequest">
+    <wsdl:part name="parameters" element="tns:GetVeicoliRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetSchedaSISTRIRequest">
+    <wsdl:part name="parameters" element="tns:GetSchedaSISTRIRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetVersioneAnagraficaResponse">
+    <wsdl:part name="parameters" element="tns:GetVersioneAnagraficaResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetVeicoli_faultMsg">
+    <wsdl:part name="fault" element="tns:GetVeicoli_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetElencoSchedeSISTRIResponse">
+    <wsdl:part name="parameters" element="tns:GetElencoSchedeSISTRIResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetVersioneRegistrazioneRequest">
+    <wsdl:part name="parameters" element="tns:GetVersioneRegistrazioneRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="AnnullaSchedaResponse">
+    <wsdl:part name="parameters" element="tns:AnnullaSchedaResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="PutSchedaSISTRI_ProduttoreResponse">
+    <wsdl:part name="parameters" element="tns:PutSchedaSISTRI_ProduttoreResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetElencoCataloghi_faultMsg">
+    <wsdl:part name="fault" element="tns:GetElencoCataloghi_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetElencoMovimentazioniResponse">
+    <wsdl:part name="parameters" element="tns:GetElencoMovimentazioniResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetPdfMovimentazioneRequest">
+    <wsdl:part name="parameters" element="tns:GetPdfMovimentazioneRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetStoricoSedeResponse">
+    <wsdl:part name="parameters" element="tns:GetStoricoSedeResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetVersioneSchedaResponse">
+    <wsdl:part name="parameters" element="tns:GetVersioneSchedaResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetDocsScheda_faultMsg">
+    <wsdl:part name="fault" element="tns:GetDocsScheda_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetVersioneRegistrazioneResponse">
+    <wsdl:part name="parameters" element="tns:GetVersioneRegistrazioneResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetVersioneAnagrafica_faultMsg">
+    <wsdl:part name="fault" element="tns:GetVersioneAnagrafica_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="AssociaRegistrazioneSchedaResponse">
+    <wsdl:part name="parameters" element="tns:AssociaRegistrazioneSchedaResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetSchedaPerAnnullamento_faultMsg">
+    <wsdl:part name="fault" element="tns:GetSchedaPerAnnullamento_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetCatalogoRequest">
+    <wsdl:part name="parameters" element="tns:GetCatalogoRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetVersioneMovimentazioneResponse">
+    <wsdl:part name="parameters" element="tns:GetVersioneMovimentazioneResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="FirmaSchedaRequest">
+    <wsdl:part name="parameters" element="tns:FirmaSchedaRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="DeleteSchedaSISTRIResponse">
+    <wsdl:part name="parameters" element="tns:DeleteSchedaSISTRIResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetElencoRegistrazioniCrono_zipped_faultMsg">
+    <wsdl:part name="fault" element="tns:GetElencoRegistrazioniCrono_zipped_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetDocsRegistrazioneRequest">
+    <wsdl:part name="parameters" element="tns:GetDocsRegistrazioneRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetSchedaSISTRI_faultMsg">
+    <wsdl:part name="fault" element="tns:GetSchedaSISTRI_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="RecuperaIdSISMovimentazioneResponse">
+    <wsdl:part name="parameters" element="tns:RecuperaIdSISMovimentazioneResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetAzienda_faultMsg">
+    <wsdl:part name="fault" element="tns:GetAzienda_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="AnnullaRegistrazioneRequest">
+    <wsdl:part name="parameters" element="tns:AnnullaRegistrazioneRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetMovimentazioneRifiutoResponse">
+    <wsdl:part name="parameters" element="tns:GetMovimentazioneRifiutoResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="UpdateSchedaFirmataResponse">
+    <wsdl:part name="parameters" element="tns:UpdateSchedaFirmataResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="checkTransazioneRegistrazioneResponse">
+    <wsdl:part name="parameters" element="tns:checkTransazioneRegistrazioneResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetVersioneAnagraficaAziendaResponse">
+    <wsdl:part name="parameters" element="tns:GetVersioneAnagraficaAziendaResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="RimuoviAssociazioneRegistrazioneSchedaRequest">
+    <wsdl:part name="parameters" element="tns:RimuoviAssociazioneRegistrazioneSchedaRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetMovimentazioneByIdSchedaResponse">
+    <wsdl:part name="parameters" element="tns:GetMovimentazioneByIdSchedaResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetPdfMovimentazione_faultMsg">
+    <wsdl:part name="fault" element="tns:GetPdfMovimentazione_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="PutSchedaSISTRI_ProduttoreRequest">
+    <wsdl:part name="parameters" element="tns:PutSchedaSISTRI_ProduttoreRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetRegistroCronologico_faultMsg">
+    <wsdl:part name="fault" element="tns:GetRegistroCronologico_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="PutSchedaSISTRI_Produttore_faultMsg">
+    <wsdl:part name="fault" element="tns:PutSchedaSISTRI_Produttore_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetVersioneMovimentazioneRequest">
+    <wsdl:part name="parameters" element="tns:GetVersioneMovimentazioneRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="UploadPercorsoFerroviarioRequest">
+    <wsdl:part name="parameters" element="tns:UploadPercorsoFerroviarioRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetSchedaFirmataPerUpdateResponse">
+    <wsdl:part name="parameters" element="tns:GetSchedaFirmataPerUpdateResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="UploadAllegatoSchedaResponse">
+    <wsdl:part name="parameters" element="tns:UploadAllegatoSchedaResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="UploadAllegatoSchedaRequest">
+    <wsdl:part name="parameters" element="tns:UploadAllegatoSchedaRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetElencoRegistrazioniCrono_faultMsg">
+    <wsdl:part name="fault" element="tns:GetElencoRegistrazioniCrono_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetVeicoliResponse">
+    <wsdl:part name="parameters" element="tns:GetVeicoliResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="checkTransazioneRegistrazioneRequest">
+    <wsdl:part name="parameters" element="tns:checkTransazioneRegistrazioneRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetVersioneSISResponse">
+    <wsdl:part name="parameters" element="tns:GetVersioneSISResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="checkTransazioneSchedaRequest">
+    <wsdl:part name="parameters" element="tns:checkTransazioneSchedaRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetVersioneScheda_faultMsg">
+    <wsdl:part name="parameters" element="tns:GetVersioneScheda_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="DeleteAllegatoSchedaRequest">
+    <wsdl:part name="parameters" element="tns:DeleteAllegatoSchedaRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetSchedaFirmataPerUpdate_faultMsg">
+    <wsdl:part name="fault" element="tns:GetSchedaFirmataPerUpdate_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetSchedaSISTRIResponse">
+    <wsdl:part name="parameters" element="tns:GetSchedaSISTRIResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetSede_faultMsg">
+    <wsdl:part name="fault" element="tns:GetSede_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="AnnullaScheda_faultMsg">
+    <wsdl:part name="fault" element="tns:AnnullaScheda_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="FirmaRegistrazione_faultMsg">
+    <wsdl:part name="fault" element="tns:FirmaRegistrazione_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetVersioneSchedaRequest">
+    <wsdl:part name="parameters" element="tns:GetVersioneSchedaRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetVersioneCatalogoResponse">
+    <wsdl:part name="parameters" element="tns:GetVersioneCatalogoResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetRegistrazionePerAnnullamento_faultMsg">
+    <wsdl:part name="fault" element="tns:GetRegistrazionePerAnnullamento_fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetSchedaPerAnnullamentoResponse">
+    <wsdl:part name="parameters" element="tns:GetSchedaPerAnnullamentoResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="SIS_WSDL">
+    <wsdl:operation name="GetElencoCataloghi">
+      <wsdl:input message="tns:GetElencoCataloghiRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:GetElencoCataloghiResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:GetElencoCataloghi_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetVersioneCatalogo">
+      <wsdl:input message="tns:GetVersioneCatalogoRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:GetVersioneCatalogoResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:GetVersioneCatalogo_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetCatalogo">
+      <wsdl:input message="tns:GetCatalogoRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:GetCatalogoResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:GetCatalogo_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetElencoRegistrazioniCrono">
+      <wsdl:input message="tns:GetElencoRegistrazioniCronoRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:GetElencoRegistrazioniCronoResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:GetElencoRegistrazioniCrono_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetElencoRegistrazioniCrono_zipped">
+      <wsdl:input message="tns:GetElencoRegistrazioniCrono_zippedRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:GetElencoRegistrazioniCrono_zippedResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:GetElencoRegistrazioniCrono_zipped_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetRegistrazioneCrono">
+      <wsdl:input message="tns:GetRegistrazioneCronoRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:GetRegistrazioneCronoResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:GetRegistrazioneCrono_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="PutRegistrazioneCronoCarico">
+      <wsdl:input message="tns:PutRegistrazioneCronoCaricoRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:PutRegistrazioneCronoCaricoResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:PutRegistrazioneCronoCarico_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="PutRegistrazioneCronoScarico">
+      <wsdl:input message="tns:PutRegistrazioneCronoScaricoRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:PutRegistrazioneCronoScaricoResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:PutRegistrazioneCronoScarico_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateRegistrazioneCronoCarico">
+      <wsdl:input message="tns:UpdateRegistrazioneCronoCaricoRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:UpdateRegistrazioneCronoCaricoResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:UpdateRegistrazioneCronoCarico_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateRegistrazioneCronoScarico">
+      <wsdl:input message="tns:UpdateRegistrazioneCronoScaricoRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:UpdateRegistrazioneCronoScaricoResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:UpdateRegistrazioneCronoScarico_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetVersioneAnagraficaAzienda">
+      <wsdl:input message="tns:GetVersioneAnagraficaAziendaRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:GetVersioneAnagraficaAziendaResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:GetVersioneAnagraficaAzienda_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetVersioneAnagrafica">
+      <wsdl:input message="tns:GetVersioneAnagraficaRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:GetVersioneAnagraficaResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:GetVersioneAnagrafica_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetAzienda">
+      <wsdl:input message="tns:GetAziendaRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:GetAziendaResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:GetAzienda_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetSede">
+      <wsdl:input message="tns:GetSedeRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:GetSedeResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:GetSede_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetRegistroCronologico">
+      <wsdl:input message="tns:GetRegistroCronologicoRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:GetRegistroCronologicoResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:GetRegistroCronologico_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetSediAziendePartner">
+      <wsdl:input message="tns:GetSediAziendePartnerRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:GetSediAziendePartnerResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:GetSediAziendePartner_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetVeicoli">
+      <wsdl:input message="tns:GetVeicoliRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:GetVeicoliResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:GetVeicoli_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetTokens">
+      <wsdl:input message="tns:GetTokensRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:GetTokensResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:GetTokens_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetElencoMovimentazioni">
+      <wsdl:input message="tns:GetElencoMovimentazioniRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:GetElencoMovimentazioniResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:GetElencoMovimentazioni_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetMovimentazioneRifiuto">
+      <wsdl:input message="tns:GetMovimentazioneRifiutoRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:GetMovimentazioneRifiutoResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:GetMovimentazioneRifiuto_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetVersioneMovimentazione">
+      <wsdl:input message="tns:GetVersioneMovimentazioneRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:GetVersioneMovimentazioneResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:GetVersioneMovimentazione_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetElencoSchedeSISTRI">
+      <wsdl:input message="tns:GetElencoSchedeSISTRIRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:GetElencoSchedeSISTRIResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:GetElencoSchedeSISTRI_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetElencoSchedeSISTRI_zipped">
+      <wsdl:input message="tns:GetElencoSchedeSISTRI_zippedRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:GetElencoSchedeSISTRI_zippedResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:GetElencoSchedeSISTRI_zipped_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetSchedaSISTRI">
+      <wsdl:input message="tns:GetSchedaSISTRIRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:GetSchedaSISTRIResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:GetSchedaSISTRI_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="PutSchedaSISTRI_Produttore">
+      <wsdl:input message="tns:PutSchedaSISTRI_ProduttoreRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:PutSchedaSISTRI_ProduttoreResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:PutSchedaSISTRI_Produttore_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="PutSchedaSISTRI_Trasportatore_Destinatario">
+      <wsdl:input message="tns:PutSchedaSISTRI_Trasportatore_DestinatarioRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:PutSchedaSISTRI_Trasportatore_DestinatarioResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:PutSchedaSISTRI_Trasportatore_Destinatario_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateSchedaSISTRI">
+      <wsdl:input message="tns:UpdateSchedaSISTRIRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:UpdateSchedaSISTRIResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:UpdateSchedaSISTRI_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetVersioneSIS">
+      <wsdl:input message="tns:GetVersioneSISRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:GetVersioneSISResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:GetVersioneSIS_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteSchedaSISTRI">
+      <wsdl:input message="tns:DeleteSchedaSISTRIRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:DeleteSchedaSISTRIResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:DeleteSchedaSISTRI_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteRegistrazioneCrono">
+      <wsdl:input message="tns:DeleteRegistrazioneCronoRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:DeleteRegistrazioneCronoResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:DeleteRegistrazioneCrono_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetDocsScheda">
+      <wsdl:input message="tns:GetDocsSchedaRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:GetDocsSchedaResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:GetDocsScheda_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetDocsRegistrazione">
+      <wsdl:input message="tns:GetDocsRegistrazioneRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:GetDocsRegistrazioneResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:GetDocsRegistrazione_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AssociaRegistrazioneScheda">
+      <wsdl:input message="tns:AssociaRegistrazioneSchedaRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:AssociaRegistrazioneSchedaResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:AssociaRegistrazioneScheda_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetVersioneScheda">
+      <wsdl:input message="tns:GetVersioneSchedaRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:GetVersioneSchedaResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:GetVersioneScheda_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetVersioneRegistrazione">
+      <wsdl:input message="tns:GetVersioneRegistrazioneRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:GetVersioneRegistrazioneResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:GetVersioneRegistrazione_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RimuoviAssociazioneRegistrazioneScheda">
+      <wsdl:input message="tns:RimuoviAssociazioneRegistrazioneSchedaRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:RimuoviAssociazioneRegistrazioneSchedaResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:RimuoviAssociazioneRegistrazioneScheda_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetMovimentazioneByIdScheda">
+      <wsdl:input message="tns:GetMovimentazioneByIdSchedaRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:GetMovimentazioneByIdSchedaResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:GetMovimentazioneByIdScheda_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetSchedaPerFirma">
+      <wsdl:input message="tns:GetSchedaPerFirmaRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:GetSchedaPerFirmaResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:GetSchedaPerFirma_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetRegistrazionePerFirma">
+      <wsdl:input message="tns:GetRegistrazionePerFirmaRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:GetRegistrazionePerFirmaResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:GetRegistrazionePerFirma_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FirmaScheda">
+      <wsdl:input message="tns:FirmaSchedaRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:FirmaSchedaResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:FirmaScheda_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FirmaRegistrazione">
+      <wsdl:input message="tns:FirmaRegistrazioneRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:FirmaRegistrazioneResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:FirmaRegistrazione_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UploadAllegatoScheda">
+      <wsdl:input message="tns:UploadAllegatoSchedaRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:UploadAllegatoSchedaResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:UploadAllegatoScheda_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetSchedaPerAnnullamento">
+      <wsdl:input message="tns:GetSchedaPerAnnullamentoRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:GetSchedaPerAnnullamentoResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:GetSchedaPerAnnullamento_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetSchedaFirmataPerUpdate">
+      <wsdl:input message="tns:GetSchedaFirmataPerUpdateRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:GetSchedaFirmataPerUpdateResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:GetSchedaFirmataPerUpdate_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetRegistrazionePerAnnullamento">
+      <wsdl:input message="tns:GetRegistrazionePerAnnullamentoRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:GetRegistrazionePerAnnullamentoResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:GetRegistrazionePerAnnullamento_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AnnullaScheda">
+      <wsdl:input message="tns:AnnullaSchedaRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:AnnullaSchedaResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:AnnullaScheda_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateSchedaFirmata">
+      <wsdl:input message="tns:UpdateSchedaFirmataRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:UpdateSchedaFirmataResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:UpdateSchedaFirmata_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AnnullaRegistrazione">
+      <wsdl:input message="tns:AnnullaRegistrazioneRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:AnnullaRegistrazioneResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:AnnullaRegistrazione_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteAllegatoScheda">
+      <wsdl:input message="tns:DeleteAllegatoSchedaRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:DeleteAllegatoSchedaResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:DeleteAllegatoScheda_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetPdfMovimentazione">
+      <wsdl:input message="tns:GetPdfMovimentazioneRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:GetPdfMovimentazioneResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:GetPdfMovimentazione_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="checkTransazioneScheda">
+      <wsdl:input message="tns:checkTransazioneSchedaRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:checkTransazioneSchedaResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:checkTransazioneScheda_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="checkTransazioneRegistrazione">
+      <wsdl:input message="tns:checkTransazioneRegistrazioneRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:checkTransazioneRegistrazioneResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:checkTransazioneRegistrazione_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertSedePartner">
+      <wsdl:input message="tns:InsertSedePartnerRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:InsertSedePartnerResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:InsertSedePartner_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RichiediCodiciPerMovimentazioniBianche">
+      <wsdl:input message="tns:RichiediCodiciPerMovimentazioniBiancheRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:RichiediCodiciPerMovimentazioniBiancheResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:RichiediCodiciPerMovimentazioniBianche_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RecuperaIdSISMovimentazione">
+      <wsdl:input message="tns:RecuperaIdSISMovimentazioneRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:RecuperaIdSISMovimentazioneResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:RecuperaIdSISMovimentazione_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="PutSchedaSISTRI_Produttore_BIANCA">
+      <wsdl:input message="tns:PutSchedaSISTRI_Produttore_BIANCARequest">
+    </wsdl:input>
+      <wsdl:output message="tns:PutSchedaSISTRI_Produttore_BIANCAResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:PutSchedaSISTRI_Produttore_BIANCA_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RecuperaCategorieIscrizione">
+      <wsdl:input message="tns:RecuperaCategorieIscrizioneRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:RecuperaCategorieIscrizioneResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:RecuperaCategorieIscrizione_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UploadPercorsoFerroviario">
+      <wsdl:input message="tns:UploadPercorsoFerroviarioRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:UploadPercorsoFerroviarioResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:UploadPercorsoFerroviario_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CheckStatoProcessamentoPercorso">
+      <wsdl:input message="tns:CheckStatoProcessamentoPercorsoRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:CheckStatoProcessamentoPercorsoResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:CheckStatoProcessamentoPercorso_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetStoricoSede">
+      <wsdl:input message="tns:GetStoricoSedeRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:GetStoricoSedeResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:GetStoricoSede_faultMsg">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SIS_WSDL" type="tns:SIS_WSDL">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="GetElencoCataloghi">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/GetElencoCataloghi"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetVersioneCatalogo">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/GetVersioneCatalogo"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetCatalogo">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/GetCatalogo"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetElencoRegistrazioniCrono">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/GetElencoRegistrazioniCrono"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetElencoRegistrazioniCrono_zipped">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/GetElencoRegistrazioniCrono_zipped"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetRegistrazioneCrono">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/GetRegistrazioneCrono"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="PutRegistrazioneCronoCarico">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/PutRegistrazioneCronoCarico"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="PutRegistrazioneCronoScarico">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/PutRegistrazioneCronoScarico"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateRegistrazioneCronoCarico">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/UpdateRegistrazioneCronoCarico"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateRegistrazioneCronoScarico">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/UpdateRegistrazioneCronoScarico"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetVersioneAnagraficaAzienda">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/GetVersioneAnagraficaAzienda"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetVersioneAnagrafica">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/GetVersioneAnagrafica"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetAzienda">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/GetAzienda"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetSede">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/GetSede"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetRegistroCronologico">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/GetRegistroCronologico"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetSediAziendePartner">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/GetSediAziendePartner"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetVeicoli">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/GetVeicoli"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetTokens">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/GetTokens"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetElencoMovimentazioni">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/GetElencoMovimentazioni"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetMovimentazioneRifiuto">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/GetMovimentazioneRifiuto"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetVersioneMovimentazione">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/GetVersioneMovimentazione"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetElencoSchedeSISTRI">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/GetElencoSchedeSISTRI"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetElencoSchedeSISTRI_zipped">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/GetElencoSchedeSISTRI_zipped"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetSchedaSISTRI">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/GetSchedaSISTRI"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="PutSchedaSISTRI_Produttore">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/PutSchedaSISTRI_Produttore"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="PutSchedaSISTRI_Trasportatore_Destinatario">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/PutSchedaSISTRI_Trasportatore_Destinatario"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateSchedaSISTRI">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/UpdateSchedaSISTRI"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetVersioneSIS">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/GetVersioneSIS"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteSchedaSISTRI">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/DeleteSchedaSISTRI"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteRegistrazioneCrono">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/DeleteRegistrazioneCrono"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetDocsScheda">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/GetDocsScheda"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetDocsRegistrazione">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/GetDocsRegistrazione"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AssociaRegistrazioneScheda">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/AssociaRegistrazioneScheda"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetVersioneScheda">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/GetVersioneScheda"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetVersioneRegistrazione">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/GetVersioneRegistrazione"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RimuoviAssociazioneRegistrazioneScheda">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/RimuoviAssociazioneRegistrazioneScheda"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetMovimentazioneByIdScheda">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/GetMovimentazioneByIdScheda"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetSchedaPerFirma">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/GetSchedaPerFirma"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetRegistrazionePerFirma">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/GetRegistrazionePerFirma"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FirmaScheda">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/FirmaScheda"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FirmaRegistrazione">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/FirmaRegistrazione"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UploadAllegatoScheda">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/UploadAllegatoScheda"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetSchedaPerAnnullamento">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/GetSchedaPerAnnullamento"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetSchedaFirmataPerUpdate">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/GetSchedaFirmataPerUpdate"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetRegistrazionePerAnnullamento">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/GetRegistrazionePerAnnullamento"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AnnullaScheda">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/AnnullaScheda"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateSchedaFirmata">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/UpdateSchedaFirmata"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AnnullaRegistrazione">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/AnnullaRegistrazione"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteAllegatoScheda">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/DeleteAllegatoScheda"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetPdfMovimentazione">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/GetPdfMovimentazione"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="checkTransazioneScheda">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/checkTransazioneScheda"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="checkTransazioneRegistrazione">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/checkTransazioneRegistrazione"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertSedePartner">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/InsertSedePartner"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RichiediCodiciPerMovimentazioniBianche">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/RichiediCodiciPerMovimentazioniBianche"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RecuperaIdSISMovimentazione">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/RecuperaIdSISMovimentazione"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="PutSchedaSISTRI_Produttore_BIANCA">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/PutSchedaSISTRI_Produttore_BIANCA"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RecuperaCategorieIscrizione">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/RecuperaCategorieIscrizione"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UploadPercorsoFerroviario">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/UploadPercorsoFerroviario"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CheckStatoProcessamentoPercorso">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/CheckStatoProcessamentoPercorso"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetStoricoSede">
+      <soap:operation soapAction="http://www.sistri.it/SIS_WSDL/GetStoricoSede"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SIS">
+    <wsdl:port name="SIS_WSDL" binding="tns:SIS_WSDL">
+      <soap:address location="https://sisssl.sistri.it/SIS/services/SIS"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
