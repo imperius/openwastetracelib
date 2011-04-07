@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # OpenWasteTrace
-# Copyright (C) 2011 Paolo Melchiorre
+# Copyright (C) 2011 Paolo Melchiorre <paolo.melchiorre@madec.it>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,10 +21,10 @@
 The L{base_service} module contains classes that form the low level foundations
 of the Web Service API. Things that many different kinds of requests have in
 common may be found here.
-
 In particular, the L{OWTBaseService} class handles most of the basic,
 repetetive setup work that most requests do.
 """
+
 import os
 import logging
 import suds
@@ -43,7 +43,7 @@ class OWTBaseServiceException(Exception):
         return "%s (Error code: %s)" % (repr(self.value), self.error_code)
     def __str__(self):
         return self.__unicode__()
-    
+
 class OWTFailure(OWTBaseServiceException):
     """
     Exception: The request could not be handled at this time. This is generally 
@@ -76,9 +76,9 @@ class OWTBaseService(object):
     """
     def __init__(self, config_obj, *args, **kwargs):
         """
-        This constructor should only be called by children of the class. As is
-        such, only the optional keyword arguments caught by C{**kwargs} will
-        be documented.
+        This constructor should only be called by children of the class.
+        As is such, only the optional keyword arguments caught by C{**kwargs}
+        will be documented.
         @type customer_transaction_id: L{str}
         @keyword customer_transaction_id: A user-specified identifier to
             differentiate this transaction from others. This value will be
@@ -88,7 +88,8 @@ class OWTBaseService(object):
         """@ivar: Python logger instance with name 'owt'."""
         self.config_obj = config_obj
         """@ivar: The OWTConfig object to pull auth info from."""
-        self.transport = HttpAuthUsingCert(self.config_obj.certificate, self.config_obj.privatekey)
+        self.transport = HttpAuthUsingCert(self.config_obj.certificate,
+                                            self.config_obj.privatekey)
         self.client = Client(self.config_obj.wsdl, transport=self.transport)
         #print self.client
         self.response = None
