@@ -22,7 +22,7 @@ The L{storage} module contains the L{OWTStorage} class.
 It stores information about storage.
 """
 
-from sqlalchemy import Table, Column, Integer, String, MetaData, ForeignKey
+from sqlalchemy import Table,Column,Integer,String,DateTime,MetaData,ForeignKey
 
 class OWTStorage(object):
     """

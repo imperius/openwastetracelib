@@ -38,7 +38,7 @@ class OWTConfig(object):
     C{privatekey} and C{dbstring} arguments and set the instance variables
     documented below at a later time if you must.
     """
-    def __init__(self,certificate,privatekey dbstring,wsdl=None):
+    def __init__(self,certificate,privatekey,dbstring,wsdl=None):
         """
         @type certificate: L{str}
         @param certificate: Certificate.
