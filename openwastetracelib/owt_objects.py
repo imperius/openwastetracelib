@@ -272,6 +272,25 @@ class SedeLegale(object):
         for key in kwargs:
             self.__setattr__(key,kwargs[key] )
 
+class SedeSummary(object):
+
+    def __init__ (self,tipoSede,tipoSedeDescr,nomeSede,codiceIstatLocalita,codiceCatastale,nazione,siglaNazione,indirizzo,nrCivico,cap,versione,idSIS):
+        """
+        Campi non obbligatori: nrCivico,  cap
+        """
+        self.tipoSede=tipoSede
+        self.tipoSedeDescr=tipoSedeDescr
+        self.nomeSede=nomeSede
+        self.codiceIstatLocalita=codiceIstatLocalita
+        self.codiceCatastale=codiceCatastale
+        self.nazione=nazione
+        self.siglaNazione=siglaNazione
+        self.indirizzo=indirizzo
+        self.nrCivico=nrCivico
+        self.cap=cap
+        self.versione=versione
+        self.idSIS=idSIS
+
 class Sede(object):
     """ """
     def __init__(self,tipoSede,tipoSedeDescr,nomeSede,codiceIstatLocalita,

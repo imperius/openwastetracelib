@@ -89,7 +89,7 @@ def GetAzienda (codiceFiscaleAzienda):
                )
     sedisummary=[]
     for s in aziendaS.sediSummary:
-        Sede1=Sede(
+        Sede1=SedeSummary(
             tipoSede = str(s.tipoSede.idCatalogo),
             tipoSedeDescr = str(s.tipoSede.description),
             nomeSede = str(s.nomeSede),
@@ -115,8 +115,7 @@ def GetAzienda (codiceFiscaleAzienda):
             #numeroUla = str(s.numeroUla),
             #latitudine = str(s.latitudine),
             #longitudine = str(s.longitudine),
-            #fixme: qui sotto non dovrebbe essere 1 ma s.versione
-            versione = 1,
+            versione = 1,  #fixme:  non dovrebbe essere 1 ma s.versione
             idSIS = str(s.idSIS)
             )
         sedisummary.append (Sede1)
