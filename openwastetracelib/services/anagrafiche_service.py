@@ -13,12 +13,12 @@ class OWTInvalidAzienda(OWTError):
     """
     pass
 
-class GettingAziendaRequest(OWTBaseService,codiceFiscaleAzienda):
+class GettingAziendaRequest(OWTBaseService):
     """
     This class allows you to get an Azienda object.
     By default, you can simply pass a identity string to the constructor.
     """
-    def __init__(self, config_obj, *args, **kwargs):
+    def __init__(self, config_obj, identity, codiceFiscaleAzienda, *args, **kwargs):
         """
         Sends an update cataloghi request. The optional keyword args
         detailed on L{OWTBaseService} apply here as well.
@@ -26,29 +26,15 @@ class GettingAziendaRequest(OWTBaseService,codiceFiscaleAzienda):
         @param config_obj: A valid OWTConfig object.
         """
         self._config_obj = config_obj
-        # Holds version info for the VersionId SOAP object.
-        self._version_info = {'service_id': 'trck', 'major': '4',
-                             'intermediate': '0', 'minor': '0'}
-        self.TrackPackageIdentifier = None
-        """@ivar: Holds the TrackPackageIdentifier WSDL object."""
-        # Call the parent FedexBaseService class for basic setup work.
-        super(FedexTrackRequest, self).__init__(self._config_obj,
-                                                'TrackService_v4.wsdl',
-                                                *args, **kwargs)
-
-    def _prepare_wsdl_objects(self):
-        """
-        This sets the package identifier information. This may be a tracking
-        number or a few different things as per the Fedex spec.
-        """
-        self.TrackPackageIdentifier = self.client.factory.create('TrackPackageIdentifier')
-        # Default to tracking number.
-        self.TrackPackageIdentifier.Type = 'TRACKING_NUMBER_OR_DOORTAG'
+        self.identity = identity
+        self.codiceFiscaleAzienda = codiceFiscaleAzienda
+        # Call the parent OWTBaseService class for basic setup work.
+        super(GettingAziendaRequest, self).__init__(self._config_obj,
+                                                    *args, **kwargs)
 
     def _check_response_for_request_errors(self):
         """
-        Checks the response to see if there were any errors specific to
-        this WSDL.
+        Checks the response to see if there were any errors.
         """
         if self.response.HighestSeverity == "ERROR":
             for notification in self.response.Notifications:
@@ -62,16 +48,14 @@ class GettingAziendaRequest(OWTBaseService,codiceFiscaleAzienda):
 
     def _assemble_and_send_request(self):
         """
-        Fires off the Fedex request.
+        Fires off the SISTRI request.
         @warning: NEVER CALL THIS METHOD DIRECTLY. CALL send_request(), WHICH RESIDES
-            ON FedexBaseService AND IS INHERITED.
+            ON OWTBaseService AND IS INHERITED.
         """
         client = self.client
         # Fire off the query.
-        response = client.service.track(WebAuthenticationDetail=self.WebAuthenticationDetail,
-                                        ClientDetail=self.ClientDetail,
-                                        TransactionDetail=self.TransactionDetail,
-                                        Version=self.VersionId,
-                                        PackageIdentifier=self.TrackPackageIdentifier)
+        response=client.service.GetAzienda(self.identity,
+                                            "",
+                                            self.codiceFiscaleAzienda)
 
         return response

@@ -18,7 +18,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 """
-The I{owt_objects} module provides objects initialization.
+The I{objects} module provides objects definition.
 """
 
 class DescrittoreCatalogo(object):

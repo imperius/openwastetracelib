@@ -29,11 +29,13 @@ class OWTStorage(object):
     Base configuration class that is used for the storage.
     These are generally passed to the OWT request classes as arguments.
     """
-    def __init__(self):
+    def __init__(self,engine):
         """
         @type meta: L{MetaData}
         @param meta: The metadata object of OWTStorage.
         """
+        self.engine = engine
+        """@ivar: Engine connected to database."""
         self.metadata=MetaData()
         """@ivar: metadata."""
         self.metadata_descrittorecatalogo=\
@@ -315,3 +317,4 @@ class OWTStorage(object):
                 Column('descrizioneAttPrincipale',String(255)),
                 Column('versione',Integer,nullable=False),
             )
+        self.metadata.create_all(self.engine)

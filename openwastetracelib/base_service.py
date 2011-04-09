@@ -91,26 +91,15 @@ class OWTBaseService(object):
         self.transport = HttpAuthUsingCert(self.config_obj.certificate,
                                             self.config_obj.privatekey)
         self.client = Client(self.config_obj.wsdl, transport=self.transport)
-        #print self.client
         self.response = None
         """@ivar: The response from SISTRI. You will want to pick what you
             want out here here. This object does have a __str__() method,
             you'll want to print or log it to see what possible values
             you can pull."""
-        self._prepare_wsdl_objects()
-
-    def __prepare_wsdl_objects(self):
-        """
-        This method should be over-ridden on each sub-class. It instantiates
-        any of the required WSDL objects so the user can just print their
-        __str__() methods and see what they need to fill in.
-        """
-        pass
 
     def __check_response_for_sistri_error(self):
         """
-        This checks the response for general Sistri errors that aren't related
-        to any one WSDL.
+        This checks the response for general Sistri errors.
         """
         if self.response.HighestSeverity == "FAILURE":
             for notification in self.response.Notifications:

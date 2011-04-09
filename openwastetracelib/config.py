@@ -27,8 +27,8 @@ L{OWTConfig} objects haphazardly. This is merely a design suggestion,
 treat it as such.
 """
 
-import os
-import sys
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
 class OWTConfig(object):
     """
@@ -47,6 +47,10 @@ class OWTConfig(object):
             This is generally sended to you after registration.
         @type dbstring: L{str}
         @param dbstring: Database connection string.
+        @type engine: L{Engine}
+        @param engine: Engine connected to database.
+        @type session: L{Session}
+        @param session: The session object.
         @type wsdl: L{str}
         @keyword wsdl: In the event that you want to override the url to
             your WSDL, do so with this argument.
@@ -57,7 +61,11 @@ class OWTConfig(object):
         """@ivar: Private key."""
         self.dbstring = dbstring
         """@ivar: Database connection string."""
-        # Allow overriding of the WDSL path.
+        self.engine = create_engine(self.dbstring,echo=False)
+        """@ivar: Engine connected to database."""
+        Session = sessionmaker(bind=self.engine)
+        self.session = Session()
+        """@ivar: The session object."""
         if wsdl == None:
             self.wsdl = "https://sisssl.sistri.it/SIS/services/SIS?wsdl"
         else:

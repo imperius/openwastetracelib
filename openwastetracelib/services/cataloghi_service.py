@@ -1,3 +1,23 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# OpenWasteTrace
+# Copyright (C) 2011 Paolo Melchiorre <paolo.melchiorre@madec.it>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
 """
 Cataloghi Service Module
 ========================
@@ -22,35 +42,21 @@ class UpdateCataloghiRequest(OWTBaseService):
         """
         Sends an update cataloghi request. The optional keyword args
         detailed on L{OWTBaseService} apply here as well.
-        
         @type config_obj: L{OWTConfig}
         @param config_obj: A valid OWTConfig object.
         """
         self._config_obj = config_obj
-        
-        # Holds version info for the VersionId SOAP object.
-        self._version_info = {'service_id': 'trck', 'major': '4', 
-                             'intermediate': '0', 'minor': '0'}
+
         self.TrackPackageIdentifier = None
         """@ivar: Holds the TrackPackageIdentifier WSDL object."""
         # Call the parent FedexBaseService class for basic setup work.
         super(FedexTrackRequest, self).__init__(self._config_obj, 
                                                 'TrackService_v4.wsdl',
                                                 *args, **kwargs)
-        
-    def _prepare_wsdl_objects(self):
-        """
-        This sets the package identifier information. This may be a tracking
-        number or a few different things as per the Fedex spec.
-        """
-        self.TrackPackageIdentifier = self.client.factory.create('TrackPackageIdentifier')
-        # Default to tracking number.
-        self.TrackPackageIdentifier.Type = 'TRACKING_NUMBER_OR_DOORTAG'
-        
+
     def _check_response_for_request_errors(self):
         """
-        Checks the response to see if there were any errors specific to
-        this WSDL.
+        Checks the response to see if there were any errors.
         """
         if self.response.HighestSeverity == "ERROR":
             for notification in self.response.Notifications:
@@ -61,11 +67,11 @@ class UpdateCataloghiRequest(OWTBaseService):
                     else:
                         raise FedexError(notification.Code,
                                          notification.Message)
-        
+
     def _assemble_and_send_request(self):
         """
         Fires off the Fedex request.
-        
+
         @warning: NEVER CALL THIS METHOD DIRECTLY. CALL send_request(), WHICH RESIDES
             ON FedexBaseService AND IS INHERITED.
         """

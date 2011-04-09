@@ -22,20 +22,19 @@ The I{owt_binding} module provides mapping for objects and tables.
 """
 
 from sqlalchemy.orm import mapper
-from objects import *
-from storage import *
+import objects
 
 class OWTBinding(object):
     """
     Base configuration class that is used for the binding.
     These are generally passed to the OWT request classes as arguments.
     """
-    def __init__(self,storage):
+    def __init__(self,storage_obj):
         """
         @type storage: L{OWTStorage}
         @param storage: OWTStorage.
         """
-        self.storage = storage
+        self.storage = storage_obj
         """@ivar: OWTStorage."""
         self.mapperDescrittoreCatalogo=mapper(DescrittoreCatalogo,
                                         storage.metadata_descrittorecatalogo)
@@ -101,3 +100,12 @@ class OWTBinding(object):
                                     storage.metadata_sottotipi_veicolo)
         self.mapperAzienda=mapper(Azienda,
                             storage.metadata_azienda)
+#        self.mapperAzienda=mapper(Azienda,metadata_azienda,
+#                                    properties=dict(RelSedeLegale=\
+#                                                    relationship(SedeLegale),
+#                                                    RelSedi=\
+#                                                    relationship(Sede)))
+#        self.mapperSede=mapper(Sede,
+#                                metadata_sede)
+#        self.mapperSedeLegale=mapper(SedeLegale,
+#                                        metadata_sedelegale)
