@@ -67,10 +67,10 @@ class SchemaValidationError(OWTBaseServiceException):
 
 class OWTBaseService(object):
     """
-    This class is the master class for all SISTRI request objects. It gets all
-    of the common SOAP objects created via suds and populates them with
-    values from a L{OWTConfig} object, along with keyword arguments
-    via L{__init__}.
+    This class is the master class for all SISTRI request objects.
+    It gets all of the common SOAP objects created via suds
+    and populates them with values from a L{OWTConfig} object,
+    along with keyword arguments via L{__init__}.
     @note: This object should never be used directly, use one of the included
         sub-classes.
     """
@@ -101,21 +101,23 @@ class OWTBaseService(object):
         """
         This checks the response for general Sistri errors.
         """
-        if self.response.HighestSeverity == "FAILURE":
-            for notification in self.response.Notifications:
-                if notification.Severity == "FAILURE":
-                    raise OWTFailure(notification.Code,notification.Message)
+#        if self.response.HighestSeverity == "FAILURE":
+#            for notification in self.response.Notifications:
+#                if notification.Severity == "FAILURE":
+#                    raise OWTFailure(notification.Code,notification.Message)
+        pass
 
     def _check_response_for_request_errors(self):
         """
         Override this in each service module to check for errors that are
         specific to that module.
         """
-        if self.response.HighestSeverity == "ERROR":
-            for notification in self.response.Notifications:
-                if notification.Severity == "ERROR":
-                    raise OWTError(notification.Code,
-                                     notification.Message)
+#        if self.response.HighestSeverity == "ERROR":
+#            for notification in self.response.Notifications:
+#                if notification.Severity == "ERROR":
+#                    raise OWTError(notification.Code,
+#                                     notification.Message)
+        pass
 
     def create_wsdl_object_of_type(self, type_name):
         """

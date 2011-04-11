@@ -20,18 +20,21 @@
 """
 This example shows how to getting an Azienda object.
 """
+
 import logging
 from example_config import CONFIG_OBJ
-from services.anagrafiche_service import GettingAziendaRequest
+from openwastetracelib.services.anagrafiche_service import GettingAziendaRequest
 
 # Set this to the INFO level to see the response from Sistri printed in stdout.
-#logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.INFO)
 
-identity = "gabriele.dangelo8571"
-codiceFiscaleAzienda = "00090710690"
+# We're using the FedexConfig object from example_config.py in this dir.
+azienda = GettingAziendaRequest(CONFIG_OBJ)
+azienda.identity = "gabriele.dangelo8571"
+azienda.codiceFiscaleAzienda = "00090710690"
 
-# This is the object that will be handling our request.
-# We're using the OWTConfig object from example_config.py in this dir.
-result = GettingAziendaRequest(CONFIG_OBJ,identity,codiceFiscaleAzienda)
+# Fires off the request, sets the 'response' attribute on the object.
+azienda.send_request()
 
-print result.response
+# See the response printed out.
+print azienda.response

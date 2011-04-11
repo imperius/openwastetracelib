@@ -29,6 +29,8 @@ treat it as such.
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from storage import OWTStorage
+from binding import OWTBinding
 
 class OWTConfig(object):
     """
@@ -51,6 +53,10 @@ class OWTConfig(object):
         @param engine: Engine connected to database.
         @type session: L{Session}
         @param session: The session object.
+        @type storage: L{Storage}
+        @param storage: The storage object.
+        @type binding: L{Binding}
+        @param binding: The binding object.
         @type wsdl: L{str}
         @keyword wsdl: In the event that you want to override the url to
             your WSDL, do so with this argument.
@@ -59,6 +65,11 @@ class OWTConfig(object):
         """@ivar: Certificate."""
         self.privatekey = privatekey
         """@ivar: Private key."""
+        if wsdl == None:
+            self.wsdl = "https://sisssl.sistri.it/SIS/services/SIS?wsdl"
+        else:
+            self.wsdl = wsdl
+        """@ivar: WSDL url string."""
         self.dbstring = dbstring
         """@ivar: Database connection string."""
         self.engine = create_engine(self.dbstring,echo=False)
@@ -66,7 +77,7 @@ class OWTConfig(object):
         Session = sessionmaker(bind=self.engine)
         self.session = Session()
         """@ivar: The session object."""
-        if wsdl == None:
-            self.wsdl = "https://sisssl.sistri.it/SIS/services/SIS?wsdl"
-        else:
-            self.wsdl = wsdl
+        self.storage = OWTStorage(self.engine)
+        """@ivar: The storage object."""
+        self.binding = OWTBinding(self.storage)
+        """@ivar: The binding object."""
