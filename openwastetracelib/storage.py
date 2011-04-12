@@ -22,7 +22,7 @@ The L{storage} module contains the L{OWTStorage} class.
 It stores information about storage.
 """
 
-from sqlalchemy import Table,Column,Integer,String,DateTime,MetaData,ForeignKey
+from sqlalchemy import Table,Column,Integer,String,DateTime,MetaData,BigInteger
 
 class OWTStorage(object):
     """
@@ -303,9 +303,7 @@ class OWTStorage(object):
                 Column('cognome',String(255)),
                 Column('nome',String(255)),
                 Column('formaGiuridica',String(255)),
-                Column('formaGiuridicaDescr',String(255)),
                 Column('tipoStatoImpresa',String(255)),
-                Column('tipoStatoImpresaDescr',String(255)),
                 Column('codiceFiscale',String(25),nullable=False,index=True),
                 Column('pIva',String(11),index=True),
                 Column('numeroIscrizioneAlbo',String(255)),
@@ -315,6 +313,7 @@ class OWTStorage(object):
                 Column('dataIscrizioneStar',DateTime),
                 Column('codiceAtecoAttPrincipale',String(255)),
                 Column('descrizioneAttPrincipale',String(255)),
-                Column('versione',Integer,nullable=False),
+                Column('versione',BigInteger,nullable=False),
+                Column('sedeLegale',String(255)),
             )
         self.metadata.create_all(self.engine)

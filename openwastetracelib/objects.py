@@ -243,7 +243,7 @@ class Sottotipi_veicolo(object):
         self.codice_sottotipo_veicolo = codice_sottotipo_veicolo
 
 class Azienda(object):
-    """ """
+    """ Azienda object with idSIS."""
     def __init__(self,ragioneSociale,codiceFiscale,versione,idSIS,**kwargs):
         self.ragioneSociale=ragioneSociale
         self.codiceFiscale=codiceFiscale

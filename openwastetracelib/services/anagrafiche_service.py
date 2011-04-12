@@ -71,37 +71,53 @@ class GettingAziendaRequest(OWTBaseService):
     def _assemble_and_send_request(self):
         """
         Fires off the SISTRI request.
-        @warning: NEVER CALL THIS METHOD DIRECTLY. CALL send_request(), WHICH RESIDES
-            ON OWTBaseService AND IS INHERITED.
+        @warning: NEVER CALL THIS METHOD DIRECTLY. CALL send_request(),
+            WHICH RESIDESON OWTBaseService AND IS INHERITED.
         """
         client = self.client
         # Fire off the query.
-        import pdb; pdb.set_trace()
         parm = dict(identity=self.identity,
                     parametriAggiuntivi="",
                     codiceFiscaleAzienda=self.codiceFiscaleAzienda)
-        aziendaS=client.service.GetAzienda(**parm)
+        aziendaSistri=client.service.GetAzienda(**parm)
         try:
-            az=Azienda(ragioneSociale= aziendaS.ragioneSociale.__repr__(),
-                       cognome=aziendaS.cognome.__repr__(),
-                       nome=aziendaS.nome.__repr__(),
-                       formaGiuridica=aziendaS.formaGiuridica.idCatalogo.__repr__(),
-                       formaGiuridicaDescr=aziendaS.formaGiuridica.description.__repr__(),
-                       tipoStatoImpresa=aziendaS.tipoStatoImpresa.idCatalogo.__repr__(),
-                       tipoStatoImpresaDescr=aziendaS.tipoStatoImpresa.description.__repr__(),
-                       codiceFiscale=aziendaS.codiceFiscale.__repr__(),
-                       pIva=aziendaS.pIva.__repr__(),
-                       numeroIscrizioneAlbo=aziendaS.numeroIscrizioneAlbo.__repr__(),
-                       cciaaRea=aziendaS.cciaaRea.__repr__(),
-                       numeroIscrizioneRea=aziendaS.numeroIscrizioneRea.__repr__(),
-                       codiceIstatAttPrincipale=aziendaS.codiceIstatAttPrincipale.__repr__(),
-                       dataIscrizioneStar=aziendaS.dataIscrizioneStar,   # nei campi datetime se c'e' la stringa none si incazza allora non faccio il repr
-                       codiceAtecoAttPrincipale=aziendaS.codiceAtecoAttPrincipale.__repr__(),
-                       descrizioneAttPrincipale=aziendaS.descrizioneAttPrincipale.__repr__(),
-                       versione=2,   #fixme: aziendaS.versione.__repr__(), mi restituisce '2L' e non va bene
-                       idSIS=aziendaS.idSIS.__repr__()
-                       )
-            self._config_obj.session.merge(az)
+            azienda=Azienda(
+                ragioneSociale=\
+                    aziendaSistri.ragioneSociale.__repr__(),
+                cognome=\
+                    aziendaSistri.cognome.__repr__(),
+                nome=\
+                    aziendaSistri.nome.__repr__(),
+                formaGiuridica=\
+                    aziendaSistri.formaGiuridica.idCatalogo.__repr__(),
+                tipoStatoImpresa=\
+                    aziendaSistri.tipoStatoImpresa.idCatalogo.__repr__(),
+                codiceFiscale=\
+                    aziendaSistri.codiceFiscale.__repr__(),
+                pIva=\
+                    aziendaSistri.pIva.__repr__(),
+                numeroIscrizioneAlbo=\
+                    aziendaSistri.numeroIscrizioneAlbo.__repr__(),
+                cciaaRea=\
+                    aziendaSistri.cciaaRea.__repr__(),
+                numeroIscrizioneRea=\
+                    aziendaSistri.numeroIscrizioneRea.__repr__(),
+                codiceIstatAttPrincipale=\
+                    aziendaSistri.codiceIstatAttPrincipale.__repr__(),
+                dataIscrizioneStar=\
+                    aziendaSistri.dataIscrizioneStar,
+                codiceAtecoAttPrincipale=\
+                    aziendaSistri.codiceAtecoAttPrincipale.__repr__(),
+                descrizioneAttPrincipale=\
+                    aziendaSistri.descrizioneAttPrincipale.__repr__(),
+                versione=\
+                    aziendaSistri.versione.long.__repr__(),
+                idSIS=\
+                    aziendaSistri.idSIS.__repr__(),
+                sedeLegale=\
+                    aziendaSistri.sedeLegale.idSIS.__repr__()
+            )
+            self._config_obj.session.merge(azienda)
             self._config_obj.session.commit()
             response="Ok"
         except:
