@@ -25,6 +25,7 @@ For more details on each, refer to the respective class's documentation.
 """
 
 import logging
+from .. objects import Azienda
 from .. base_service import OWTBaseService, OWTError
 
 class OWTInvalidAzienda(OWTError):
@@ -75,6 +76,34 @@ class GettingAziendaRequest(OWTBaseService):
         """
         client = self.client
         # Fire off the query.
-#        response=client.service.GetAzienda(identity=self.identity,parametriAggiuntivi="",codiceFiscaleAzienda=self.codiceFiscaleAzienda)
-        response=client.service.GetAzienda(self.identity,"",self.codiceFiscaleAzienda)
+        import pdb; pdb.set_trace()
+        parm = dict(identity=self.identity,
+                    parametriAggiuntivi="",
+                    codiceFiscaleAzienda=self.codiceFiscaleAzienda)
+        aziendaS=client.service.GetAzienda(**parm)
+        try:
+            az=Azienda(ragioneSociale= aziendaS.ragioneSociale.__repr__(),
+                       cognome=aziendaS.cognome.__repr__(),
+                       nome=aziendaS.nome.__repr__(),
+                       formaGiuridica=aziendaS.formaGiuridica.idCatalogo.__repr__(),
+                       formaGiuridicaDescr=aziendaS.formaGiuridica.description.__repr__(),
+                       tipoStatoImpresa=aziendaS.tipoStatoImpresa.idCatalogo.__repr__(),
+                       tipoStatoImpresaDescr=aziendaS.tipoStatoImpresa.description.__repr__(),
+                       codiceFiscale=aziendaS.codiceFiscale.__repr__(),
+                       pIva=aziendaS.pIva.__repr__(),
+                       numeroIscrizioneAlbo=aziendaS.numeroIscrizioneAlbo.__repr__(),
+                       cciaaRea=aziendaS.cciaaRea.__repr__(),
+                       numeroIscrizioneRea=aziendaS.numeroIscrizioneRea.__repr__(),
+                       codiceIstatAttPrincipale=aziendaS.codiceIstatAttPrincipale.__repr__(),
+                       dataIscrizioneStar=aziendaS.dataIscrizioneStar,   # nei campi datetime se c'e' la stringa none si incazza allora non faccio il repr
+                       codiceAtecoAttPrincipale=aziendaS.codiceAtecoAttPrincipale.__repr__(),
+                       descrizioneAttPrincipale=aziendaS.descrizioneAttPrincipale.__repr__(),
+                       versione=2,   #fixme: aziendaS.versione.__repr__(), mi restituisce '2L' e non va bene
+                       idSIS=aziendaS.idSIS.__repr__()
+                       )
+            self._config_obj.session.merge(az)
+            self._config_obj.session.commit()
+            response="Ok"
+        except:
+            response="Ko"
         return response
