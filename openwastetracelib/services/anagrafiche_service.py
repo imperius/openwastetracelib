@@ -25,7 +25,7 @@ For more details on each, refer to the respective class's documentation.
 """
 
 import logging
-from .. objects import Azienda
+from .. objects import Azienda, Catalogo
 from .. base_service import OWTBaseService, OWTError
 
 class OWTInvalidAzienda(OWTError):
@@ -81,6 +81,18 @@ class GettingAziendaRequest(OWTBaseService):
                     codiceFiscaleAzienda=self.codiceFiscaleAzienda)
         aziendaSistri=client.service.GetAzienda(**parm)
         try:
+            formaGiuridica=Catalogo(
+                idCatalogo=\
+                    aziendaSistri.formaGiuridica.idCatalogo.__repr__(),
+                description=\
+                    aziendaSistri.formaGiuridica.description.__repr__(),
+            )
+            tipoStatoImpresa=Catalogo(
+                idCatalogo=\
+                    aziendaSistri.tipoStatoImpresa.idCatalogo.__repr__(),
+                description=\
+                    aziendaSistri.tipoStatoImpresa.description.__repr__(),
+            )
             azienda=Azienda(
                 ragioneSociale=\
                     aziendaSistri.ragioneSociale.__repr__(),
@@ -117,9 +129,13 @@ class GettingAziendaRequest(OWTBaseService):
                 sedeLegale=\
                     aziendaSistri.sedeLegale.idSIS.__repr__()
             )
+            self._config_obj.session.merge(formaGiuridica)
+            azienda.formaGiuridicaRelationship.append(formaGiuridica)
+            self._config_obj.session.merge(tipoStatoImpresa)
+            azienda.tipoStatoImpresaRelationship.append(tipoStatoImpresa)
             self._config_obj.session.merge(azienda)
             self._config_obj.session.commit()
             response="Ok"
-        except:
-            response="Ko"
+        except Exception,e:
+            response=e
         return response

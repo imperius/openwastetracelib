@@ -21,7 +21,7 @@
 The I{owt_binding} module provides mapping for objects and tables.
 """
 
-from sqlalchemy.orm import mapper
+from sqlalchemy.orm import mapper, relationship
 from objects import *
 
 class OWTBinding(object):
@@ -99,13 +99,16 @@ class OWTBinding(object):
         self.mapperDescrittoreCatalogo=mapper(DescrittoreCatalogo,
                             self.storage.metadata_descrittorecatalogo)
         self.mapperAzienda=mapper(Azienda,
-                            self.storage.metadata_azienda)
-#        self.mapperAzienda=mapper(Azienda,metadata_azienda,
-#                                    properties=dict(RelSedeLegale=\
-#                                                    relationship(SedeLegale),
-#                                                    RelSedi=\
-#                                                    relationship(Sede)))
-#        self.mapperSede=mapper(Sede,
-#                                metadata_sede)
-#        self.mapperSedeLegale=mapper(SedeLegale,
-#                                        metadata_sedelegale)
+                            self.storage.metadata_azienda,
+                            properties={
+                                'formaGiuridicaRelationship':relationship(
+                                    Catalogo,
+                                    primaryjoin=self.storage.metadata_azienda.c.formaGiuridica==self.storage.metadata_catalogo.c.idCatalogo,
+                                    foreign_keys=[self.storage.metadata_catalogo.c.idCatalogo]),
+                                'tipoStatoImpresaRelationship':relationship(
+                                    Catalogo,
+                                    primaryjoin=self.storage.metadata_azienda.c.tipoStatoImpresa==self.storage.metadata_catalogo.c.idCatalogo,
+                                    foreign_keys=[self.storage.metadata_catalogo.c.idCatalogo])
+                            })
+        self.mapperCatalogo=mapper(Catalogo,
+                            self.storage.metadata_catalogo)

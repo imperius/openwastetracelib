@@ -22,7 +22,8 @@ The L{storage} module contains the L{OWTStorage} class.
 It stores information about storage.
 """
 
-from sqlalchemy import Table,Column,Integer,String,DateTime,MetaData,BigInteger
+from sqlalchemy import Table, Column, MetaData, ForeignKey
+from sqlalchemy import Integer, String, DateTime, BigInteger
 
 class OWTStorage(object):
     """
@@ -200,42 +201,37 @@ class OWTStorage(object):
                 self.metadata,
                 Column('id_camera_commercio',Integer,nullable=False,
                         primary_key=True),
-                Column('indirizzo',String(255),nullable=False,index=True),
-                Column('numero_civico',String(255),nullable=False,index=True),
-                Column('cap',String(255),nullable=False,index=True),
-                Column('nome_persona_riferimento',String(255),nullable=False,
-                    index=True),
+                Column('indirizzo',String(255),nullable=False),
+                Column('numero_civico',String(255),nullable=False),
+                Column('cap',String(255),nullable=False),
+                Column('nome_persona_riferimento',String(255),nullable=False),
                 Column('cognome_persona_riferimento',String(255),
-                    nullable=False,index=True),
-                Column('email_persona_riferimento',String(255),nullable=False,
-                    index=True),
+                        nullable=False),
+                Column('email_persona_riferimento',String(255),nullable=False),
                 Column('telefono_persona_riferimento',String(255),
-                    nullable=False,index=True),
-                Column('sigla_cciaa',String(255),nullable=False,index=True),
+                        nullable=False),
+                Column('sigla_cciaa',String(255),nullable=False),
             )
         self.metadata_tipi_esito_trasporto=\
             Table('tipi_esito_trasporto',
                 self.metadata,
                 Column('id_esito_trasporto',String(255),nullable=False,
                         primary_key=True),
-                Column('descr_esito_trasporto',String(255),nullable=False,
-                    index=True),
+                Column('descr_esito_trasporto',String(255),nullable=False),
             )
         self.metadata_stati_veicolo=\
             Table('stati_veicolo',
                 self.metadata,
                 Column('id_stato_veicolo',String(255),nullable=False,
                         primary_key=True),
-                Column('descrizione_stato_veicolo',String(255),nullable=False,
-                    index=True),
+                Column('descrizione_stato_veicolo',String(255),nullable=False),
             )
         self.metadata_cod_rec_1013=\
             Table('cod_rec_1013',
                 self.metadata,
                 Column('id_cod_rec_1013',String(255),nullable=False,
                         primary_key=True),
-                Column('descrizione_cod_rec',String(255),nullable=False,
-                    index=True),
+                Column('descrizione_cod_rec',String(255),nullable=False),
             )
         self.metadata_stati_registrazioni_crono=\
             Table('stati_registrazioni_crono',
@@ -243,33 +239,32 @@ class OWTStorage(object):
                 Column('id_stato_registrazione_crono',String(255),
                         nullable=False,primary_key=True),
                 Column('descrizione_stato_reg_crono',String(255),
-                    nullable=False,index=True),
+                        nullable=False),
             )
         self.metadata_tipi_trasporto=\
             Table('tipi_trasporto',
                 self.metadata,
                 Column('id_tipo_trasporto',Integer,nullable=False,
                         primary_key=True),
-                Column('descrizione_tipo_trasporto',String(255),nullable=False,
-                    index=True),
+                Column('descrizione_tipo_trasporto',String(255),
+                        nullable=False),
             )
         self.metadata_tipologie_raee=\
             Table('tipologie_raee',
                 self.metadata,
                 Column('id_tipologia_raee',String(255),nullable=False,
                         primary_key=True),
-                Column('descrizione_tipologia_raee',String(255),nullable=False,
-                    index=True),
+                Column('descrizione_tipologia_raee',String(255),
+                        nullable=False),
             )
         self.metadata_codici_cer_iii_livello=\
             Table('codici_cer_iii_livello',
                 self.metadata,
                 Column('id_codice_cer_iii_livello',String(255),nullable=False,
                         primary_key=True),
-                Column('escrizione_iii_livello',String(255),nullable=False,
-                    index=True),
-                Column('flag_pericoloso',Integer,nullable=False,index=True),
-                Column('flag_attivo',Integer,nullable=False,index=True),
+                Column('escrizione_iii_livello',String(255),nullable=False),
+                Column('flag_pericoloso',Integer,nullable=False),
+                Column('flag_attivo',Integer,nullable=False),
             )
         self.metadata_tipi_stato_impresa=\
             Table('tipi_stato_impresa',
@@ -282,30 +277,29 @@ class OWTStorage(object):
                 self.metadata,
                 Column('id_caratteristica_pericolo',String(255),nullable=False,
                         primary_key=True),
-                Column('descr_car_pericolo',String(255),nullable=False,
-                        index=True),
+                Column('descr_car_pericolo',String(255),nullable=False),
             )
         self.metadata_sottotipi_veicolo=\
             Table('sottotipi_veicolo',
                 self.metadata,
                 Column('id_sottotipo_veicolo',String(255),nullable=False,
                         primary_key=True),
-                Column('descrizione',String(255),nullable=False,index=True),
-                Column('codice_sottotipo_veicolo',Integer,nullable=False,
-                    index=True),
+                Column('descrizione',String(255),nullable=False),
+                Column('codice_sottotipo_veicolo',Integer,nullable=False),
             )
         self.metadata_azienda=\
             Table('azienda',
                 self.metadata,
-                Column('idSIS',String(255),nullable=False,index=True,
-                        unique=True,primary_key=True),
-                Column('ragioneSociale',String(255),nullable=False,index=True),
+                Column('idSIS',String(255),nullable=False,primary_key=True),
+                Column('ragioneSociale',String(255),nullable=False),
                 Column('cognome',String(255)),
                 Column('nome',String(255)),
-                Column('formaGiuridica',String(255)),
-                Column('tipoStatoImpresa',String(255)),
-                Column('codiceFiscale',String(25),nullable=False,index=True),
-                Column('pIva',String(11),index=True),
+                Column('formaGiuridica',String(255),
+                        ForeignKey('catalogo.idCatalogo')),
+                Column('tipoStatoImpresa',String(255),
+                        ForeignKey('catalogo.idCatalogo')),
+                Column('codiceFiscale',String(25),nullable=False),
+                Column('pIva',String(11)),
                 Column('numeroIscrizioneAlbo',String(255)),
                 Column('cciaaRea',String(255)),
                 Column('numeroIscrizioneRea',String(255)),
@@ -315,5 +309,12 @@ class OWTStorage(object):
                 Column('descrizioneAttPrincipale',String(255)),
                 Column('versione',BigInteger,nullable=False),
                 Column('sedeLegale',String(255)),
+            )
+        self.metadata_catalogo=\
+            Table('catalogo',
+                self.metadata,
+                Column('idCatalogo',String(255),nullable=False,
+                        primary_key=True),
+                Column('description',String(255)),
             )
         self.metadata.create_all(self.engine)

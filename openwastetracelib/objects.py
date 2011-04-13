@@ -252,6 +252,12 @@ class Azienda(object):
         for key in kwargs:
             self.__setattr__(key,kwargs[key] )
 
+class Catalogo(object):
+    """ Catalogo object with idCatalogo """
+    def __init__(self,idCatalogo,description=None):
+        self.idCatalogo = idCatalogo
+        self.description = description
+
 class SedeLegale(object):
     """ """
     def __init__(self,tipoSede,tipoSedeDescr,nomeSede,codiceIstatLocalita,
