@@ -87,12 +87,12 @@ class GettingAziendaRequest(OWTBaseService):
                 description=\
                     aziendaSistri.formaGiuridica.description.__repr__(),
             )
-            tipoStatoImpresa=Catalogo(
-                idCatalogo=\
-                    aziendaSistri.tipoStatoImpresa.idCatalogo.__repr__(),
-                description=\
-                    aziendaSistri.tipoStatoImpresa.description.__repr__(),
-            )
+#            tipoStatoImpresa=Catalogo(
+#                idCatalogo=\
+#                    aziendaSistri.tipoStatoImpresa.idCatalogo.__repr__(),
+#                description=\
+#                    aziendaSistri.tipoStatoImpresa.description.__repr__(),
+#            )
             azienda=Azienda(
                 ragioneSociale=\
                     aziendaSistri.ragioneSociale.__repr__(),
@@ -100,10 +100,10 @@ class GettingAziendaRequest(OWTBaseService):
                     aziendaSistri.cognome.__repr__(),
                 nome=\
                     aziendaSistri.nome.__repr__(),
-                formaGiuridica=\
-                    aziendaSistri.formaGiuridica.idCatalogo.__repr__(),
-                tipoStatoImpresa=\
-                    aziendaSistri.tipoStatoImpresa.idCatalogo.__repr__(),
+#                formaGiuridica=\
+#                    aziendaSistri.formaGiuridica.idCatalogo.__repr__(),
+#                tipoStatoImpresa=\
+#                    aziendaSistri.tipoStatoImpresa.idCatalogo.__repr__(),
                 codiceFiscale=\
                     aziendaSistri.codiceFiscale.__repr__(),
                 pIva=\
@@ -126,13 +126,13 @@ class GettingAziendaRequest(OWTBaseService):
                     aziendaSistri.versione.long.__repr__(),
                 idSIS=\
                     aziendaSistri.idSIS.__repr__(),
-                sedeLegale=\
-                    aziendaSistri.sedeLegale.idSIS.__repr__()
+#                sedeLegale=\
+#                    aziendaSistri.sedeLegale.idSIS.__repr__()
             )
             self._config_obj.session.merge(formaGiuridica)
-            azienda.formaGiuridicaRelationship.append(formaGiuridica)
-            self._config_obj.session.merge(tipoStatoImpresa)
-            azienda.tipoStatoImpresaRelationship.append(tipoStatoImpresa)
+#            self._config_obj.session.merge(tipoStatoImpresa)
+            azienda.formaGiuridica=formaGiuridica
+#            azienda.tipoStatoImpresa=[tipoStatoImpresa,]
             self._config_obj.session.merge(azienda)
             self._config_obj.session.commit()
             response="Ok"

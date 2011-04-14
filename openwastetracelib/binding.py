@@ -101,14 +101,16 @@ class OWTBinding(object):
         self.mapperAzienda=mapper(Azienda,
                             self.storage.metadata_azienda,
                             properties={
-                                'formaGiuridicaRelationship':relationship(
-                                    Catalogo,
-                                    primaryjoin=self.storage.metadata_azienda.c.formaGiuridica==self.storage.metadata_catalogo.c.idCatalogo,
-                                    foreign_keys=[self.storage.metadata_catalogo.c.idCatalogo]),
-                                'tipoStatoImpresaRelationship':relationship(
-                                    Catalogo,
-                                    primaryjoin=self.storage.metadata_azienda.c.tipoStatoImpresa==self.storage.metadata_catalogo.c.idCatalogo,
-                                    foreign_keys=[self.storage.metadata_catalogo.c.idCatalogo])
-                            })
+                                'formaGiuridica':relationship(Catalogo)})
+#                            properties={
+#                                'formaGiuridica':relationship(
+#                                    Catalogo,
+#                                    primaryjoin=self.storage.metadata_azienda.c.formaGiuridica_idCatalogo==self.storage.metadata_catalogo.c.idCatalogo,
+#                                    foreign_keys=[self.storage.metadata_catalogo.c.idCatalogo]),
+#                                'tipoStatoImpresa':relationship(
+#                                    Catalogo,
+#                                    primaryjoin=self.storage.metadata_azienda.c.tipoStatoImpresa_idCatalogo==self.storage.metadata_catalogo.c.idCatalogo,
+#                                    foreign_keys=[self.storage.metadata_catalogo.c.idCatalogo])
+#                            })
         self.mapperCatalogo=mapper(Catalogo,
                             self.storage.metadata_catalogo)

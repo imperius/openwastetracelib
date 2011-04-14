@@ -294,10 +294,10 @@ class OWTStorage(object):
                 Column('ragioneSociale',String(255),nullable=False),
                 Column('cognome',String(255)),
                 Column('nome',String(255)),
-                Column('formaGiuridica',String(255),
+                Column('formaGiuridica_idCatalogo',String(255),
                         ForeignKey('catalogo.idCatalogo')),
-                Column('tipoStatoImpresa',String(255),
-                        ForeignKey('catalogo.idCatalogo')),
+#                Column('tipoStatoImpresa_idCatalogo',String(255),
+#                        ForeignKey('catalogo.idCatalogo')),
                 Column('codiceFiscale',String(25),nullable=False),
                 Column('pIva',String(11)),
                 Column('numeroIscrizioneAlbo',String(255)),
@@ -308,7 +308,7 @@ class OWTStorage(object):
                 Column('codiceAtecoAttPrincipale',String(255)),
                 Column('descrizioneAttPrincipale',String(255)),
                 Column('versione',BigInteger,nullable=False),
-                Column('sedeLegale',String(255)),
+#                Column('sedeLegale',String(255)),
             )
         self.metadata_catalogo=\
             Table('catalogo',
