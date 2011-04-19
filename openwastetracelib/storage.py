@@ -23,7 +23,7 @@ It stores information about storage.
 """
 
 from sqlalchemy import Table, Column, MetaData, ForeignKey
-from sqlalchemy import Integer, String, DateTime, BigInteger
+from sqlalchemy import Integer, String, DateTime, BigInteger, Float
 
 class OWTStorage(object):
     """
@@ -68,7 +68,7 @@ class OWTStorage(object):
                 Column('id_tipo_forma_giuridica',String(255),nullable=False,
                         primary_key=True),
                 Column('descrizione_forma_giuridica',String(255),
-                        nullable=False),
+                        nullable=True),
             )
         self.metadata_tipi_reg_cronologico=\
             Table('tipi_reg_cronologico',
@@ -294,10 +294,12 @@ class OWTStorage(object):
                 Column('ragioneSociale',String(255),nullable=False),
                 Column('cognome',String(255)),
                 Column('nome',String(255)),
-                Column('formaGiuridica_idCatalogo',String(255),
-                        ForeignKey('catalogo.idCatalogo')),
-#                Column('tipoStatoImpresa_idCatalogo',String(255),
-#                        ForeignKey('catalogo.idCatalogo')),
+                Column('formaGiuridicaFK',String(255),
+                        ForeignKey('forme_giuridiche.id_tipo_forma_giuridica')
+                ),
+                Column('tipoStatoImpresaFK',String(255),
+                        ForeignKey('tipi_stato_impresa.id_tipo_stato_impresa')
+                ),
                 Column('codiceFiscale',String(25),nullable=False),
                 Column('pIva',String(11)),
                 Column('numeroIscrizioneAlbo',String(255)),
@@ -310,11 +312,55 @@ class OWTStorage(object):
                 Column('versione',BigInteger,nullable=False),
 #                Column('sedeLegale',String(255)),
             )
-        self.metadata_catalogo=\
-            Table('catalogo',
+        self.metadata_sede=\
+            Table('sede',
                 self.metadata,
-                Column('idCatalogo',String(255),nullable=False,
-                        primary_key=True),
-                Column('description',String(255)),
+                Column('idSIS',String(255),nullable=False,primary_key=True),
+                Column('tipoSede',String(255),nullable=False),
+                Column('nomeSede',String(255),nullable=False),
+                Column('codiceIstatLocalita',String(255),nullable=False),
+                Column('codiceCatastale',String(255),nullable=False),
+                Column('nazione',String(255),nullable=False),
+                Column('siglaNazione',String(255),nullable=False),
+                Column('indirizzo',String(255),nullable=False),
+                Column('versione',BigInteger,nullable=False),
+                Column('nrCivico',String(255)),
+                Column('cap',String(255)),
+                Column('telefono',String(255)),
+                Column('fax',String(255)),
+                Column('numeroAddetti',BigInteger),
+                Column('cameraCommercio',String(255)),
+                Column('cameraCommercioDescr',String(255)),
+                Column('associazioneCategoria',String(255)),
+                Column('associazioneCategoriaDescr',String(255)),
+                Column('codiceIstatAttPrincipale',String(255)),
+                Column('codiceAtecoAttPrincipale',String(255)),
+                Column('descrizioneAttPrincipale',String(255)),
+                Column('numeroIscrizioneRea',String(255)),
+                Column('numeroUla',Float),
+                Column('latitudine',String(255)),
+                Column('longitudine',String(255))
             )
+#        self.metadata_sedelegale=\
+#            Table('sedelegale',
+#                self.metadata,
+#                Column('idSIS',String(255),nullable=False,primary_key=True),
+#                Column('tipoSede',String(255),nullable=False),
+#                Column('nomeSede',String(255),nullable=False),
+#                Column('codiceIstatLocalita',String(255),nullable=False),
+#                Column('codiceCatastale',String(255),nullable=False),
+#                Column('nazione',String(255),nullable=False),
+#                Column('siglaNazione',String(255),nullable=False),
+#                Column('indirizzo',String(255),nullable=False),
+#                Column('nrCivico',String(255)),
+#                Column('cap',String(255)),
+#                Column('versione',Integer,nullable=False)
+#            )
+#        self.metadata_catalogo=\
+#            Table('catalogo',
+#                self.metadata,
+#                Column('idCatalogo',String(255),nullable=False,
+#                        primary_key=True),
+#                Column('description',String(255)),
+#            )
         self.metadata.create_all(self.engine)

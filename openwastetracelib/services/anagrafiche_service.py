@@ -25,7 +25,8 @@ For more details on each, refer to the respective class's documentation.
 """
 
 import logging
-from .. objects import Azienda, Catalogo
+from .. objects import Azienda,Forme_giuridiche,Tipi_stato_impresa
+from .. objects import Sede
 from .. base_service import OWTBaseService, OWTError
 
 class OWTInvalidAzienda(OWTError):
@@ -75,24 +76,21 @@ class GettingAziendaRequest(OWTBaseService):
             WHICH RESIDESON OWTBaseService AND IS INHERITED.
         """
         client = self.client
+        session = self._config_obj.session
         # Fire off the query.
         parm = dict(identity=self.identity,
                     parametriAggiuntivi="",
                     codiceFiscaleAzienda=self.codiceFiscaleAzienda)
         aziendaSistri=client.service.GetAzienda(**parm)
         try:
-            formaGiuridica=Catalogo(
-                idCatalogo=\
-                    aziendaSistri.formaGiuridica.idCatalogo.__repr__(),
-                description=\
-                    aziendaSistri.formaGiuridica.description.__repr__(),
+            formaGiuridica=Forme_giuridiche(
+                id_tipo_forma_giuridica=\
+                    aziendaSistri.formaGiuridica.idCatalogo.__repr__()
             )
-#            tipoStatoImpresa=Catalogo(
-#                idCatalogo=\
-#                    aziendaSistri.tipoStatoImpresa.idCatalogo.__repr__(),
-#                description=\
-#                    aziendaSistri.tipoStatoImpresa.description.__repr__(),
-#            )
+            tipoStatoImpresa=Tipi_stato_impresa(
+                id_tipo_stato_impresa=\
+                    aziendaSistri.tipoStatoImpresa.idCatalogo.__repr__()
+            )
             azienda=Azienda(
                 ragioneSociale=\
                     aziendaSistri.ragioneSociale.__repr__(),
@@ -100,10 +98,6 @@ class GettingAziendaRequest(OWTBaseService):
                     aziendaSistri.cognome.__repr__(),
                 nome=\
                     aziendaSistri.nome.__repr__(),
-#                formaGiuridica=\
-#                    aziendaSistri.formaGiuridica.idCatalogo.__repr__(),
-#                tipoStatoImpresa=\
-#                    aziendaSistri.tipoStatoImpresa.idCatalogo.__repr__(),
                 codiceFiscale=\
                     aziendaSistri.codiceFiscale.__repr__(),
                 pIva=\
@@ -129,12 +123,89 @@ class GettingAziendaRequest(OWTBaseService):
 #                sedeLegale=\
 #                    aziendaSistri.sedeLegale.idSIS.__repr__()
             )
-            self._config_obj.session.merge(formaGiuridica)
-#            self._config_obj.session.merge(tipoStatoImpresa)
+            if session.query(Forme_giuridiche).filter(Forme_giuridiche.id_tipo_forma_giuridica==formaGiuridica.id_tipo_forma_giuridica).count()>0:
+                formaGiuridica=session.query(Forme_giuridiche).filter(Forme_giuridiche.id_tipo_forma_giuridica==formaGiuridica.id_tipo_forma_giuridica).first()
             azienda.formaGiuridica=formaGiuridica
-#            azienda.tipoStatoImpresa=[tipoStatoImpresa,]
-            self._config_obj.session.merge(azienda)
-            self._config_obj.session.commit()
+            if session.query(Tipi_stato_impresa).filter(Tipi_stato_impresa.id_tipo_stato_impresa==tipoStatoImpresa.id_tipo_stato_impresa).count()>0:
+                tipoStatoImpresa=session.query(Tipi_stato_impresa).filter(Tipi_stato_impresa.id_tipo_stato_impresa==tipoStatoImpresa.id_tipo_stato_impresa).first()
+            azienda.tipoStatoImpresa=tipoStatoImpresa
+            session.merge(azienda)
+            session.commit()
+            response="Ok"
+        except Exception,e:
+            response=e
+        return response
+
+class GettingSedeRequest(OWTBaseService):
+    """
+    This class allows you to get an Sede object.
+    By default, you can simply pass a identity string to the constructor.
+    """
+    def __init__(self,config_obj,*args,**kwargs):
+        """
+        Sends a get azienda request. The optional keyword args
+        detailed on L{OWTBaseService} apply here as well.
+        @type config_obj: L{OWTConfig}
+        @param config_obj: A valid OWTConfig object.
+        """
+        self._config_obj = config_obj
+        self.identity = None
+        self.idSIS = None
+        # Call the parent OWTBaseService class for basic setup work.
+        super(GettingSedeRequest,self).__init__(self._config_obj,
+                                                    *args,**kwargs)
+
+    def _check_response_for_request_errors(self):
+        """
+        Checks the response to see if there were any errors.
+        """
+#        if self.response.HighestSeverity == "ERROR":
+#            for notification in self.response.Notifications:
+#                if notification.Severity == "ERROR":
+#                    if "Invalid tracking number" in notification.Message:
+#                        raise FedexInvalidTrackingNumber(notification.Code,
+#                                                         notification.Message)
+#                    else:
+#                        raise FedexError(notification.Code,
+#                                         notification.Message)
+        pass
+
+    def _assemble_and_send_request(self):
+        """
+        Fires off the SISTRI request.
+        @warning: NEVER CALL THIS METHOD DIRECTLY. CALL send_request(),
+            WHICH RESIDESON OWTBaseService AND IS INHERITED.
+        """
+        client = self.client
+        session = self._config_obj.session
+        # Fire off the query.
+        parm = dict(identity=self.identity,
+                    parametriAggiuntivi="",
+                    idSIS=self.idSIS)
+        sedeSistri=client.service.GetSede(**parm)
+        try:
+            sede=Sede(
+                tipoSede=\
+                    sedeSistri.tipoSede.idCatalogo.__repr__(),
+                nomeSede=\
+                    sedeSistri.nomeSede.__repr__(),
+                codiceIstatLocalita=\
+                    sedeSistri.codiceIstatLocalita.__repr__(),
+                codiceCatastale=\
+                    sedeSistri.codiceCatastale.__repr__(),
+                nazione=\
+                    sedeSistri.nazione.__repr__(),
+                siglaNazione=\
+                    sedeSistri.siglaNazione.__repr__(),
+                indirizzo=\
+                    sedeSistri.indirizzo.__repr__(),
+                versione=\
+                    sedeSistri.versione.long,
+                idSIS=\
+                    sedeSistri.idSIS.__repr__(),
+            )
+            session.merge(sede)
+            session.commit()
             response="Ok"
         except Exception,e:
             response=e

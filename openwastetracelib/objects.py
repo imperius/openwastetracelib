@@ -21,13 +21,6 @@
 The I{objects} module provides objects definition.
 """
 
-class DescrittoreCatalogo(object):
-    """ """
-    def __init__(self,catalogo, versione, descrizione):
-        self.catalogo = catalogo
-        self.versione = versione
-        self.descrizione = descrizione
-
 class Stati_scheda_sistri(object):
     """ """
     def __init__(self,id_stato_scheda_sistri, stato_scheda_sistri):
@@ -44,7 +37,8 @@ class Stati_fisici_rifiuto(object):
 
 class Forme_giuridiche(object):
     """ """
-    def __init__(self,id_tipo_forma_giuridica, descrizione_forma_giuridica):
+    def __init__(self,id_tipo_forma_giuridica,
+                    descrizione_forma_giuridica=None):
         self.id_tipo_forma_giuridica = id_tipo_forma_giuridica
         self.descrizione_forma_giuridica = descrizione_forma_giuridica
 
@@ -242,6 +236,13 @@ class Sottotipi_veicolo(object):
         self.descrizione = descrizione
         self.codice_sottotipo_veicolo = codice_sottotipo_veicolo
 
+class DescrittoreCatalogo(object):
+    """ """
+    def __init__(self,catalogo, versione, descrizione):
+        self.catalogo = catalogo
+        self.versione = versione
+        self.descrizione = descrizione
+
 class Azienda(object):
     """ Azienda object with idSIS."""
     def __init__(self,ragioneSociale,codiceFiscale,versione,idSIS,**kwargs):
@@ -252,58 +253,11 @@ class Azienda(object):
         for key in kwargs:
             self.__setattr__(key,kwargs[key] )
 
-class Catalogo(object):
-    """ Catalogo object with idCatalogo """
-    def __init__(self,idCatalogo,description=None):
-        self.idCatalogo = idCatalogo
-        self.description = description
-
-class SedeLegale(object):
-    """ """
-    def __init__(self,tipoSede,tipoSedeDescr,nomeSede,codiceIstatLocalita,
-                    codiceCatastale,nazione,siglaNazione,indirizzo,nrCivico,
-                    cap,versione,idSIS,**kwargs):
-        self.tipoSede=tipoSede
-        self.tipoSedeDescr=tipoSedeDescr
-        self.nomeSede=nomeSede
-        self.codiceIstatLocalita=codiceIstatLocalita
-        self.codiceCatastale=codiceCatastale
-        self.nazione=nazione
-        self.siglaNazione=siglaNazione
-        self.indirizzo=indirizzo
-        self.nrCivico=nrCivico
-        self.cap=cap
-        self.versione=versione
-        self.idSIS=idSIS
-        for key in kwargs:
-            self.__setattr__(key,kwargs[key] )
-
-class SedeSummary(object):
-    """ """
-    def __init__ (self,tipoSede,tipoSedeDescr,nomeSede,codiceIstatLocalita,
-                    codiceCatastale,nazione,siglaNazione,indirizzo,nrCivico,
-                    cap,versione,idSIS):
-        """Campi non obbligatori: nrCivico, cap"""
-        self.tipoSede=tipoSede
-        self.tipoSedeDescr=tipoSedeDescr
-        self.nomeSede=nomeSede
-        self.codiceIstatLocalita=codiceIstatLocalita
-        self.codiceCatastale=codiceCatastale
-        self.nazione=nazione
-        self.siglaNazione=siglaNazione
-        self.indirizzo=indirizzo
-        self.nrCivico=nrCivico
-        self.cap=cap
-        self.versione=versione
-        self.idSIS=idSIS
-
 class Sede(object):
-    """ """
-    def __init__(self,tipoSede,tipoSedeDescr,nomeSede,codiceIstatLocalita,
-                    codiceCatastale,nazione,siglaNazione,indirizzo,versione,
-                    idSIS,**kwargs):
+    """ Sede object with idSIS. """
+    def __init__(self,tipoSede,nomeSede,codiceIstatLocalita,codiceCatastale,
+                    nazione,siglaNazione,indirizzo,versione,idSIS,**kwargs):
         self.tipoSede=tipoSede
-        self.tipoSedeDescr=tipoSedeDescr
         self.nomeSede=nomeSede
         self.codiceIstatLocalita=codiceIstatLocalita
         self.codiceCatastale=codiceCatastale
@@ -314,4 +268,48 @@ class Sede(object):
         self.idSIS=idSIS
         for key in kwargs:
             self.__setattr__(key,kwargs[key] )
+
+#class SedeLegale(object):
+#    """ """
+#    def __init__(self,tipoSede,tipoSedeDescr,nomeSede,codiceIstatLocalita,
+#                    codiceCatastale,nazione,siglaNazione,indirizzo,nrCivico,
+#                    cap,versione,idSIS,**kwargs):
+#        self.tipoSede=tipoSede
+#        self.tipoSedeDescr=tipoSedeDescr
+#        self.nomeSede=nomeSede
+#        self.codiceIstatLocalita=codiceIstatLocalita
+#        self.codiceCatastale=codiceCatastale
+#        self.nazione=nazione
+#        self.siglaNazione=siglaNazione
+#        self.indirizzo=indirizzo
+#        self.nrCivico=nrCivico
+#        self.cap=cap
+#        self.versione=versione
+#        self.idSIS=idSIS
+#        for key in kwargs:
+#            self.__setattr__(key,kwargs[key] )
+
+#class SedeSummary(object):
+#    """ """
+#    def __init__ (self,tipoSede,tipoSedeDescr,nomeSede,codiceIstatLocalita,
+#                    codiceCatastale,nazione,siglaNazione,indirizzo,nrCivico,
+#                    cap,versione,idSIS):
+#        self.tipoSede=tipoSede
+#        self.tipoSedeDescr=tipoSedeDescr
+#        self.nomeSede=nomeSede
+#        self.codiceIstatLocalita=codiceIstatLocalita
+#        self.codiceCatastale=codiceCatastale
+#        self.nazione=nazione
+#        self.siglaNazione=siglaNazione
+#        self.indirizzo=indirizzo
+#        self.nrCivico=nrCivico
+#        self.cap=cap
+#        self.versione=versione
+#        self.idSIS=idSIS
+
+#class Catalogo(object):
+#    """ Catalogo object with idCatalogo """
+#    def __init__(self,idCatalogo,description=None):
+#        self.idCatalogo = idCatalogo
+#        self.description = description
 
