@@ -123,7 +123,7 @@ class GettingAziendaRequest(OWTBaseService):
                 descrizioneAttPrincipale=\
                     aziendaSistri.descrizioneAttPrincipale.__repr__(),
                 versione=\
-                    aziendaSistri.versione.long.__repr__(),
+                    aziendaSistri.versione.long,
                 idSIS=\
                     aziendaSistri.idSIS.__repr__(),
 #                sedeLegale=\
