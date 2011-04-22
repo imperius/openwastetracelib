@@ -26,7 +26,7 @@ from example_config import CONFIG_OBJ
 from openwastetracelib.services.anagrafiche_service import GettingAziendaRequest
 
 # Set this to the INFO level to see the response from Sistri printed in stdout.
-#logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.INFO)
 
 # We're using the FedexConfig object from example_config.py in this dir.
 azienda = GettingAziendaRequest(CONFIG_OBJ)

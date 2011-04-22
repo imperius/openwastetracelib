@@ -18,14 +18,23 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 """
-This file holds various configuration options used for all of the examples.
-You will need to change the values below to match your test account.
+This example shows how to getting an Sede object.
 """
 
-from openwastetracelib.config import OWTConfig
+import logging
+from example_config import CONFIG_OBJ
+from openwastetracelib.services.anagrafiche_service import GettingSedeRequest
 
-# Change these values to match your account credentials.
-CONFIG_OBJ=OWTConfig(certificate="/tmp/Certificate.cer",
-                        privatekey="/tmp/Private.pem",
-                        dbstring="sqlite:///:memory:",
-                        wsdl="https://sisssl.sistri.it/SIS/services/SIS?wsdl")
+# Set this to the INFO level to see the response from Sistri printed in stdout.
+logging.basicConfig(level=logging.INFO)
+
+# We're using the FedexConfig object from example_config.py in this dir.
+sede = GettingSedeRequest(CONFIG_OBJ)
+sede.identity = "test"
+sede.idSIS = "00000000000"
+
+# Fires off the request, sets the 'response' attribute on the object.
+sede.send_request()
+
+# See the response printed out.
+print sede.response

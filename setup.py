@@ -58,7 +58,7 @@ CLASSIFIERS = [
 KEYWORDS = 'sistri soap suds wsdl wrapper'
 
 setup(name = 'OpenWasteTrace',
-      version = "0.7",
+      version = "0.8",
       description = 'Sistri Web Services Soap API wrapper.',
       long_description = LONG_DESCRIPTION,
       author = 'Paolo Melchiorre',
@@ -67,7 +67,7 @@ setup(name = 'OpenWasteTrace',
       download_url = 'http://download.openwastetrace.it',
       packages = ['openwastetracelib', 'openwastetracelib.services'],
       package_dir= {'openwastetracelib': 'openwastetracelib'},
-      package_data = {'fedex': ['resources/*.dtd', 'resources/*.wsdl']},
+      package_data = {'openwastetracelib': ['resources/*.dtd', 'resources/*.wsdl']},
       platforms = ['Platform Independent'],
       license = 'GPLv3',
       classifiers = CLASSIFIERS,
