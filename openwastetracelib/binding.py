@@ -133,11 +133,16 @@ class OWTBinding(object):
             mapper(Azienda,
                 self.storage.metadata_azienda,
                 properties={'formaGiuridica':relationship(Forme_giuridiche),
-                            'tipoStatoImpresa':relationship(Tipi_stato_impresa)
+                            'tipoStatoImpresa':relationship(Tipi_stato_impresa),
+                            'sediSummary':relationship(Sede)
                 })
         self.mapperSede=\
             mapper(Sede,
-                self.storage.metadata_sede)
-#        self.mapperCatalogo=\
-#            mapper(Catalogo,
-#                self.storage.metadata_catalogo)
+                self.storage.metadata_sede,
+                properties={'tipoSede':relationship(Tipi_sede),
+                            'cameraCommercio':relationship(Camere_commercio),
+                            'associazioneCategoria':relationship(Associazioni_categoria),
+                            'sottocategorie':relationship(Sottocategorie_star,
+                                secondary=self.storage.metadata_sottocategorie)
+                }
+            )

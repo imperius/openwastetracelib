@@ -76,7 +76,7 @@ class Tipi_veicolo(object):
 
 class Tipi_sede(object):
     """ """
-    def __init__(self,id_tipo_sede,descrizione):
+    def __init__(self,id_tipo_sede,descrizione=None):
         self.id_tipo_sede = id_tipo_sede
         self.descrizione = descrizione
 
@@ -101,8 +101,8 @@ class Localita_estere(object):
 
 class Associazioni_categoria(object):
     """ """
-    def __init__(self,id_associazione_categoria,ass_categoria_nome,
-                    id_accordo,sigla_provincia,sigla_cciaa):
+    def __init__(self,id_associazione_categoria,ass_categoria_nome=None,
+                    id_accordo=None,sigla_provincia=None,sigla_cciaa=None):
         self.id_associazione_categoria = id_associazione_categoria
         self.ass_categoria_nome = ass_categoria_nome
         self.id_accordo = id_accordo
@@ -126,8 +126,8 @@ class Tipi_imballaggi(object):
 
 class Sottocategorie_star(object):
     """ """
-    def __init__(self,id_sottocategoria_star,id_categoria_star,
-                    descrizione_sottocategoria):
+    def __init__(self,id_sottocategoria_star,id_categoria_star=None,
+                    descrizione_sottocategoria=None):
         self.id_sottocategoria_star = id_sottocategoria_star
         self.id_categoria_star = id_categoria_star
         self.descrizione_sottocategoria = descrizione_sottocategoria
@@ -157,10 +157,11 @@ class Stati_utente_idm(object):
 
 class Camere_commercio(object):
     """ """
-    def __init__(self,id_camera_commercio,indirizzo,numero_civico,cap,
-                    nome_persona_riferimento,cognome_persona_riferimento,
-                    email_persona_riferimento,telefono_persona_riferimento,
-                    sigla_cciaa):
+    def __init__(self,id_camera_commercio,indirizzo=None,numero_civico=None,
+                    cap=None,nome_persona_riferimento=None,
+                    cognome_persona_riferimento=None,
+                    email_persona_riferimento=None,
+                    telefono_persona_riferimento=None,sigla_cciaa=None):
         self.id_camera_commercio = id_camera_commercio
         self.indirizzo = indirizzo
         self.numero_civico = numero_civico
@@ -255,9 +256,8 @@ class Azienda(object):
 
 class Sede(object):
     """ Sede object with idSIS. """
-    def __init__(self,tipoSede,nomeSede,codiceIstatLocalita,codiceCatastale,
-                    nazione,siglaNazione,indirizzo,versione,idSIS,**kwargs):
-        self.tipoSede=tipoSede
+    def __init__(self,nomeSede,codiceIstatLocalita,codiceCatastale,nazione,
+                    siglaNazione,indirizzo,versione,idSIS,tipoSede=None,**kwargs):
         self.nomeSede=nomeSede
         self.codiceIstatLocalita=codiceIstatLocalita
         self.codiceCatastale=codiceCatastale
@@ -265,51 +265,7 @@ class Sede(object):
         self.siglaNazione=siglaNazione
         self.indirizzo=indirizzo
         self.versione=versione
+        self.tipoSede=tipoSede
         self.idSIS=idSIS
         for key in kwargs:
             self.__setattr__(key,kwargs[key] )
-
-#class SedeLegale(object):
-#    """ """
-#    def __init__(self,tipoSede,tipoSedeDescr,nomeSede,codiceIstatLocalita,
-#                    codiceCatastale,nazione,siglaNazione,indirizzo,nrCivico,
-#                    cap,versione,idSIS,**kwargs):
-#        self.tipoSede=tipoSede
-#        self.tipoSedeDescr=tipoSedeDescr
-#        self.nomeSede=nomeSede
-#        self.codiceIstatLocalita=codiceIstatLocalita
-#        self.codiceCatastale=codiceCatastale
-#        self.nazione=nazione
-#        self.siglaNazione=siglaNazione
-#        self.indirizzo=indirizzo
-#        self.nrCivico=nrCivico
-#        self.cap=cap
-#        self.versione=versione
-#        self.idSIS=idSIS
-#        for key in kwargs:
-#            self.__setattr__(key,kwargs[key] )
-
-#class SedeSummary(object):
-#    """ """
-#    def __init__ (self,tipoSede,tipoSedeDescr,nomeSede,codiceIstatLocalita,
-#                    codiceCatastale,nazione,siglaNazione,indirizzo,nrCivico,
-#                    cap,versione,idSIS):
-#        self.tipoSede=tipoSede
-#        self.tipoSedeDescr=tipoSedeDescr
-#        self.nomeSede=nomeSede
-#        self.codiceIstatLocalita=codiceIstatLocalita
-#        self.codiceCatastale=codiceCatastale
-#        self.nazione=nazione
-#        self.siglaNazione=siglaNazione
-#        self.indirizzo=indirizzo
-#        self.nrCivico=nrCivico
-#        self.cap=cap
-#        self.versione=versione
-#        self.idSIS=idSIS
-
-#class Catalogo(object):
-#    """ Catalogo object with idCatalogo """
-#    def __init__(self,idCatalogo,description=None):
-#        self.idCatalogo = idCatalogo
-#        self.description = description
-

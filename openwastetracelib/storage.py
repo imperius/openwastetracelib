@@ -111,7 +111,6 @@ class OWTStorage(object):
                 self.metadata,
                 Column('id_tipo_sede',String(255),nullable=False,
                         primary_key=True),
-                Column('descrizione',String(255),nullable=False),
             )
         self.metadata_tipi_registrazioni_crono=\
             Table('tipi_registrazioni_crono',
@@ -139,10 +138,10 @@ class OWTStorage(object):
                 self.metadata,
                 Column('id_associazione_categoria',Integer,nullable=False,
                         primary_key=True),
-                Column('ass_categoria_nome',String(255),nullable=False),
-                Column('id_accordo',String(255),nullable=False),
-                Column('sigla_provincia',String(255),nullable=False),
-                Column('sigla_cciaa',String(255),nullable=False),
+                Column('ass_categoria_nome',String(255),nullable=True),
+                Column('id_accordo',String(255),nullable=True),
+                Column('sigla_provincia',String(255),nullable=True),
+                Column('sigla_cciaa',String(255),nullable=True),
             )
         self.metadata_stati_registro_cronologico=\
             Table('stati_registro_cronologico',
@@ -165,9 +164,9 @@ class OWTStorage(object):
                 self.metadata,
                 Column('id_sottocategoria_star',String(255),nullable=False,
                         primary_key=True),
-                Column('id_categoria_star',String(255),nullable=False),
+                Column('id_categoria_star',String(255),nullable=True),
                 Column('descrizione_sottocategoria',String(255),
-                        nullable=False),
+                        nullable=True),
             )
         self.metadata_tipi_documento=\
             Table('tipi_documento',
@@ -201,16 +200,16 @@ class OWTStorage(object):
                 self.metadata,
                 Column('id_camera_commercio',Integer,nullable=False,
                         primary_key=True),
-                Column('indirizzo',String(255),nullable=False),
-                Column('numero_civico',String(255),nullable=False),
-                Column('cap',String(255),nullable=False),
-                Column('nome_persona_riferimento',String(255),nullable=False),
+                Column('indirizzo',String(255),nullable=True),
+                Column('numero_civico',String(255),nullable=True),
+                Column('cap',String(255),nullable=True),
+                Column('nome_persona_riferimento',String(255),nullable=True),
                 Column('cognome_persona_riferimento',String(255),
-                        nullable=False),
-                Column('email_persona_riferimento',String(255),nullable=False),
+                        nullable=True),
+                Column('email_persona_riferimento',String(255),nullable=True),
                 Column('telefono_persona_riferimento',String(255),
-                        nullable=False),
-                Column('sigla_cciaa',String(255),nullable=False),
+                        nullable=True),
+                Column('sigla_cciaa',String(255),nullable=True),
             )
         self.metadata_tipi_esito_trasporto=\
             Table('tipi_esito_trasporto',
@@ -310,13 +309,14 @@ class OWTStorage(object):
                 Column('codiceAtecoAttPrincipale',String(255)),
                 Column('descrizioneAttPrincipale',String(255)),
                 Column('versione',BigInteger,nullable=False),
-#                Column('sedeLegale',String(255)),
             )
         self.metadata_sede=\
             Table('sede',
                 self.metadata,
                 Column('idSIS',String(255),nullable=False,primary_key=True),
-                Column('tipoSede',String(255),nullable=False),
+                Column('tipoSedeFK',String(255),
+                        ForeignKey('tipi_sede.id_tipo_sede')
+                ),
                 Column('nomeSede',String(255),nullable=False),
                 Column('codiceIstatLocalita',String(255),nullable=False),
                 Column('codiceCatastale',String(255),nullable=False),
@@ -329,38 +329,27 @@ class OWTStorage(object):
                 Column('telefono',String(255)),
                 Column('fax',String(255)),
                 Column('numeroAddetti',BigInteger),
-                Column('cameraCommercio',String(255)),
-                Column('cameraCommercioDescr',String(255)),
-                Column('associazioneCategoria',String(255)),
-                Column('associazioneCategoriaDescr',String(255)),
+                Column('cameraCommercioFK',String(255),
+                        ForeignKey('camere_commercio.id_camera_commercio')
+                ),
+                Column('associazioneCategoriaFK',String(255),
+                        ForeignKey('associazioni_categoria.id_associazione_categoria')
+                ),
                 Column('codiceIstatAttPrincipale',String(255)),
                 Column('codiceAtecoAttPrincipale',String(255)),
                 Column('descrizioneAttPrincipale',String(255)),
                 Column('numeroIscrizioneRea',String(255)),
                 Column('numeroUla',Float),
-                Column('latitudine',String(255)),
-                Column('longitudine',String(255))
+                Column('latitudine',Float),
+                Column('longitudine',Float),
+                Column('aziendaFK',String(255),ForeignKey('azienda.idSIS'))
             )
-#        self.metadata_sedelegale=\
-#            Table('sedelegale',
-#                self.metadata,
-#                Column('idSIS',String(255),nullable=False,primary_key=True),
-#                Column('tipoSede',String(255),nullable=False),
-#                Column('nomeSede',String(255),nullable=False),
-#                Column('codiceIstatLocalita',String(255),nullable=False),
-#                Column('codiceCatastale',String(255),nullable=False),
-#                Column('nazione',String(255),nullable=False),
-#                Column('siglaNazione',String(255),nullable=False),
-#                Column('indirizzo',String(255),nullable=False),
-#                Column('nrCivico',String(255)),
-#                Column('cap',String(255)),
-#                Column('versione',Integer,nullable=False)
-#            )
-#        self.metadata_catalogo=\
-#            Table('catalogo',
-#                self.metadata,
-#                Column('idCatalogo',String(255),nullable=False,
-#                        primary_key=True),
-#                Column('description',String(255)),
-#            )
+        self.metadata_sottocategorie=\
+            Table('sottocategorie',
+                self.metadata,
+                Column('sedeFK',String(255),ForeignKey('sede.idSIS')),
+                Column('sottocategorie_starFK',String(255),
+                    ForeignKey('sottocategorie_star.id_sottocategoria_star')
+                )
+            )
         self.metadata.create_all(self.engine)

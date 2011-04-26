@@ -25,8 +25,8 @@ For more details on each, refer to the respective class's documentation.
 """
 
 import logging
-from .. objects import Azienda,Forme_giuridiche,Tipi_stato_impresa
-from .. objects import Sede
+from .. objects import Azienda,Forme_giuridiche,Tipi_stato_impresa,Tipi_sede
+from .. objects import Sede,Camere_commercio,Associazioni_categoria,Sottocategorie_star
 from .. base_service import OWTBaseService, OWTError
 
 class OWTInvalidAzienda(OWTError):
@@ -77,21 +77,71 @@ class GettingAziendaRequest(OWTBaseService):
         """
         client = self.client
         session = self._config_obj.session
-        # Fire off the query.
         parm = dict(identity=self.identity,
                     parametriAggiuntivi="",
                     codiceFiscaleAzienda=self.codiceFiscaleAzienda)
         aziendaSistri=client.service.GetAzienda(**parm)
         try:
-            formaGiuridica=Forme_giuridiche(
-                id_tipo_forma_giuridica=\
-                    aziendaSistri.formaGiuridica.idCatalogo.__repr__()
-            )
-            tipoStatoImpresa=Tipi_stato_impresa(
-                id_tipo_stato_impresa=\
-                    aziendaSistri.tipoStatoImpresa.idCatalogo.__repr__()
-            )
+            sediSummary=[]
+            if aziendaSistri.sediSummary:
+                for sedeSummary in aziendaSistri.sediSummary:
+                    tipoSede=None
+                    if sedeSummary.tipoSede:
+                        tipoSede=Tipi_sede(
+                            id_tipo_sede=\
+                                sedeSummary.tipoSede.idCatalogo.__repr__(),
+                            descrizione=\
+                                sedeSummary.tipoSede.description.__repr__()
+                        )
+                        if session.query(Tipi_sede).filter(Tipi_sede.id_tipo_sede==tipoSede.id_tipo_sede).count()>0:
+                            tipoSede=session.query(Tipi_sede).filter(Tipi_sede.id_tipo_sede==tipoSede.id_tipo_sede).first()
+                    sede=Sede(
+                        idSIS=\
+                            sedeSummary.idSIS.__repr__(),
+                        nomeSede=\
+                            sedeSummary.nomeSede.__repr__(),
+                        codiceIstatLocalita=\
+                            sedeSummary.codiceIstatLocalita.__repr__(),
+                        codiceCatastale=\
+                            sedeSummary.codiceCatastale.__repr__(),
+                        nazione=\
+                            sedeSummary.nazione.__repr__(),
+                        siglaNazione=\
+                            sedeSummary.siglaNazione.__repr__(),
+                        indirizzo=\
+                            sedeSummary.indirizzo.__repr__(),
+                        nrCivico=\
+                            sedeSummary.nrCivico.__repr__(),
+                        cap=\
+                            sedeSummary.cap.__repr__(),
+                        versione=\
+                            sedeSummary.versione.long,
+                        tipoSede=tipoSede
+                    )
+                    if session.query(Sede).filter(Sede.idSIS==sede.idSIS).count()>0:
+                        sede=session.query(Sede).filter(Sede.idSIS==sede.idSIS).first()
+                    sediSummary.append(sede)
+            formaGiuridica=None
+            if aziendaSistri.formaGiuridica:
+                formaGiuridica=Forme_giuridiche(
+                    id_tipo_forma_giuridica=\
+                        aziendaSistri.formaGiuridica.idCatalogo.__repr__(),
+                    descrizione_forma_giuridica=\
+                        aziendaSistri.formaGiuridica.description.__repr__(),
+                )
+                if session.query(Forme_giuridiche).filter(Forme_giuridiche.id_tipo_forma_giuridica==formaGiuridica.id_tipo_forma_giuridica).count()>0:
+                    formaGiuridica=session.query(Forme_giuridiche).filter(Forme_giuridiche.id_tipo_forma_giuridica==formaGiuridica.id_tipo_forma_giuridica).first()
+            tipoStatoImpresa=None
+            if aziendaSistri.tipoStatoImpresa:
+                tipoStatoImpresa=Tipi_stato_impresa(
+                    id_tipo_stato_impresa=\
+                        aziendaSistri.tipoStatoImpresa.idCatalogo.__repr__()
+                )
+                if session.query(Tipi_stato_impresa).filter(Tipi_stato_impresa.id_tipo_stato_impresa==tipoStatoImpresa.id_tipo_stato_impresa).count()>0:
+                    tipoStatoImpresa=session.query(Tipi_stato_impresa).filter(Tipi_stato_impresa.id_tipo_stato_impresa==tipoStatoImpresa.id_tipo_stato_impresa).first()
             azienda=Azienda(
+                idSIS=\
+                    aziendaSistri.idSIS.__repr__(),
                 ragioneSociale=\
                     aziendaSistri.ragioneSociale.__repr__(),
                 cognome=\
@@ -118,17 +168,10 @@ class GettingAziendaRequest(OWTBaseService):
                     aziendaSistri.descrizioneAttPrincipale.__repr__(),
                 versione=\
                     aziendaSistri.versione.long,
-                idSIS=\
-                    aziendaSistri.idSIS.__repr__(),
-#                sedeLegale=\
-#                    aziendaSistri.sedeLegale.idSIS.__repr__()
+                formaGiuridica=formaGiuridica,
+                tipoStatoImpresa=tipoStatoImpresa,
+                sediSummary=sediSummary,
             )
-            if session.query(Forme_giuridiche).filter(Forme_giuridiche.id_tipo_forma_giuridica==formaGiuridica.id_tipo_forma_giuridica).count()>0:
-                formaGiuridica=session.query(Forme_giuridiche).filter(Forme_giuridiche.id_tipo_forma_giuridica==formaGiuridica.id_tipo_forma_giuridica).first()
-            azienda.formaGiuridica=formaGiuridica
-            if session.query(Tipi_stato_impresa).filter(Tipi_stato_impresa.id_tipo_stato_impresa==tipoStatoImpresa.id_tipo_stato_impresa).count()>0:
-                tipoStatoImpresa=session.query(Tipi_stato_impresa).filter(Tipi_stato_impresa.id_tipo_stato_impresa==tipoStatoImpresa.id_tipo_stato_impresa).first()
-            azienda.tipoStatoImpresa=tipoStatoImpresa
             session.merge(azienda)
             session.commit()
             response="Ok"
@@ -178,15 +221,52 @@ class GettingSedeRequest(OWTBaseService):
         """
         client = self.client
         session = self._config_obj.session
-        # Fire off the query.
         parm = dict(identity=self.identity,
                     parametriAggiuntivi="",
                     idSIS=self.idSIS)
         sedeSistri=client.service.GetSede(**parm)
         try:
+            sottocategorie=[]
+            if sedeSistri.sottocategorie:
+                for sottocategoria in sedeSistri.sottocategorie:
+                    sottocategorie_star=Sottocategorie_star(
+                        id_sottocategoria_star=\
+                            sottocategoria.idCatalogo.__repr__(),
+                        descrizione_sottocategoria=\
+                            sottocategoria.description.__repr__()
+                    )
+                    if session.query(Sottocategorie_star).filter(Sottocategorie_star.id_sottocategoria_star==sottocategorie_star.id_sottocategoria_star).count()>0:
+                        sottocategorie_star=session.query(Sottocategorie_star).filter(Sottocategorie_star.id_sottocategoria_star==sottocategorie_star.id_sottocategoria_star).first()
+                    sottocategorie.append(sottocategorie_star)
+            tipoSede=None
+            if sedeSistri.tipoSede:
+                tipoSede=Tipi_sede(
+                    id_tipo_sede=\
+                        sedeSistri.tipoSede.idCatalogo.__repr__(),
+                    descrizione=\
+                        sedeSistri.tipoSede.description.__repr__()
+                )
+                if session.query(Tipi_sede).filter(Tipi_sede.id_tipo_sede==tipoSede.id_tipo_sede).count()>0:
+                    tipoSede=session.query(Tipi_sede).filter(Tipi_sede.id_tipo_sede==tipoSede.id_tipo_sede).first()
+            cameraCommercio=None
+            if sedeSistri.cameraCommercio:
+                cameraCommercio=Camere_commercio(
+                    id_camera_commercio=\
+                        sedeSistri.cameraCommercio.idCatalogo.__repr__()
+                )
+                if session.query(Camere_commercio).filter(Camere_commercio.id_camera_commercio==cameraCommercio.id_camera_commercio).count()>0:
+                    cameraCommercio=session.query(Camere_commercio).filter(Camere_commercio.id_camera_commercio==cameraCommercio.id_camera_commercio).first()
+            associazioneCategoria=None
+            if sedeSistri.associazioneCategoria:
+                associazioneCategoria=Associazioni_categoria(
+                    id_associazione_categoria=\
+                        sedeSistri.associazioneCategoria.idCatalogo.__repr__()
+                )
+                if session.query(Associazioni_categoria).filter(Associazioni_categoria.id_associazione_categoria==associazioneCategoria.id_associazione_categoria).count()>0:
+                    associazioneCategoria=session.query(Associazioni_categoria).filter(Associazioni_categoria.id_associazione_categoria==associazioneCategoria.id_associazione_categoria).first()
             sede=Sede(
-                tipoSede=\
-                    sedeSistri.tipoSede.idCatalogo.__repr__(),
+                idSIS=\
+                    sedeSistri.idSIS.__repr__(),
                 nomeSede=\
                     sedeSistri.nomeSede.__repr__(),
                 codiceIstatLocalita=\
@@ -199,10 +279,36 @@ class GettingSedeRequest(OWTBaseService):
                     sedeSistri.siglaNazione.__repr__(),
                 indirizzo=\
                     sedeSistri.indirizzo.__repr__(),
+                nrCivico=\
+                    sedeSistri.nrCivico.__repr__(),
+                cap=\
+                    sedeSistri.cap.__repr__(),
                 versione=\
                     sedeSistri.versione.long,
-                idSIS=\
-                    sedeSistri.idSIS.__repr__(),
+                telefono=\
+                    sedeSistri.telefono.__repr__(),
+                fax=\
+                    sedeSistri.fax.__repr__(),
+                numeroAddetti=\
+                    sedeSistri.numeroAddetti.long,
+                codiceIstatAttPrincipale=\
+                    sedeSistri.codiceIstatAttPrincipale.__repr__(),
+                codiceAtecoAttPrincipale=\
+                    sedeSistri.codiceAtecoAttPrincipale.__repr__(),
+                descrizioneAttPrincipale=\
+                    sedeSistri.descrizioneAttPrincipale.__repr__(),
+                numeroIscrizioneRea=\
+                    sedeSistri.numeroIscrizioneRea.__repr__(),
+                numeroUla=\
+                    sedeSistri.numeroUla.double,
+                latitudine=\
+                    sedeSistri.latitudine.double,
+                longitudine=\
+                    sedeSistri.longitudine.double,
+                tipoSede=tipoSede,
+                cameraCommercio=cameraCommercio,
+                associazioneCategoria=associazioneCategoria,
+                sottocategorie=sottocategorie
             )
             session.merge(sede)
             session.commit()
