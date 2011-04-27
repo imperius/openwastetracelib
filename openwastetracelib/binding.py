@@ -134,7 +134,9 @@ class OWTBinding(object):
                 self.storage.metadata_azienda,
                 properties={'formaGiuridica':relationship(Forme_giuridiche),
                             'tipoStatoImpresa':relationship(Tipi_stato_impresa),
-                            'sediSummary':relationship(Sede)
+                            'sedeLegale':relationship(Sede,uselist=False),
+                            'sediSummary':relationship(Sede,
+                                secondary=self.storage.metadata_sedisummary)
                 })
         self.mapperSede=\
             mapper(Sede,

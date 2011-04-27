@@ -121,6 +121,46 @@ class GettingAziendaRequest(OWTBaseService):
                     if session.query(Sede).filter(Sede.idSIS==sede.idSIS).count()>0:
                         sede=session.query(Sede).filter(Sede.idSIS==sede.idSIS).first()
                     sediSummary.append(sede)
+                    session.merge(sede)
+            sedeLegale=None
+            if aziendaSistri.sedeLegale:
+                sedeLegaleSistri=aziendaSistri.sedeLegale
+                tipoSede=None
+                if sedeLegaleSistri.tipoSede:
+                    tipoSedeSistri=sedeLegaleSistri.tipoSede
+                    tipoSede=Tipi_sede(
+                        id_tipo_sede=\
+                            tipoSedeSistri.idCatalogo.__repr__(),
+                        descrizione=\
+                            tipoSedeSistri.description.__repr__()
+                    )
+                    if session.query(Tipi_sede).filter(Tipi_sede.id_tipo_sede==tipoSede.id_tipo_sede).count()>0:
+                        tipoSede=session.query(Tipi_sede).filter(Tipi_sede.id_tipo_sede==tipoSede.id_tipo_sede).first()
+                sedeLegale=Sede(
+                    idSIS=\
+                        sedeLegaleSistri.idSIS.__repr__(),
+                    nomeSede=\
+                        sedeLegaleSistri.nomeSede.__repr__(),
+                    codiceIstatLocalita=\
+                        sedeLegaleSistri.codiceIstatLocalita.__repr__(),
+                    codiceCatastale=\
+                        sedeLegaleSistri.codiceCatastale.__repr__(),
+                    nazione=\
+                        sedeLegaleSistri.nazione.__repr__(),
+                    siglaNazione=\
+                        sedeLegaleSistri.siglaNazione.__repr__(),
+                    indirizzo=\
+                        sedeLegaleSistri.indirizzo.__repr__(),
+                    nrCivico=\
+                        sedeLegaleSistri.nrCivico.__repr__(),
+                    cap=\
+                        sedeLegaleSistri.cap.__repr__(),
+                    versione=\
+                        sedeLegaleSistri.versione.long,
+                    tipoSede=tipoSede
+                )
+                if session.query(Sede).filter(Sede.idSIS==sedeLegale.idSIS).count()>0:
+                    sedeLegale=session.query(Sede).filter(Sede.idSIS==sedeLegale.idSIS).first()
             formaGiuridica=None
             if aziendaSistri.formaGiuridica:
                 formaGiuridica=Forme_giuridiche(
@@ -168,6 +208,7 @@ class GettingAziendaRequest(OWTBaseService):
                     aziendaSistri.descrizioneAttPrincipale.__repr__(),
                 versione=\
                     aziendaSistri.versione.long,
+                sedeLegale=sedeLegale,
                 formaGiuridica=formaGiuridica,
                 tipoStatoImpresa=tipoStatoImpresa,
                 sediSummary=sediSummary,

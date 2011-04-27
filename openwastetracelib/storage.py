@@ -309,6 +309,15 @@ class OWTStorage(object):
                 Column('codiceAtecoAttPrincipale',String(255)),
                 Column('descrizioneAttPrincipale',String(255)),
                 Column('versione',BigInteger,nullable=False),
+                Column('sedeLegaleFK',String(255),
+                        ForeignKey('sede.idSIS')
+                ),
+            )
+        self.metadata_sedisummary=\
+            Table('sedisummary',
+                self.metadata,
+                Column('aziendaFK',String(255),ForeignKey('azienda.idSIS')),
+                Column('sedeFK',String(255),ForeignKey('sede.idSIS')),
             )
         self.metadata_sede=\
             Table('sede',
@@ -342,7 +351,7 @@ class OWTStorage(object):
                 Column('numeroUla',Float),
                 Column('latitudine',Float),
                 Column('longitudine',Float),
-                Column('aziendaFK',String(255),ForeignKey('azienda.idSIS'))
+#                Column('aziendaFK',String(255),ForeignKey('azienda.idSIS'))
             )
         self.metadata_sottocategorie=\
             Table('sottocategorie',
