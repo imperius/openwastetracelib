@@ -23,7 +23,6 @@ HTTPS Transport for suds SOAP client using certificate and key files.
 
 import urllib2
 import httplib
-from suds.client import Client
 from suds.options import Options
 from suds.transport import *
 from suds.transport.http import HttpTransport
