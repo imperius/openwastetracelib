@@ -25,7 +25,6 @@ In particular, the L{OWTBaseService} class handles most of the basic,
 repetetive setup work that most requests do.
 """
 
-import os
 import logging
 import suds
 from suds.client import Client
