@@ -37,40 +37,39 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from distutils.core import setup
-import os
-import openwastetracelib
 
-LONG_DESCRIPTION = \
-"""A wrapper around Sistri's Web Services Soap API using Suds."""
+LONG_DESCRIPTION = """\
+A wrapper around Sistri's Web Services Soap API using Suds and SQLAlchemy."""
 
-CLASSIFIERS = [
-                'Development Status :: 3 - Alpha',
-                'Environment :: Console',
-                'Environment :: Web Environment',
-                'Intended Audience :: Developers',
-                'License :: OSI Approved :: GNU General Public License (GPL)',
-                'Natural Language :: Italian',
-                'Operating System :: OS Independent',
-                'Programming Language :: Python',
-                'Topic :: Software Development :: Libraries :: Python Modules'
-              ]
+CLASSIFIERS = \
+[
+'Development Status :: 3 - Alpha',
+'Environment :: Console',
+'Environment :: Web Environment',
+'Intended Audience :: Developers',
+'License :: OSI Approved :: GNU General Public License (GPL)',
+'Natural Language :: Italian',
+'Operating System :: OS Independent',
+'Programming Language :: Python',
+'Topic :: Software Development :: Libraries :: Python Modules'
+]
 
 KEYWORDS = 'sistri soap suds wsdl wrapper'
 
-setup(name = 'OpenWasteTrace',
-      version = "0.9",
-      description = 'Sistri Web Services Soap API wrapper.',
-      long_description = LONG_DESCRIPTION,
-      author = 'Paolo Melchiorre',
-      author_email = 'paolo.melchiorre@madec.it',
-      url = 'http://www.openwastetrace.it',
-      download_url = 'http://download.openwastetrace.it',
-      packages = ['openwastetracelib', 'openwastetracelib.services'],
-      package_dir= {'openwastetracelib': 'openwastetracelib'},
-      package_data = {'openwastetracelib': ['resources/*.dtd', 'resources/*.wsdl']},
-      platforms = ['Platform Independent'],
-      license = 'GPLv3',
-      classifiers = CLASSIFIERS,
-      keywords = KEYWORDS,
-      requires = ['suds'],
-     )
+setup(
+    name='OpenWasteTrace',
+    version="0.10",
+    description='Sistri Web Services Soap API wrapper.',
+    long_description=LONG_DESCRIPTION,
+    author='Paolo Melchiorre',
+    author_email='paolo.melchiorre@madec.it',
+    url='http://www.openwastetrace.it',
+    download_url='http://download.openwastetrace.it',
+    packages=['openwastetracelib', 'openwastetracelib.services'],
+    package_dir={'openwastetracelib': 'openwastetracelib'},
+    platforms=['Platform Independent'],
+    license='GPLv3',
+    classifiers=CLASSIFIERS,
+    keywords=KEYWORDS,
+    requires=['suds', 'SQLAlchemy'],
+)

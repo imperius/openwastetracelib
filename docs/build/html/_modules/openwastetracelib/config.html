@@ -1,0 +1,176 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>openwastetracelib.config &mdash; OpenWasteTrace v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="OpenWasteTrace v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">OpenWasteTrace v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for openwastetracelib.config</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+
+<span class="c"># OpenWasteTrace</span>
+<span class="c"># Copyright (C) 2011 Paolo Melchiorre &lt;paolo.melchiorre@madec.it&gt;</span>
+<span class="c">#</span>
+<span class="c"># This program is free software: you can redistribute it and/or modify</span>
+<span class="c"># it under the terms of the GNU General Public License as published by</span>
+<span class="c"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c"># (at your option) any later version.</span>
+<span class="c">#</span>
+<span class="c"># This program is distributed in the hope that it will be useful,</span>
+<span class="c"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c"># GNU General Public License for more details.</span>
+<span class="c">#</span>
+<span class="c"># You should have received a copy of the GNU General Public License</span>
+<span class="c"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The L{config} module contains the L{OWTConfig} class, which is passed to</span>
+<span class="sd">the SISTRI API calls. It stores useful information such as your Web Services</span>
+<span class="sd">account private key and certificate.</span>
+<span class="sd">It is strongly suggested that you create a single L{OWTConfig} object in</span>
+<span class="sd">your project and pass that to the various API calls, rather than create new</span>
+<span class="sd">L{OWTConfig} objects haphazardly. This is merely a design suggestion,</span>
+<span class="sd">treat it as such.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">sessionmaker</span>
+<span class="kn">from</span> <span class="nn">storage</span> <span class="kn">import</span> <span class="n">OWTStorage</span>
+<span class="kn">from</span> <span class="nn">binding</span> <span class="kn">import</span> <span class="n">OWTBinding</span>
+
+
+<div class="viewcode-block" id="OWTConfig"><a class="viewcode-back" href="../../modules.html#openwastetracelib.config.OWTConfig">[docs]</a><span class="k">class</span> <span class="nc">OWTConfig</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base configuration class that is used for the different SISTRI SOAP calls.</span>
+<span class="sd">    These are generally passed to the OWT request classes as arguments.</span>
+<span class="sd">    You may instantiate a L{OWTConfig} object with the minimal C{certificate},</span>
+<span class="sd">    C{privatekey} and C{dbstring} arguments and set the instance variables</span>
+<span class="sd">    documented below at a later time if you must.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">certificate</span><span class="p">,</span> <span class="n">privatekey</span><span class="p">,</span> <span class="n">dbstring</span><span class="p">,</span> <span class="n">wsdl</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        @type certificate: L{str}</span>
+<span class="sd">        @param certificate: Certificate.</span>
+<span class="sd">        @type privatekey: L{str}</span>
+<span class="sd">        @param privatekey: Private Key for your Web Systems account.</span>
+<span class="sd">            This is generally sended to you after registration.</span>
+<span class="sd">        @type dbstring: L{str}</span>
+<span class="sd">        @param dbstring: Database connection string.</span>
+<span class="sd">        @type engine: L{Engine}</span>
+<span class="sd">        @param engine: Engine connected to database.</span>
+<span class="sd">        @type session: L{Session}</span>
+<span class="sd">        @param session: The session object.</span>
+<span class="sd">        @type storage: L{Storage}</span>
+<span class="sd">        @param storage: The storage object.</span>
+<span class="sd">        @type binding: L{Binding}</span>
+<span class="sd">        @param binding: The binding object.</span>
+<span class="sd">        @type wsdl: L{str}</span>
+<span class="sd">        @keyword wsdl: In the event that you want to override the url to</span>
+<span class="sd">            your WSDL, do so with this argument.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">certificate</span> <span class="o">=</span> <span class="n">certificate</span>
+        <span class="sd">&quot;&quot;&quot;@ivar: Certificate.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">privatekey</span> <span class="o">=</span> <span class="n">privatekey</span>
+        <span class="sd">&quot;&quot;&quot;@ivar: Private key.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">wsdl</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">wsdl</span> <span class="o">=</span> <span class="s">&quot;https://sisssl.sistri.it/SIS/services/SIS?wsdl&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">wsdl</span> <span class="o">=</span> <span class="n">wsdl</span>
+        <span class="sd">&quot;&quot;&quot;@ivar: WSDL url string.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dbstring</span> <span class="o">=</span> <span class="n">dbstring</span>
+        <span class="sd">&quot;&quot;&quot;@ivar: Database connection string.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dbstring</span><span class="p">,</span> <span class="n">echo</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+        <span class="sd">&quot;&quot;&quot;@ivar: Engine connected to database.&quot;&quot;&quot;</span>
+        <span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+        <span class="sd">&quot;&quot;&quot;@ivar: The session object.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">storage</span> <span class="o">=</span> <span class="n">OWTStorage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="p">)</span>
+        <span class="sd">&quot;&quot;&quot;@ivar: The storage object.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">binding</span> <span class="o">=</span> <span class="n">OWTBinding</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="p">)</span>
+        <span class="sd">&quot;&quot;&quot;@ivar: The binding object.&quot;&quot;&quot;</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">OpenWasteTrace v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Paolo Melchiorre.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

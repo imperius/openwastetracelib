@@ -1,0 +1,545 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>2. Modules Documentation &mdash; OpenWasteTrace v0.10 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.10',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="OpenWasteTrace v0.10 documentation" href="index.html" />
+    <link rel="next" title="3. Services Documentation" href="services.html" />
+    <link rel="prev" title="1. Open Waste Trace" href="introduction.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="services.html" title="3. Services Documentation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="introduction.html" title="1. Open Waste Trace"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">OpenWasteTrace v0.10 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="modules-documentation">
+<h1>2. Modules Documentation<a class="headerlink" href="#modules-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-openwastetracelib.config">
+<span id="config-module"></span><h2>2.1. Config module<a class="headerlink" href="#module-openwastetracelib.config" title="Permalink to this headline">¶</a></h2>
+<p>The L{config} module contains the L{OWTConfig} class, which is passed to
+the SISTRI API calls. It stores useful information such as your Web Services
+account private key and certificate.
+It is strongly suggested that you create a single L{OWTConfig} object in
+your project and pass that to the various API calls, rather than create new
+L{OWTConfig} objects haphazardly. This is merely a design suggestion,
+treat it as such.</p>
+<dl class="class">
+<dt id="openwastetracelib.config.OWTConfig">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.config.</tt><tt class="descname">OWTConfig</tt><big>(</big><em>certificate</em>, <em>privatekey</em>, <em>dbstring</em>, <em>wsdl=None</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/config.html#OWTConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.config.OWTConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Base configuration class that is used for the different SISTRI SOAP calls.
+These are generally passed to the OWT request classes as arguments.
+You may instantiate a L{OWTConfig} object with the minimal C{certificate},
+C{privatekey} and C{dbstring} arguments and set the instance variables
+documented below at a later time if you must.</p>
+<dl class="attribute">
+<dt id="openwastetracelib.config.OWTConfig.binding">
+<tt class="descname">binding</tt><a class="headerlink" href="#openwastetracelib.config.OWTConfig.binding" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;ivar: The binding object.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="openwastetracelib.config.OWTConfig.certificate">
+<tt class="descname">certificate</tt><a class="headerlink" href="#openwastetracelib.config.OWTConfig.certificate" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;ivar: Certificate.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="openwastetracelib.config.OWTConfig.dbstring">
+<tt class="descname">dbstring</tt><a class="headerlink" href="#openwastetracelib.config.OWTConfig.dbstring" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;ivar: Database connection string.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="openwastetracelib.config.OWTConfig.engine">
+<tt class="descname">engine</tt><a class="headerlink" href="#openwastetracelib.config.OWTConfig.engine" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;ivar: Engine connected to database.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="openwastetracelib.config.OWTConfig.privatekey">
+<tt class="descname">privatekey</tt><a class="headerlink" href="#openwastetracelib.config.OWTConfig.privatekey" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;ivar: Private key.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="openwastetracelib.config.OWTConfig.session">
+<tt class="descname">session</tt><a class="headerlink" href="#openwastetracelib.config.OWTConfig.session" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;ivar: The session object.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="openwastetracelib.config.OWTConfig.storage">
+<tt class="descname">storage</tt><a class="headerlink" href="#openwastetracelib.config.OWTConfig.storage" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;ivar: The storage object.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-openwastetracelib.binding">
+<span id="binding-module"></span><h2>2.2. Binding module<a class="headerlink" href="#module-openwastetracelib.binding" title="Permalink to this headline">¶</a></h2>
+<p>The I{owt_binding} module provides mapping for objects and tables.</p>
+<dl class="class">
+<dt id="openwastetracelib.binding.OWTBinding">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.binding.</tt><tt class="descname">OWTBinding</tt><big>(</big><em>storage_obj</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/binding.html#OWTBinding"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.binding.OWTBinding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Base configuration class that is used for the binding.
+These are generally passed to the OWT request classes as arguments.</p>
+<dl class="attribute">
+<dt id="openwastetracelib.binding.OWTBinding.storage">
+<tt class="descname">storage</tt><a class="headerlink" href="#openwastetracelib.binding.OWTBinding.storage" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;ivar: OWTStorage.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-openwastetracelib.objects">
+<span id="objects-module"></span><h2>2.3. Objects module<a class="headerlink" href="#module-openwastetracelib.objects" title="Permalink to this headline">¶</a></h2>
+<p>The I{objects} module provides objects definition.</p>
+<dl class="class">
+<dt id="openwastetracelib.objects.Associazioni_categoria">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.objects.</tt><tt class="descname">Associazioni_categoria</tt><big>(</big><em>id_associazione_categoria</em>, <em>ass_categoria_nome=None</em>, <em>id_accordo=None</em>, <em>sigla_provincia=None</em>, <em>sigla_cciaa=None</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/objects.html#Associazioni_categoria"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.objects.Associazioni_categoria" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="openwastetracelib.objects.Azienda">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.objects.</tt><tt class="descname">Azienda</tt><big>(</big><em>ragioneSociale</em>, <em>codiceFiscale</em>, <em>versione</em>, <em>idSIS</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/objects.html#Azienda"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.objects.Azienda" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Azienda object with idSIS.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="openwastetracelib.objects.Camere_commercio">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.objects.</tt><tt class="descname">Camere_commercio</tt><big>(</big><em>id_camera_commercio</em>, <em>indirizzo=None</em>, <em>numero_civico=None</em>, <em>cap=None</em>, <em>nome_persona_riferimento=None</em>, <em>cognome_persona_riferimento=None</em>, <em>email_persona_riferimento=None</em>, <em>telefono_persona_riferimento=None</em>, <em>sigla_cciaa=None</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/objects.html#Camere_commercio"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.objects.Camere_commercio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="openwastetracelib.objects.Caratteristiche_pericolo">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.objects.</tt><tt class="descname">Caratteristiche_pericolo</tt><big>(</big><em>id_caratteristica_pericolo</em>, <em>descr_car_pericolo</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/objects.html#Caratteristiche_pericolo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.objects.Caratteristiche_pericolo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="openwastetracelib.objects.Categorie_raee">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.objects.</tt><tt class="descname">Categorie_raee</tt><big>(</big><em>id_categoria_raee</em>, <em>descrizione_categoria_raee</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/objects.html#Categorie_raee"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.objects.Categorie_raee" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="openwastetracelib.objects.Classi_adr">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.objects.</tt><tt class="descname">Classi_adr</tt><big>(</big><em>id_classe_adr</em>, <em>descrizione_classe_adr</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/objects.html#Classi_adr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.objects.Classi_adr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="openwastetracelib.objects.Cod_rec_1013">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.objects.</tt><tt class="descname">Cod_rec_1013</tt><big>(</big><em>id_cod_rec_1013</em>, <em>descrizione_cod_rec</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/objects.html#Cod_rec_1013"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.objects.Cod_rec_1013" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="openwastetracelib.objects.Codici_cer_iii_livello">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.objects.</tt><tt class="descname">Codici_cer_iii_livello</tt><big>(</big><em>id_codice_cer_iii_livello</em>, <em>escrizione_iii_livello</em>, <em>flag_pericoloso</em>, <em>flag_attivo</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/objects.html#Codici_cer_iii_livello"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.objects.Codici_cer_iii_livello" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="openwastetracelib.objects.DescrittoreCatalogo">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.objects.</tt><tt class="descname">DescrittoreCatalogo</tt><big>(</big><em>catalogo</em>, <em>versione</em>, <em>descrizione</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/objects.html#DescrittoreCatalogo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.objects.DescrittoreCatalogo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="openwastetracelib.objects.Forme_giuridiche">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.objects.</tt><tt class="descname">Forme_giuridiche</tt><big>(</big><em>id_tipo_forma_giuridica</em>, <em>descrizione_forma_giuridica=None</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/objects.html#Forme_giuridiche"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.objects.Forme_giuridiche" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="openwastetracelib.objects.Localita_estere">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.objects.</tt><tt class="descname">Localita_estere</tt><big>(</big><em>id_localita</em>, <em>nazione</em>, <em>sigla_nazione</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/objects.html#Localita_estere"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.objects.Localita_estere" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="openwastetracelib.objects.Numeri_onu">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.objects.</tt><tt class="descname">Numeri_onu</tt><big>(</big><em>id_numero_onu</em>, <em>descrizione_numero_onu</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/objects.html#Numeri_onu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.objects.Numeri_onu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="openwastetracelib.objects.Operazioni_impianti">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.objects.</tt><tt class="descname">Operazioni_impianti</tt><big>(</big><em>id_operazione_impianto</em>, <em>id_tipo_operazione_impianto</em>, <em>operazione_impianto</em>, <em>ordinamento</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/objects.html#Operazioni_impianti"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.objects.Operazioni_impianti" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="openwastetracelib.objects.Ruoli_aziendali">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.objects.</tt><tt class="descname">Ruoli_aziendali</tt><big>(</big><em>id_ruolo_aziendale</em>, <em>ruolo_aziendale</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/objects.html#Ruoli_aziendali"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.objects.Ruoli_aziendali" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="openwastetracelib.objects.Sede">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.objects.</tt><tt class="descname">Sede</tt><big>(</big><em>nomeSede</em>, <em>codiceIstatLocalita</em>, <em>codiceCatastale</em>, <em>nazione</em>, <em>siglaNazione</em>, <em>indirizzo</em>, <em>versione</em>, <em>idSIS</em>, <em>tipoSede=None</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/objects.html#Sede"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.objects.Sede" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Sede object with idSIS.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="openwastetracelib.objects.Sottocategorie_star">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.objects.</tt><tt class="descname">Sottocategorie_star</tt><big>(</big><em>id_sottocategoria_star</em>, <em>id_categoria_star=None</em>, <em>descrizione_sottocategoria=None</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/objects.html#Sottocategorie_star"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.objects.Sottocategorie_star" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="openwastetracelib.objects.Sottotipi_veicolo">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.objects.</tt><tt class="descname">Sottotipi_veicolo</tt><big>(</big><em>id_sottotipo_veicolo</em>, <em>descrizione</em>, <em>codice_sottotipo_veicolo</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/objects.html#Sottotipi_veicolo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.objects.Sottotipi_veicolo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="openwastetracelib.objects.Stati_fisici_rifiuto">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.objects.</tt><tt class="descname">Stati_fisici_rifiuto</tt><big>(</big><em>id_stato_fisico_rifiuto</em>, <em>descr_stato_fisico_rifiuto</em>, <em>codice_stato_fisico</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/objects.html#Stati_fisici_rifiuto"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.objects.Stati_fisici_rifiuto" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="openwastetracelib.objects.Stati_registrazioni_crono">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.objects.</tt><tt class="descname">Stati_registrazioni_crono</tt><big>(</big><em>id_stato_registrazione_crono</em>, <em>descrizione_stato_reg_crono</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/objects.html#Stati_registrazioni_crono"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.objects.Stati_registrazioni_crono" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="openwastetracelib.objects.Stati_registro_cronologico">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.objects.</tt><tt class="descname">Stati_registro_cronologico</tt><big>(</big><em>id_stato_registro_cronologico</em>, <em>descrizione_stato_reg_crono</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/objects.html#Stati_registro_cronologico"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.objects.Stati_registro_cronologico" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="openwastetracelib.objects.Stati_scheda_sistri">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.objects.</tt><tt class="descname">Stati_scheda_sistri</tt><big>(</big><em>id_stato_scheda_sistri</em>, <em>stato_scheda_sistri</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/objects.html#Stati_scheda_sistri"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.objects.Stati_scheda_sistri" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="openwastetracelib.objects.Stati_utente_idm">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.objects.</tt><tt class="descname">Stati_utente_idm</tt><big>(</big><em>id_stato_utente_idm</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/objects.html#Stati_utente_idm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.objects.Stati_utente_idm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="openwastetracelib.objects.Stati_veicolo">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.objects.</tt><tt class="descname">Stati_veicolo</tt><big>(</big><em>id_stato_veicolo</em>, <em>descrizione_stato_veicolo</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/objects.html#Stati_veicolo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.objects.Stati_veicolo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="openwastetracelib.objects.Tipi_documento">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.objects.</tt><tt class="descname">Tipi_documento</tt><big>(</big><em>id_tipo_documento</em>, <em>descrizione</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/objects.html#Tipi_documento"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.objects.Tipi_documento" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="openwastetracelib.objects.Tipi_esito_trasporto">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.objects.</tt><tt class="descname">Tipi_esito_trasporto</tt><big>(</big><em>id_esito_trasporto</em>, <em>descr_esito_trasporto</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/objects.html#Tipi_esito_trasporto"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.objects.Tipi_esito_trasporto" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="openwastetracelib.objects.Tipi_imballaggi">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.objects.</tt><tt class="descname">Tipi_imballaggi</tt><big>(</big><em>id_tipo_imballaggio</em>, <em>tipo_imballaggio</em>, <em>codice_imballaggio</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/objects.html#Tipi_imballaggi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.objects.Tipi_imballaggi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="openwastetracelib.objects.Tipi_reg_cronologico">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.objects.</tt><tt class="descname">Tipi_reg_cronologico</tt><big>(</big><em>id_tipo_reg_cronologico</em>, <em>descrizione_tipo_reg_crono</em>, <em>macro_categoria</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/objects.html#Tipi_reg_cronologico"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.objects.Tipi_reg_cronologico" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="openwastetracelib.objects.Tipi_registrazioni_crono">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.objects.</tt><tt class="descname">Tipi_registrazioni_crono</tt><big>(</big><em>id_tipo_registrazione_crono</em>, <em>descr_tipo_reg_crono</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/objects.html#Tipi_registrazioni_crono"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.objects.Tipi_registrazioni_crono" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="openwastetracelib.objects.Tipi_sede">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.objects.</tt><tt class="descname">Tipi_sede</tt><big>(</big><em>id_tipo_sede</em>, <em>descrizione=None</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/objects.html#Tipi_sede"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.objects.Tipi_sede" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="openwastetracelib.objects.Tipi_stato_impresa">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.objects.</tt><tt class="descname">Tipi_stato_impresa</tt><big>(</big><em>id_tipo_stato_impresa</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/objects.html#Tipi_stato_impresa"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.objects.Tipi_stato_impresa" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="openwastetracelib.objects.Tipi_trasporto">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.objects.</tt><tt class="descname">Tipi_trasporto</tt><big>(</big><em>id_tipo_trasporto</em>, <em>descrizione_tipo_trasporto</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/objects.html#Tipi_trasporto"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.objects.Tipi_trasporto" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="openwastetracelib.objects.Tipi_veicolo">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.objects.</tt><tt class="descname">Tipi_veicolo</tt><big>(</big><em>id_tipo_veicolo</em>, <em>descrizione</em>, <em>codice_tipo_veicolo</em>, <em>flag_rimorchio</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/objects.html#Tipi_veicolo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.objects.Tipi_veicolo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="openwastetracelib.objects.Tipologie_raee">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.objects.</tt><tt class="descname">Tipologie_raee</tt><big>(</big><em>id_tipologia_raee</em>, <em>descrizione_tipologia_raee</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/objects.html#Tipologie_raee"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.objects.Tipologie_raee" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="openwastetracelib.objects.Veicolo">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.objects.</tt><tt class="descname">Veicolo</tt><big>(</big><em>targa</em>, <em>tipoVeicolo=None</em>, <em>statoVeicolo=None</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/objects.html#Veicolo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.objects.Veicolo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Veicolo object with idSIS.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-openwastetracelib.storage">
+<span id="storage-module"></span><h2>2.4. Storage module<a class="headerlink" href="#module-openwastetracelib.storage" title="Permalink to this headline">¶</a></h2>
+<p>The L{storage} module contains the L{OWTStorage} class.
+It stores information about storage.</p>
+<dl class="class">
+<dt id="openwastetracelib.storage.OWTStorage">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.storage.</tt><tt class="descname">OWTStorage</tt><big>(</big><em>engine</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/storage.html#OWTStorage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.storage.OWTStorage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Base configuration class that is used for the storage.
+These are generally passed to the OWT request classes as arguments.</p>
+<dl class="attribute">
+<dt id="openwastetracelib.storage.OWTStorage.engine">
+<tt class="descname">engine</tt><a class="headerlink" href="#openwastetracelib.storage.OWTStorage.engine" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;ivar: Engine connected to database.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="openwastetracelib.storage.OWTStorage.metadata">
+<tt class="descname">metadata</tt><a class="headerlink" href="#openwastetracelib.storage.OWTStorage.metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;ivar: metadata.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-openwastetracelib.https_cert">
+<span id="https-cert-module"></span><h2>2.5. Https_cert module<a class="headerlink" href="#module-openwastetracelib.https_cert" title="Permalink to this headline">¶</a></h2>
+<p>HTTPS Transport for suds SOAP client using certificate and key files.</p>
+<dl class="class">
+<dt id="openwastetracelib.https_cert.HTTPSClientAuthHandler">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.https_cert.</tt><tt class="descname">HTTPSClientAuthHandler</tt><big>(</big><em>cert</em>, <em>key</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/https_cert.html#HTTPSClientAuthHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.https_cert.HTTPSClientAuthHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">urllib2.HTTPSHandler</span></tt></p>
+<p>HTTPS Client Auth solution for urllib2.
+Inspired by <a class="reference external" href="http://bugs.python.org/issue3466">http://bugs.python.org/issue3466</a> and improved by David Norton
+of Three Pillar Software. In this implementation, we use properties passed
+in rather than static module fields.
+Found at: <a class="reference external" href="http://www.threepillarsoftware.com/soap_client_auth">http://www.threepillarsoftware.com/soap_client_auth</a></p>
+<dl class="method">
+<dt id="openwastetracelib.https_cert.HTTPSClientAuthHandler.https_open">
+<tt class="descname">https_open</tt><big>(</big><em>req</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/https_cert.html#HTTPSClientAuthHandler.https_open"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.https_cert.HTTPSClientAuthHandler.https_open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rather than pass in a reference to a connection class, we pass in
+a reference to a function which, for all intents and purposes,
+will behave as a constructor</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt>
+<tt class="descname">HttpAuthUsingCert(cert, key, options=Definitions:</tt></dt>
+<dt>
+<tt class="descname">prettyxml: classes=(&lt;type 'bool'&gt;,), default=False</tt></dt>
+<dt>
+<tt class="descname">cachingpolicy: classes=(&lt;type 'int'&gt;,), default=0</tt></dt>
+<dt>
+<tt class="descname">soapheaders: classes=*, default=()</tt></dt>
+<dt>
+<tt class="descname">service: classes=(&lt;type 'int'&gt;, &lt;type 'basestring'&gt;), default=None</tt></dt>
+<dt>
+<tt class="descname">doctor: classes=(&lt;class suds.xsd.doctor.Doctor at 0xacf35cc&gt;,), default=None</tt></dt>
+<dt>
+<tt class="descname">cache: classes=(&lt;class suds.cache.Cache at 0xaba232c&gt;,), default=&lt;suds.cache.NoCache instance at 0xabb9bcc&gt;</tt></dt>
+<dt>
+<tt class="descname">retxml: classes=(&lt;type 'bool'&gt;,), default=False</tt></dt>
+<dt>
+<tt class="descname">prefixes: classes=(&lt;type 'bool'&gt;,), default=True</tt></dt>
+<dt>
+<tt class="descname">faults: classes=(&lt;type 'bool'&gt;,), default=True</tt></dt>
+<dt>
+<tt class="descname">wsse: classes=(&lt;class suds.wsse.Security at 0xace0efc&gt;,), default=None</tt></dt>
+<dt>
+<tt class="descname">autoblend: classes=(&lt;type 'bool'&gt;,), default=False</tt></dt>
+<dt>
+<tt class="descname">location: classes=(&lt;type 'basestring'&gt;,), default=None</tt></dt>
+<dt>
+<tt class="descname">plugins: classes=(&lt;type 'list'&gt;, &lt;type 'tuple'&gt;), default=[]</tt></dt>
+<dt>
+<tt class="descname">xstq: classes=(&lt;type 'bool'&gt;,), default=True</tt></dt>
+<dt>
+<tt class="descname">port: classes=(&lt;type 'int'&gt;, &lt;type 'basestring'&gt;), default=None</tt></dt>
+<dt>
+<tt class="descname">transport: classes=(&lt;class suds.transport.Transport at 0xac7847c&gt;,), default=None</tt></dt>
+<dt>
+<tt class="descname">Content:</tt></dt>
+<dt>
+<tt class="descname">('cachingpolicy', 0)</tt></dt>
+<dt>
+<tt class="descname">('soapheaders', ())</tt></dt>
+<dt>
+<tt class="descname">('service', None)</tt></dt>
+<dt>
+<tt class="descname">('doctor', None)</tt></dt>
+<dt>
+<tt class="descname">('cache', &lt;suds.cache.NoCache instance at 0xabb9bcc&gt;)</tt></dt>
+<dt>
+<tt class="descname">('port', None)</tt></dt>
+<dt>
+<tt class="descname">('prefixes', True)</tt></dt>
+<dt>
+<tt class="descname">('faults', True)</tt></dt>
+<dt>
+<tt class="descname">('wsse', None)</tt></dt>
+<dt>
+<tt class="descname">('autoblend', False)</tt></dt>
+<dt>
+<tt class="descname">('location', None)</tt></dt>
+<dt>
+<tt class="descname">('plugins', [])</tt></dt>
+<dt>
+<tt class="descname">('prettyxml', False)</tt></dt>
+<dt>
+<tt class="descname">('retxml', False)</tt></dt>
+<dt>
+<tt class="descname">('transport', None)</tt></dt>
+<dt>
+<tt class="descname">('xstq', True)</tt></dt>
+<dt>
+<tt class="descname">Linked:)</tt></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">suds.transport.http.HttpTransport</span></tt></p>
+<p>Provides http authentication using certificate and key.
+&#64;ivar handler: The authentication handler.
+&#64;ivar cert: Path to PEM certificate file.
+&#64;ivar key: Path to PEM private key file.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">2. Modules Documentation</a><ul>
+<li><a class="reference internal" href="#module-openwastetracelib.config">2.1. Config module</a></li>
+<li><a class="reference internal" href="#module-openwastetracelib.binding">2.2. Binding module</a></li>
+<li><a class="reference internal" href="#module-openwastetracelib.objects">2.3. Objects module</a></li>
+<li><a class="reference internal" href="#module-openwastetracelib.storage">2.4. Storage module</a></li>
+<li><a class="reference internal" href="#module-openwastetracelib.https_cert">2.5. Https_cert module</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="introduction.html"
+                        title="previous chapter">1. Open Waste Trace</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="services.html"
+                        title="next chapter">3. Services Documentation</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/modules.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="services.html" title="3. Services Documentation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="introduction.html" title="1. Open Waste Trace"
+             >previous</a> |</li>
+        <li><a href="index.html">OpenWasteTrace v0.10 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Paolo Melchiorre.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

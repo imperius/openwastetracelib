@@ -1,0 +1,486 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>openwastetracelib.storage &mdash; OpenWasteTrace v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="OpenWasteTrace v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">OpenWasteTrace v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for openwastetracelib.storage</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+
+<span class="c"># OpenWasteTrace</span>
+<span class="c"># Copyright (C) 2011 Paolo Melchiorre &lt;paolo.melchiorre@madec.it&gt;</span>
+<span class="c">#</span>
+<span class="c"># This program is free software: you can redistribute it and/or modify</span>
+<span class="c"># it under the terms of the GNU General Public License as published by</span>
+<span class="c"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c"># (at your option) any later version.</span>
+<span class="c">#</span>
+<span class="c"># This program is distributed in the hope that it will be useful,</span>
+<span class="c"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c"># GNU General Public License for more details.</span>
+<span class="c">#</span>
+<span class="c"># You should have received a copy of the GNU General Public License</span>
+<span class="c"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The L{storage} module contains the L{OWTStorage} class.</span>
+<span class="sd">It stores information about storage.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Table</span><span class="p">,</span> <span class="n">Column</span><span class="p">,</span> <span class="n">MetaData</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> \
+    <span class="n">DateTime</span><span class="p">,</span> <span class="n">BigInteger</span><span class="p">,</span> <span class="n">Float</span>
+
+
+<div class="viewcode-block" id="OWTStorage"><a class="viewcode-back" href="../../modules.html#openwastetracelib.storage.OWTStorage">[docs]</a><span class="k">class</span> <span class="nc">OWTStorage</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base configuration class that is used for the storage.</span>
+<span class="sd">    These are generally passed to the OWT request classes as arguments.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">engine</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        @type meta: L{MetaData}</span>
+<span class="sd">        @param meta: The metadata object of OWTStorage.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">engine</span> <span class="o">=</span> <span class="n">engine</span>
+        <span class="sd">&quot;&quot;&quot;@ivar: Engine connected to database.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">MetaData</span><span class="p">()</span>
+        <span class="sd">&quot;&quot;&quot;@ivar: metadata.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_descrittorecatalogo</span> <span class="o">=</span> \
+            <span class="n">Table</span><span class="p">(</span><span class="s">&#39;descrittorecatalogo&#39;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;catalogo&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                        <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;versione&#39;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;descrizione&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_stati_scheda_sistri</span> <span class="o">=</span> \
+            <span class="n">Table</span><span class="p">(</span><span class="s">&#39;stati_scheda_sistri&#39;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;id_stato_scheda_sistri&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                        <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;stato_scheda_sistri&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_stati_fisici_rifiuto</span> <span class="o">=</span> \
+            <span class="n">Table</span><span class="p">(</span><span class="s">&#39;stati_fisici_rifiuto&#39;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;id_stato_fisico_rifiuto&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                        <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;descr_stato_fisico_rifiuto&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+                        <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;codice_stato_fisico&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_forme_giuridiche</span> <span class="o">=</span> \
+            <span class="n">Table</span><span class="p">(</span><span class="s">&#39;forme_giuridiche&#39;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;id_tipo_forma_giuridica&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                        <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;descrizione_forma_giuridica&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+                        <span class="n">nullable</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_tipi_reg_cronologico</span> <span class="o">=</span> \
+            <span class="n">Table</span><span class="p">(</span><span class="s">&#39;tipi_reg_cronologico&#39;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;id_tipo_reg_cronologico&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                        <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;descrizione_tipo_reg_crono&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+                        <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;macro_categoria&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_operazioni_impianti</span> <span class="o">=</span> \
+            <span class="n">Table</span><span class="p">(</span><span class="s">&#39;operazioni_impianti&#39;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;id_operazione_impianto&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                        <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;id_tipo_operazione_impianto&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+                        <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;operazione_impianto&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;ordinamento&#39;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_categorie_raee</span> <span class="o">=</span> \
+            <span class="n">Table</span><span class="p">(</span><span class="s">&#39;categorie_raee&#39;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;id_categoria_raee&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                        <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;descrizione_categoria_raee&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+                        <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_tipi_veicolo</span> <span class="o">=</span> \
+            <span class="n">Table</span><span class="p">(</span><span class="s">&#39;tipi_veicolo&#39;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;id_tipo_veicolo&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                        <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;descrizione&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;codice_tipo_veicolo&#39;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;flag_rimorchio&#39;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_tipi_sede</span> <span class="o">=</span> \
+            <span class="n">Table</span><span class="p">(</span><span class="s">&#39;tipi_sede&#39;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;id_tipo_sede&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                        <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_tipi_registrazioni_crono</span> <span class="o">=</span> \
+            <span class="n">Table</span><span class="p">(</span><span class="s">&#39;tipi_registrazioni_crono&#39;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;id_tipo_registrazione_crono&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+                        <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;descr_tipo_reg_crono&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_numeri_onu</span> <span class="o">=</span> \
+            <span class="n">Table</span><span class="p">(</span><span class="s">&#39;numeri_onu&#39;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;id_numero_onu&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                        <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;descrizione_numero_onu&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_localita_estere</span> <span class="o">=</span> \
+            <span class="n">Table</span><span class="p">(</span><span class="s">&#39;localita_estere&#39;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;id_localita&#39;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                        <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;nazione&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;sigla_nazione&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_associazioni_categoria</span> <span class="o">=</span> \
+            <span class="n">Table</span><span class="p">(</span><span class="s">&#39;associazioni_categoria&#39;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;id_associazione_categoria&#39;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                        <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;ass_categoria_nome&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;id_accordo&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;sigla_provincia&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;sigla_cciaa&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_stati_registro_cronologico</span> <span class="o">=</span> \
+            <span class="n">Table</span><span class="p">(</span><span class="s">&#39;stati_registro_cronologico&#39;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;id_stato_registro_cronologico&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+                        <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;descrizione_stato_reg_crono&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+                        <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_tipi_imballaggi</span> <span class="o">=</span> \
+            <span class="n">Table</span><span class="p">(</span><span class="s">&#39;tipi_imballaggi&#39;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;id_tipo_imballaggio&#39;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                        <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;tipo_imballaggio&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;codice_imballaggio&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_sottocategorie_star</span> <span class="o">=</span> \
+            <span class="n">Table</span><span class="p">(</span><span class="s">&#39;sottocategorie_star&#39;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;id_sottocategoria_star&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                        <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;id_categoria_star&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;descrizione_sottocategoria&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+                        <span class="n">nullable</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_tipi_documento</span> <span class="o">=</span> \
+            <span class="n">Table</span><span class="p">(</span><span class="s">&#39;tipi_documento&#39;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;id_tipo_documento&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                        <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;descrizione&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_classi_adr</span> <span class="o">=</span> \
+            <span class="n">Table</span><span class="p">(</span><span class="s">&#39;classi_adr&#39;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;id_classe_adr&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                        <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;descrizione_classe_adr&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_ruoli_aziendali</span> <span class="o">=</span> \
+            <span class="n">Table</span><span class="p">(</span><span class="s">&#39;ruoli_aziendali&#39;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;id_ruolo_aziendale&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                        <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;ruolo_aziendale&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_stati_utente_idm</span> <span class="o">=</span> \
+            <span class="n">Table</span><span class="p">(</span><span class="s">&#39;stati_utente_idm&#39;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;id_stato_utente_idm&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                        <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_camere_commercio</span> <span class="o">=</span> \
+            <span class="n">Table</span><span class="p">(</span><span class="s">&#39;camere_commercio&#39;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;id_camera_commercio&#39;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                        <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;indirizzo&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;numero_civico&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;cap&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;nome_persona_riferimento&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;cognome_persona_riferimento&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+                        <span class="n">nullable</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;email_persona_riferimento&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+                        <span class="n">nullable</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;telefono_persona_riferimento&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+                        <span class="n">nullable</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;sigla_cciaa&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_tipi_esito_trasporto</span> <span class="o">=</span> \
+            <span class="n">Table</span><span class="p">(</span><span class="s">&#39;tipi_esito_trasporto&#39;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;id_esito_trasporto&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                        <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;descr_esito_trasporto&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_stati_veicolo</span> <span class="o">=</span> \
+            <span class="n">Table</span><span class="p">(</span><span class="s">&#39;stati_veicolo&#39;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;id_stato_veicolo&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                        <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;descrizione_stato_veicolo&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+                        <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_cod_rec_1013</span> <span class="o">=</span> \
+            <span class="n">Table</span><span class="p">(</span><span class="s">&#39;cod_rec_1013&#39;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;id_cod_rec_1013&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                        <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;descrizione_cod_rec&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_stati_registrazioni_crono</span> <span class="o">=</span> \
+            <span class="n">Table</span><span class="p">(</span><span class="s">&#39;stati_registrazioni_crono&#39;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;id_stato_registrazione_crono&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+                        <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;descrizione_stato_reg_crono&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+                        <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_tipi_trasporto</span> <span class="o">=</span> \
+            <span class="n">Table</span><span class="p">(</span><span class="s">&#39;tipi_trasporto&#39;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;id_tipo_trasporto&#39;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                        <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;descrizione_tipo_trasporto&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+                        <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_tipologie_raee</span> <span class="o">=</span> \
+            <span class="n">Table</span><span class="p">(</span><span class="s">&#39;tipologie_raee&#39;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;id_tipologia_raee&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                        <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;descrizione_tipologia_raee&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+                        <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_codici_cer_iii_livello</span> <span class="o">=</span> \
+            <span class="n">Table</span><span class="p">(</span><span class="s">&#39;codici_cer_iii_livello&#39;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;id_codice_cer_iii_livello&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+                        <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;escrizione_iii_livello&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;flag_pericoloso&#39;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;flag_attivo&#39;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_tipi_stato_impresa</span> <span class="o">=</span> \
+            <span class="n">Table</span><span class="p">(</span><span class="s">&#39;tipi_stato_impresa&#39;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;id_tipo_stato_impresa&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                        <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_caratteristiche_pericolo</span> <span class="o">=</span> \
+            <span class="n">Table</span><span class="p">(</span><span class="s">&#39;caratteristiche_pericolo&#39;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;id_caratteristica_pericolo&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+                        <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;descr_car_pericolo&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_sottotipi_veicolo</span> <span class="o">=</span> \
+            <span class="n">Table</span><span class="p">(</span><span class="s">&#39;sottotipi_veicolo&#39;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;id_sottotipo_veicolo&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                        <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;descrizione&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;codice_sottotipo_veicolo&#39;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_azienda</span> <span class="o">=</span> \
+            <span class="n">Table</span><span class="p">(</span><span class="s">&#39;azienda&#39;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;idSIS&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;ragioneSociale&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;cognome&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">)),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;nome&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">)),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;formaGiuridicaFK&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+                        <span class="n">ForeignKey</span><span class="p">(</span><span class="s">&#39;forme_giuridiche.id_tipo_forma_giuridica&#39;</span><span class="p">)</span>
+                <span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;tipoStatoImpresaFK&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+                        <span class="n">ForeignKey</span><span class="p">(</span><span class="s">&#39;tipi_stato_impresa.id_tipo_stato_impresa&#39;</span><span class="p">)</span>
+                <span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;codiceFiscale&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">25</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;pIva&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">11</span><span class="p">)),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;numeroIscrizioneAlbo&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">)),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;cciaaRea&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">)),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;numeroIscrizioneRea&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">)),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;codiceIstatAttPrincipale&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">)),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;dataIscrizioneStar&#39;</span><span class="p">,</span> <span class="n">DateTime</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;codiceAtecoAttPrincipale&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">)),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;descrizioneAttPrincipale&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">)),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;versione&#39;</span><span class="p">,</span> <span class="n">BigInteger</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;sedeLegaleFK&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+                        <span class="n">ForeignKey</span><span class="p">(</span><span class="s">&#39;sede.idSIS&#39;</span><span class="p">)</span>
+                <span class="p">),</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_sedisummary</span> <span class="o">=</span> \
+            <span class="n">Table</span><span class="p">(</span><span class="s">&#39;sedisummary&#39;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;aziendaFK&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s">&#39;azienda.idSIS&#39;</span><span class="p">)),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;sedeFK&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s">&#39;sede.idSIS&#39;</span><span class="p">)),</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_sede</span> <span class="o">=</span> \
+            <span class="n">Table</span><span class="p">(</span><span class="s">&#39;sede&#39;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;idSIS&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;tipoSedeFK&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+                        <span class="n">ForeignKey</span><span class="p">(</span><span class="s">&#39;tipi_sede.id_tipo_sede&#39;</span><span class="p">)</span>
+                <span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;nomeSede&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;codiceIstatLocalita&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;codiceCatastale&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;nazione&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;siglaNazione&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;indirizzo&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;versione&#39;</span><span class="p">,</span> <span class="n">BigInteger</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;nrCivico&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">)),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;cap&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">)),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;telefono&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">)),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;fax&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">)),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;numeroAddetti&#39;</span><span class="p">,</span> <span class="n">BigInteger</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;cameraCommercioFK&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+                        <span class="n">ForeignKey</span><span class="p">(</span><span class="s">&#39;camere_commercio.id_camera_commercio&#39;</span><span class="p">)</span>
+                <span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;associazioneCategoriaFK&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+                        <span class="n">ForeignKey</span><span class="p">(</span><span class="s">&#39;associazioni_categoria.</span><span class="se">\</span>
+<span class="s">                                    id_associazione_categoria&#39;</span><span class="p">)</span>
+                <span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;codiceIstatAttPrincipale&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">)),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;codiceAtecoAttPrincipale&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">)),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;descrizioneAttPrincipale&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">)),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;numeroIscrizioneRea&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">)),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;numeroUla&#39;</span><span class="p">,</span> <span class="n">Float</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;latitudine&#39;</span><span class="p">,</span> <span class="n">Float</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;longitudine&#39;</span><span class="p">,</span> <span class="n">Float</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_sottocategorie</span> <span class="o">=</span> \
+            <span class="n">Table</span><span class="p">(</span><span class="s">&#39;sottocategorie&#39;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;sedeFK&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s">&#39;sede.idSIS&#39;</span><span class="p">)),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;sottocategorie_starFK&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+                    <span class="n">ForeignKey</span><span class="p">(</span><span class="s">&#39;sottocategorie_star.id_sottocategoria_star&#39;</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_veicolo</span> <span class="o">=</span> \
+            <span class="n">Table</span><span class="p">(</span><span class="s">&#39;veicolo&#39;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;targa&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;tipoVeicoloFK&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+                    <span class="n">ForeignKey</span><span class="p">(</span><span class="s">&#39;tipi_veicolo.id_tipo_veicolo&#39;</span><span class="p">)</span>
+                <span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;sottotipoVeicoloFK&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+                    <span class="n">ForeignKey</span><span class="p">(</span><span class="s">&#39;sottotipi_veicolo.id_sottotipo_veicolo&#39;</span><span class="p">)</span>
+                <span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;statoVeicoloFK&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+                    <span class="n">ForeignKey</span><span class="p">(</span><span class="s">&#39;stati_veicolo.id_stato_veicolo&#39;</span><span class="p">)</span>
+                <span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;annoImmatricolazione&#39;</span><span class="p">,</span> <span class="n">BigInteger</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;marca&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;modello&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_codiciceriiilivello</span> <span class="o">=</span> \
+            <span class="n">Table</span><span class="p">(</span><span class="s">&#39;codiciceriiilivello&#39;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;veicoloFK&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s">&#39;veicolo.targa&#39;</span><span class="p">)),</span>
+                <span class="n">Column</span><span class="p">(</span><span class="s">&#39;codici_cer_iii_livelloFK&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+                    <span class="n">ForeignKey</span><span class="p">(</span><span class="s">&#39;codici_cer_iii_livello.</span><span class="se">\</span>
+<span class="s">                                id_codice_cer_iii_livello&#39;</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">create_all</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">OpenWasteTrace v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Paolo Melchiorre.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

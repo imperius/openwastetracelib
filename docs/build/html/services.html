@@ -1,0 +1,268 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>3. Services Documentation &mdash; OpenWasteTrace v0.10 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.10',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="OpenWasteTrace v0.10 documentation" href="index.html" />
+    <link rel="prev" title="2. Modules Documentation" href="modules.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="modules.html" title="2. Modules Documentation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">OpenWasteTrace v0.10 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="services-documentation">
+<h1>3. Services Documentation<a class="headerlink" href="#services-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-openwastetracelib.base_service">
+<span id="base-service"></span><h2>3.1. Base service<a class="headerlink" href="#module-openwastetracelib.base_service" title="Permalink to this headline">¶</a></h2>
+<p>The L{base_service} module contains classes that form the low level foundations
+of the Web Service API.
+Things that many different kinds of requests have in common may be found here.
+In particular, the L{OWTBaseService} class handles most of the basic,
+repetetive setup work that most requests do.</p>
+<dl class="class">
+<dt id="openwastetracelib.base_service.OWTBaseService">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.base_service.</tt><tt class="descname">OWTBaseService</tt><big>(</big><em>config_obj</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/base_service.html#OWTBaseService"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.base_service.OWTBaseService" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>This class is the master class for all SISTRI request objects.
+It gets all of the common SOAP objects created via suds
+and populates them with values from a L{OWTConfig} object,
+along with keyword arguments via L{__init__}.
+&#64;note: This object should never be used directly, use one of the included
+sub-classes.</p>
+<dl class="attribute">
+<dt id="openwastetracelib.base_service.OWTBaseService.config_obj">
+<tt class="descname">config_obj</tt><a class="headerlink" href="#openwastetracelib.base_service.OWTBaseService.config_obj" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;ivar: The OWTConfig object to pull auth info from.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="openwastetracelib.base_service.OWTBaseService.create_wsdl_object_of_type">
+<tt class="descname">create_wsdl_object_of_type</tt><big>(</big><em>type_name</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/base_service.html#OWTBaseService.create_wsdl_object_of_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.base_service.OWTBaseService.create_wsdl_object_of_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates and returns a WSDL object of the specified type.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="openwastetracelib.base_service.OWTBaseService.logger">
+<tt class="descname">logger</tt><a class="headerlink" href="#openwastetracelib.base_service.OWTBaseService.logger" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;ivar: Python logger instance with name &#8216;owt&#8217;.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="openwastetracelib.base_service.OWTBaseService.response">
+<tt class="descname">response</tt><a class="headerlink" href="#openwastetracelib.base_service.OWTBaseService.response" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;ivar: The response from SISTRI. You will want to pick what you
+want out here here. This object does have a __str__() method,
+you&#8217;ll want to print or log it to see what possible values
+you can pull.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="openwastetracelib.base_service.OWTBaseService.send_request">
+<tt class="descname">send_request</tt><big>(</big><em>send_function=None</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/base_service.html#OWTBaseService.send_request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.base_service.OWTBaseService.send_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends the assembled request on the child object.
+&#64;type send_function: function reference
+&#64;keyword send_function: A function reference (passed without the
+parenthesis) to a function that will send the request. This
+allows for overriding the default function in cases such as
+validation requests.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="openwastetracelib.base_service.OWTBaseServiceException">
+<em class="property">exception </em><tt class="descclassname">openwastetracelib.base_service.</tt><tt class="descname">OWTBaseServiceException</tt><big>(</big><em>error_code</em>, <em>value</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/base_service.html#OWTBaseServiceException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.base_service.OWTBaseServiceException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></tt></p>
+<p>Exception: Serves as the base exception that other service-related
+exception objects are sub-classed from.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="openwastetracelib.base_service.OWTError">
+<em class="property">exception </em><tt class="descclassname">openwastetracelib.base_service.</tt><tt class="descname">OWTError</tt><big>(</big><em>error_code</em>, <em>value</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/base_service.html#OWTError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.base_service.OWTError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#openwastetracelib.base_service.OWTBaseServiceException" title="openwastetracelib.base_service.OWTBaseServiceException"><tt class="xref py py-class docutils literal"><span class="pre">openwastetracelib.base_service.OWTBaseServiceException</span></tt></a></p>
+<p>Exception: These are generally problems with the client-provided data.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="openwastetracelib.base_service.OWTFailure">
+<em class="property">exception </em><tt class="descclassname">openwastetracelib.base_service.</tt><tt class="descname">OWTFailure</tt><big>(</big><em>error_code</em>, <em>value</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/base_service.html#OWTFailure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.base_service.OWTFailure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#openwastetracelib.base_service.OWTBaseServiceException" title="openwastetracelib.base_service.OWTBaseServiceException"><tt class="xref py py-class docutils literal"><span class="pre">openwastetracelib.base_service.OWTBaseServiceException</span></tt></a></p>
+<p>Exception: The request could not be handled at this time.
+This is generally a server problem.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="openwastetracelib.base_service.SchemaValidationError">
+<em class="property">exception </em><tt class="descclassname">openwastetracelib.base_service.</tt><tt class="descname">SchemaValidationError</tt><a class="reference internal" href="_modules/openwastetracelib/base_service.html#SchemaValidationError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.base_service.SchemaValidationError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#openwastetracelib.base_service.OWTBaseServiceException" title="openwastetracelib.base_service.OWTBaseServiceException"><tt class="xref py py-class docutils literal"><span class="pre">openwastetracelib.base_service.OWTBaseServiceException</span></tt></a></p>
+<p>Exception: There is probably a problem in the data you provided.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-openwastetracelib.services">
+<span id="services"></span><h2>3.2. Services<a class="headerlink" href="#module-openwastetracelib.services" title="Permalink to this headline">¶</a></h2>
+<p>This module contains the wrappers around Sistri Web Service requests which you
+will want to instantiate and use with a L{OWTConfig} object supplying
+your static details.</p>
+<div class="section" id="module-openwastetracelib.services.anagrafiche_service">
+<span id="anagrafiche-service"></span><h3>3.2.1. Anagrafiche service<a class="headerlink" href="#module-openwastetracelib.services.anagrafiche_service" title="Permalink to this headline">¶</a></h3>
+<p>This package contains the anagrafiche managment methods defined by Sistri.
+For more details on each, refer to the respective class&#8217;s documentation.</p>
+<dl class="class">
+<dt id="openwastetracelib.services.anagrafiche_service.GettingAziendaRequest">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.services.anagrafiche_service.</tt><tt class="descname">GettingAziendaRequest</tt><big>(</big><em>config_obj</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/services/anagrafiche_service.html#GettingAziendaRequest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.services.anagrafiche_service.GettingAziendaRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#openwastetracelib.base_service.OWTBaseService" title="openwastetracelib.base_service.OWTBaseService"><tt class="xref py py-class docutils literal"><span class="pre">openwastetracelib.base_service.OWTBaseService</span></tt></a></p>
+<p>This class allows you to get an Azienda object.
+By default, you can simply pass a identity string to the constructor.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="openwastetracelib.services.anagrafiche_service.GettingSedeRequest">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.services.anagrafiche_service.</tt><tt class="descname">GettingSedeRequest</tt><big>(</big><em>config_obj</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/services/anagrafiche_service.html#GettingSedeRequest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.services.anagrafiche_service.GettingSedeRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#openwastetracelib.base_service.OWTBaseService" title="openwastetracelib.base_service.OWTBaseService"><tt class="xref py py-class docutils literal"><span class="pre">openwastetracelib.base_service.OWTBaseService</span></tt></a></p>
+<p>This class allows you to get an Sede object.
+By default, you can simply pass a identity string to the constructor.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="openwastetracelib.services.anagrafiche_service.OWTInvalidAzienda">
+<em class="property">exception </em><tt class="descclassname">openwastetracelib.services.anagrafiche_service.</tt><tt class="descname">OWTInvalidAzienda</tt><big>(</big><em>error_code</em>, <em>value</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/services/anagrafiche_service.html#OWTInvalidAzienda"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.services.anagrafiche_service.OWTInvalidAzienda" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#openwastetracelib.base_service.OWTError" title="openwastetracelib.base_service.OWTError"><tt class="xref py py-class docutils literal"><span class="pre">openwastetracelib.base_service.OWTError</span></tt></a></p>
+<p>Exception: Sent when a an error related invalid Azienda id.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-openwastetracelib.services.cataloghi_service">
+<span id="cataloghi-service"></span><h3>3.2.2. Cataloghi service<a class="headerlink" href="#module-openwastetracelib.services.cataloghi_service" title="Permalink to this headline">¶</a></h3>
+<p>This package contains the cataloghi managment methods defined by Sistri.
+For more details on each, refer to the respective class&#8217;s documentation.</p>
+<dl class="exception">
+<dt id="openwastetracelib.services.cataloghi_service.OWTInvalidCataloghi">
+<em class="property">exception </em><tt class="descclassname">openwastetracelib.services.cataloghi_service.</tt><tt class="descname">OWTInvalidCataloghi</tt><big>(</big><em>error_code</em>, <em>value</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/services/cataloghi_service.html#OWTInvalidCataloghi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.services.cataloghi_service.OWTInvalidCataloghi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#openwastetracelib.base_service.OWTError" title="openwastetracelib.base_service.OWTError"><tt class="xref py py-class docutils literal"><span class="pre">openwastetracelib.base_service.OWTError</span></tt></a></p>
+<p>Exception: Sent when a an error related cataloghi occurred.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="openwastetracelib.services.cataloghi_service.UpdateCataloghiRequest">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.services.cataloghi_service.</tt><tt class="descname">UpdateCataloghiRequest</tt><big>(</big><em>config_obj</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/services/cataloghi_service.html#UpdateCataloghiRequest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.services.cataloghi_service.UpdateCataloghiRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#openwastetracelib.base_service.OWTBaseService" title="openwastetracelib.base_service.OWTBaseService"><tt class="xref py py-class docutils literal"><span class="pre">openwastetracelib.base_service.OWTBaseService</span></tt></a></p>
+<p>This class allows you to updating all Cataloghi objects.
+By default, you can simply pass a identity string to the constructor.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="openwastetracelib.services.cataloghi_service.UpdateDescrittoriCataloghiRequest">
+<em class="property">class </em><tt class="descclassname">openwastetracelib.services.cataloghi_service.</tt><tt class="descname">UpdateDescrittoriCataloghiRequest</tt><big>(</big><em>config_obj</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/openwastetracelib/services/cataloghi_service.html#UpdateDescrittoriCataloghiRequest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openwastetracelib.services.cataloghi_service.UpdateDescrittoriCataloghiRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#openwastetracelib.base_service.OWTBaseService" title="openwastetracelib.base_service.OWTBaseService"><tt class="xref py py-class docutils literal"><span class="pre">openwastetracelib.base_service.OWTBaseService</span></tt></a></p>
+<p>This class allows you to updating all DescrittoriCataloghi objects.
+By default, you can simply pass a identity string to the constructor.</p>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">3. Services Documentation</a><ul>
+<li><a class="reference internal" href="#module-openwastetracelib.base_service">3.1. Base service</a></li>
+<li><a class="reference internal" href="#module-openwastetracelib.services">3.2. Services</a><ul>
+<li><a class="reference internal" href="#module-openwastetracelib.services.anagrafiche_service">3.2.1. Anagrafiche service</a></li>
+<li><a class="reference internal" href="#module-openwastetracelib.services.cataloghi_service">3.2.2. Cataloghi service</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="modules.html"
+                        title="previous chapter">2. Modules Documentation</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/services.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="modules.html" title="2. Modules Documentation"
+             >previous</a> |</li>
+        <li><a href="index.html">OpenWasteTrace v0.10 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Paolo Melchiorre.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,407 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>openwastetracelib.objects &mdash; OpenWasteTrace v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="OpenWasteTrace v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">OpenWasteTrace v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for openwastetracelib.objects</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+
+<span class="c"># OpenWasteTrace</span>
+<span class="c"># Copyright (C) 2011 Paolo Melchiorre &lt;paolo.melchiorre@madec.it&gt;</span>
+<span class="c">#</span>
+<span class="c"># This program is free software: you can redistribute it and/or modify</span>
+<span class="c"># it under the terms of the GNU General Public License as published by</span>
+<span class="c"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c"># (at your option) any later version.</span>
+<span class="c">#</span>
+<span class="c"># This program is distributed in the hope that it will be useful,</span>
+<span class="c"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c"># GNU General Public License for more details.</span>
+<span class="c">#</span>
+<span class="c"># You should have received a copy of the GNU General Public License</span>
+<span class="c"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The I{objects} module provides objects definition.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="Stati_scheda_sistri"><a class="viewcode-back" href="../../modules.html#openwastetracelib.objects.Stati_scheda_sistri">[docs]</a><span class="k">class</span> <span class="nc">Stati_scheda_sistri</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_stato_scheda_sistri</span><span class="p">,</span> <span class="n">stato_scheda_sistri</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_stato_scheda_sistri</span> <span class="o">=</span> <span class="n">id_stato_scheda_sistri</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stato_scheda_sistri</span> <span class="o">=</span> <span class="n">stato_scheda_sistri</span>
+
+</div>
+<div class="viewcode-block" id="Stati_fisici_rifiuto"><a class="viewcode-back" href="../../modules.html#openwastetracelib.objects.Stati_fisici_rifiuto">[docs]</a><span class="k">class</span> <span class="nc">Stati_fisici_rifiuto</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_stato_fisico_rifiuto</span><span class="p">,</span> <span class="n">descr_stato_fisico_rifiuto</span><span class="p">,</span>
+                    <span class="n">codice_stato_fisico</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_stato_fisico_rifiuto</span> <span class="o">=</span> <span class="n">id_stato_fisico_rifiuto</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">descr_stato_fisico_rifiuto</span> <span class="o">=</span> <span class="n">descr_stato_fisico_rifiuto</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">codice_stato_fisico</span> <span class="o">=</span> <span class="n">codice_stato_fisico</span>
+
+</div>
+<div class="viewcode-block" id="Forme_giuridiche"><a class="viewcode-back" href="../../modules.html#openwastetracelib.objects.Forme_giuridiche">[docs]</a><span class="k">class</span> <span class="nc">Forme_giuridiche</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_tipo_forma_giuridica</span><span class="p">,</span>
+                    <span class="n">descrizione_forma_giuridica</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_tipo_forma_giuridica</span> <span class="o">=</span> <span class="n">id_tipo_forma_giuridica</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">descrizione_forma_giuridica</span> <span class="o">=</span> <span class="n">descrizione_forma_giuridica</span>
+
+</div>
+<div class="viewcode-block" id="Tipi_reg_cronologico"><a class="viewcode-back" href="../../modules.html#openwastetracelib.objects.Tipi_reg_cronologico">[docs]</a><span class="k">class</span> <span class="nc">Tipi_reg_cronologico</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_tipo_reg_cronologico</span><span class="p">,</span> <span class="n">descrizione_tipo_reg_crono</span><span class="p">,</span>
+                    <span class="n">macro_categoria</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_tipo_reg_cronologico</span> <span class="o">=</span> <span class="n">id_tipo_reg_cronologico</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">descrizione_tipo_reg_crono</span> <span class="o">=</span> <span class="n">descrizione_tipo_reg_crono</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">macro_categoria</span> <span class="o">=</span> <span class="n">macro_categoria</span>
+
+</div>
+<div class="viewcode-block" id="Operazioni_impianti"><a class="viewcode-back" href="../../modules.html#openwastetracelib.objects.Operazioni_impianti">[docs]</a><span class="k">class</span> <span class="nc">Operazioni_impianti</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_operazione_impianto</span><span class="p">,</span> <span class="n">id_tipo_operazione_impianto</span><span class="p">,</span>
+                    <span class="n">operazione_impianto</span><span class="p">,</span> <span class="n">ordinamento</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_operazione_impianto</span> <span class="o">=</span> <span class="n">id_operazione_impianto</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_tipo_operazione_impianto</span> <span class="o">=</span> <span class="n">id_tipo_operazione_impianto</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">operazione_impianto</span> <span class="o">=</span> <span class="n">operazione_impianto</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ordinamento</span> <span class="o">=</span> <span class="n">ordinamento</span>
+
+</div>
+<div class="viewcode-block" id="Categorie_raee"><a class="viewcode-back" href="../../modules.html#openwastetracelib.objects.Categorie_raee">[docs]</a><span class="k">class</span> <span class="nc">Categorie_raee</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_categoria_raee</span><span class="p">,</span> <span class="n">descrizione_categoria_raee</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_categoria_raee</span> <span class="o">=</span> <span class="n">id_categoria_raee</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">descrizione_categoria_raee</span> <span class="o">=</span> <span class="n">descrizione_categoria_raee</span>
+
+</div>
+<div class="viewcode-block" id="Tipi_veicolo"><a class="viewcode-back" href="../../modules.html#openwastetracelib.objects.Tipi_veicolo">[docs]</a><span class="k">class</span> <span class="nc">Tipi_veicolo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_tipo_veicolo</span><span class="p">,</span> <span class="n">descrizione</span><span class="p">,</span> <span class="n">codice_tipo_veicolo</span><span class="p">,</span>
+                    <span class="n">flag_rimorchio</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_tipo_veicolo</span> <span class="o">=</span> <span class="n">id_tipo_veicolo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">descrizione</span> <span class="o">=</span> <span class="n">descrizione</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">codice_tipo_veicolo</span> <span class="o">=</span> <span class="n">codice_tipo_veicolo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">flag_rimorchio</span> <span class="o">=</span> <span class="n">flag_rimorchio</span>
+
+</div>
+<div class="viewcode-block" id="Tipi_sede"><a class="viewcode-back" href="../../modules.html#openwastetracelib.objects.Tipi_sede">[docs]</a><span class="k">class</span> <span class="nc">Tipi_sede</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_tipo_sede</span><span class="p">,</span> <span class="n">descrizione</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_tipo_sede</span> <span class="o">=</span> <span class="n">id_tipo_sede</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">descrizione</span> <span class="o">=</span> <span class="n">descrizione</span>
+
+</div>
+<div class="viewcode-block" id="Tipi_registrazioni_crono"><a class="viewcode-back" href="../../modules.html#openwastetracelib.objects.Tipi_registrazioni_crono">[docs]</a><span class="k">class</span> <span class="nc">Tipi_registrazioni_crono</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_tipo_registrazione_crono</span><span class="p">,</span> <span class="n">descr_tipo_reg_crono</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_tipo_registrazione_crono</span> <span class="o">=</span> <span class="n">id_tipo_registrazione_crono</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">descr_tipo_reg_crono</span> <span class="o">=</span> <span class="n">descr_tipo_reg_crono</span>
+
+</div>
+<div class="viewcode-block" id="Numeri_onu"><a class="viewcode-back" href="../../modules.html#openwastetracelib.objects.Numeri_onu">[docs]</a><span class="k">class</span> <span class="nc">Numeri_onu</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_numero_onu</span><span class="p">,</span> <span class="n">descrizione_numero_onu</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_numero_onu</span> <span class="o">=</span> <span class="n">id_numero_onu</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">descrizione_numero_onu</span> <span class="o">=</span> <span class="n">descrizione_numero_onu</span>
+
+</div>
+<div class="viewcode-block" id="Localita_estere"><a class="viewcode-back" href="../../modules.html#openwastetracelib.objects.Localita_estere">[docs]</a><span class="k">class</span> <span class="nc">Localita_estere</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_localita</span><span class="p">,</span> <span class="n">nazione</span><span class="p">,</span> <span class="n">sigla_nazione</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_localita</span> <span class="o">=</span> <span class="n">id_localita</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nazione</span> <span class="o">=</span> <span class="n">nazione</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sigla_nazione</span> <span class="o">=</span> <span class="n">sigla_nazione</span>
+
+</div>
+<div class="viewcode-block" id="Associazioni_categoria"><a class="viewcode-back" href="../../modules.html#openwastetracelib.objects.Associazioni_categoria">[docs]</a><span class="k">class</span> <span class="nc">Associazioni_categoria</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_associazione_categoria</span><span class="p">,</span> <span class="n">ass_categoria_nome</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                    <span class="n">id_accordo</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">sigla_provincia</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">sigla_cciaa</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_associazione_categoria</span> <span class="o">=</span> <span class="n">id_associazione_categoria</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ass_categoria_nome</span> <span class="o">=</span> <span class="n">ass_categoria_nome</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_accordo</span> <span class="o">=</span> <span class="n">id_accordo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sigla_provincia</span> <span class="o">=</span> <span class="n">sigla_provincia</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sigla_cciaa</span> <span class="o">=</span> <span class="n">sigla_cciaa</span>
+
+</div>
+<div class="viewcode-block" id="Stati_registro_cronologico"><a class="viewcode-back" href="../../modules.html#openwastetracelib.objects.Stati_registro_cronologico">[docs]</a><span class="k">class</span> <span class="nc">Stati_registro_cronologico</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_stato_registro_cronologico</span><span class="p">,</span>
+                    <span class="n">descrizione_stato_reg_crono</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_stato_registro_cronologico</span> <span class="o">=</span> <span class="n">id_stato_registro_cronologico</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">descrizione_stato_reg_crono</span> <span class="o">=</span> <span class="n">descrizione_stato_reg_crono</span>
+
+</div>
+<div class="viewcode-block" id="Tipi_imballaggi"><a class="viewcode-back" href="../../modules.html#openwastetracelib.objects.Tipi_imballaggi">[docs]</a><span class="k">class</span> <span class="nc">Tipi_imballaggi</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_tipo_imballaggio</span><span class="p">,</span> <span class="n">tipo_imballaggio</span><span class="p">,</span>
+                    <span class="n">codice_imballaggio</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_tipo_imballaggio</span> <span class="o">=</span> <span class="n">id_tipo_imballaggio</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tipo_imballaggio</span> <span class="o">=</span> <span class="n">tipo_imballaggio</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">codice_imballaggio</span> <span class="o">=</span> <span class="n">codice_imballaggio</span>
+
+</div>
+<div class="viewcode-block" id="Sottocategorie_star"><a class="viewcode-back" href="../../modules.html#openwastetracelib.objects.Sottocategorie_star">[docs]</a><span class="k">class</span> <span class="nc">Sottocategorie_star</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_sottocategoria_star</span><span class="p">,</span> <span class="n">id_categoria_star</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                    <span class="n">descrizione_sottocategoria</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_sottocategoria_star</span> <span class="o">=</span> <span class="n">id_sottocategoria_star</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_categoria_star</span> <span class="o">=</span> <span class="n">id_categoria_star</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">descrizione_sottocategoria</span> <span class="o">=</span> <span class="n">descrizione_sottocategoria</span>
+
+</div>
+<div class="viewcode-block" id="Tipi_documento"><a class="viewcode-back" href="../../modules.html#openwastetracelib.objects.Tipi_documento">[docs]</a><span class="k">class</span> <span class="nc">Tipi_documento</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_tipo_documento</span><span class="p">,</span> <span class="n">descrizione</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_tipo_documento</span> <span class="o">=</span> <span class="n">id_tipo_documento</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">descrizione</span> <span class="o">=</span> <span class="n">descrizione</span>
+
+</div>
+<div class="viewcode-block" id="Classi_adr"><a class="viewcode-back" href="../../modules.html#openwastetracelib.objects.Classi_adr">[docs]</a><span class="k">class</span> <span class="nc">Classi_adr</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_classe_adr</span><span class="p">,</span> <span class="n">descrizione_classe_adr</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_classe_adr</span> <span class="o">=</span> <span class="n">id_classe_adr</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">descrizione_classe_adr</span> <span class="o">=</span> <span class="n">descrizione_classe_adr</span>
+
+</div>
+<div class="viewcode-block" id="Ruoli_aziendali"><a class="viewcode-back" href="../../modules.html#openwastetracelib.objects.Ruoli_aziendali">[docs]</a><span class="k">class</span> <span class="nc">Ruoli_aziendali</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_ruolo_aziendale</span><span class="p">,</span> <span class="n">ruolo_aziendale</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_ruolo_aziendale</span> <span class="o">=</span> <span class="n">id_ruolo_aziendale</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ruolo_aziendale</span> <span class="o">=</span> <span class="n">ruolo_aziendale</span>
+
+</div>
+<div class="viewcode-block" id="Stati_utente_idm"><a class="viewcode-back" href="../../modules.html#openwastetracelib.objects.Stati_utente_idm">[docs]</a><span class="k">class</span> <span class="nc">Stati_utente_idm</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_stato_utente_idm</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_stato_utente_idm</span> <span class="o">=</span> <span class="n">id_stato_utente_idm</span>
+
+</div>
+<div class="viewcode-block" id="Camere_commercio"><a class="viewcode-back" href="../../modules.html#openwastetracelib.objects.Camere_commercio">[docs]</a><span class="k">class</span> <span class="nc">Camere_commercio</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_camera_commercio</span><span class="p">,</span> <span class="n">indirizzo</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">numero_civico</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                    <span class="n">cap</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">nome_persona_riferimento</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                    <span class="n">cognome_persona_riferimento</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                    <span class="n">email_persona_riferimento</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                    <span class="n">telefono_persona_riferimento</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">sigla_cciaa</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_camera_commercio</span> <span class="o">=</span> <span class="n">id_camera_commercio</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">indirizzo</span> <span class="o">=</span> <span class="n">indirizzo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">numero_civico</span> <span class="o">=</span> <span class="n">numero_civico</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cap</span> <span class="o">=</span> <span class="n">cap</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nome_persona_riferimento</span> <span class="o">=</span> <span class="n">nome_persona_riferimento</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cognome_persona_riferimento</span> <span class="o">=</span> <span class="n">cognome_persona_riferimento</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">email_persona_riferimento</span> <span class="o">=</span> <span class="n">email_persona_riferimento</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">telefono_persona_riferimento</span> <span class="o">=</span> <span class="n">telefono_persona_riferimento</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sigla_cciaa</span> <span class="o">=</span> <span class="n">sigla_cciaa</span>
+
+</div>
+<div class="viewcode-block" id="Tipi_esito_trasporto"><a class="viewcode-back" href="../../modules.html#openwastetracelib.objects.Tipi_esito_trasporto">[docs]</a><span class="k">class</span> <span class="nc">Tipi_esito_trasporto</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_esito_trasporto</span><span class="p">,</span> <span class="n">descr_esito_trasporto</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_esito_trasporto</span> <span class="o">=</span> <span class="n">id_esito_trasporto</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">descr_esito_trasporto</span> <span class="o">=</span> <span class="n">descr_esito_trasporto</span>
+
+</div>
+<div class="viewcode-block" id="Stati_veicolo"><a class="viewcode-back" href="../../modules.html#openwastetracelib.objects.Stati_veicolo">[docs]</a><span class="k">class</span> <span class="nc">Stati_veicolo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_stato_veicolo</span><span class="p">,</span> <span class="n">descrizione_stato_veicolo</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_stato_veicolo</span> <span class="o">=</span> <span class="n">id_stato_veicolo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">descrizione_stato_veicolo</span> <span class="o">=</span> <span class="n">descrizione_stato_veicolo</span>
+
+</div>
+<div class="viewcode-block" id="Cod_rec_1013"><a class="viewcode-back" href="../../modules.html#openwastetracelib.objects.Cod_rec_1013">[docs]</a><span class="k">class</span> <span class="nc">Cod_rec_1013</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_cod_rec_1013</span><span class="p">,</span> <span class="n">descrizione_cod_rec</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_cod_rec_1013</span> <span class="o">=</span> <span class="n">id_cod_rec_1013</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">descrizione_cod_rec</span> <span class="o">=</span> <span class="n">descrizione_cod_rec</span>
+
+</div>
+<div class="viewcode-block" id="Stati_registrazioni_crono"><a class="viewcode-back" href="../../modules.html#openwastetracelib.objects.Stati_registrazioni_crono">[docs]</a><span class="k">class</span> <span class="nc">Stati_registrazioni_crono</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_stato_registrazione_crono</span><span class="p">,</span>
+                    <span class="n">descrizione_stato_reg_crono</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_stato_registrazione_crono</span> <span class="o">=</span> <span class="n">id_stato_registrazione_crono</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">descrizione_stato_reg_crono</span> <span class="o">=</span> <span class="n">descrizione_stato_reg_crono</span>
+
+</div>
+<div class="viewcode-block" id="Tipi_trasporto"><a class="viewcode-back" href="../../modules.html#openwastetracelib.objects.Tipi_trasporto">[docs]</a><span class="k">class</span> <span class="nc">Tipi_trasporto</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_tipo_trasporto</span><span class="p">,</span> <span class="n">descrizione_tipo_trasporto</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_tipo_trasporto</span> <span class="o">=</span> <span class="n">id_tipo_trasporto</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">descrizione_tipo_trasporto</span> <span class="o">=</span> <span class="n">descrizione_tipo_trasporto</span>
+
+</div>
+<div class="viewcode-block" id="Tipologie_raee"><a class="viewcode-back" href="../../modules.html#openwastetracelib.objects.Tipologie_raee">[docs]</a><span class="k">class</span> <span class="nc">Tipologie_raee</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_tipologia_raee</span><span class="p">,</span> <span class="n">descrizione_tipologia_raee</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_tipologia_raee</span> <span class="o">=</span> <span class="n">id_tipologia_raee</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">descrizione_tipologia_raee</span> <span class="o">=</span> <span class="n">descrizione_tipologia_raee</span>
+
+</div>
+<div class="viewcode-block" id="Codici_cer_iii_livello"><a class="viewcode-back" href="../../modules.html#openwastetracelib.objects.Codici_cer_iii_livello">[docs]</a><span class="k">class</span> <span class="nc">Codici_cer_iii_livello</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_codice_cer_iii_livello</span><span class="p">,</span> <span class="n">escrizione_iii_livello</span><span class="p">,</span>
+                    <span class="n">flag_pericoloso</span><span class="p">,</span> <span class="n">flag_attivo</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_codice_cer_iii_livello</span> <span class="o">=</span> <span class="n">id_codice_cer_iii_livello</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">escrizione_iii_livello</span> <span class="o">=</span> <span class="n">escrizione_iii_livello</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">flag_pericoloso</span> <span class="o">=</span> <span class="n">flag_pericoloso</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">flag_attivo</span> <span class="o">=</span> <span class="n">flag_attivo</span>
+
+</div>
+<div class="viewcode-block" id="Tipi_stato_impresa"><a class="viewcode-back" href="../../modules.html#openwastetracelib.objects.Tipi_stato_impresa">[docs]</a><span class="k">class</span> <span class="nc">Tipi_stato_impresa</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_tipo_stato_impresa</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_tipo_stato_impresa</span> <span class="o">=</span> <span class="n">id_tipo_stato_impresa</span>
+
+</div>
+<div class="viewcode-block" id="Caratteristiche_pericolo"><a class="viewcode-back" href="../../modules.html#openwastetracelib.objects.Caratteristiche_pericolo">[docs]</a><span class="k">class</span> <span class="nc">Caratteristiche_pericolo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_caratteristica_pericolo</span><span class="p">,</span> <span class="n">descr_car_pericolo</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_caratteristica_pericolo</span> <span class="o">=</span> <span class="n">id_caratteristica_pericolo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">descr_car_pericolo</span> <span class="o">=</span> <span class="n">descr_car_pericolo</span>
+
+</div>
+<div class="viewcode-block" id="Sottotipi_veicolo"><a class="viewcode-back" href="../../modules.html#openwastetracelib.objects.Sottotipi_veicolo">[docs]</a><span class="k">class</span> <span class="nc">Sottotipi_veicolo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_sottotipo_veicolo</span><span class="p">,</span> <span class="n">descrizione</span><span class="p">,</span>
+                    <span class="n">codice_sottotipo_veicolo</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_sottotipo_veicolo</span> <span class="o">=</span> <span class="n">id_sottotipo_veicolo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">descrizione</span> <span class="o">=</span> <span class="n">descrizione</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">codice_sottotipo_veicolo</span> <span class="o">=</span> <span class="n">codice_sottotipo_veicolo</span>
+
+</div>
+<div class="viewcode-block" id="DescrittoreCatalogo"><a class="viewcode-back" href="../../modules.html#openwastetracelib.objects.DescrittoreCatalogo">[docs]</a><span class="k">class</span> <span class="nc">DescrittoreCatalogo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">catalogo</span><span class="p">,</span> <span class="n">versione</span><span class="p">,</span> <span class="n">descrizione</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">catalogo</span> <span class="o">=</span> <span class="n">catalogo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">versione</span> <span class="o">=</span> <span class="n">versione</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">descrizione</span> <span class="o">=</span> <span class="n">descrizione</span>
+
+</div>
+<div class="viewcode-block" id="Azienda"><a class="viewcode-back" href="../../modules.html#openwastetracelib.objects.Azienda">[docs]</a><span class="k">class</span> <span class="nc">Azienda</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Azienda object with idSIS.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ragioneSociale</span><span class="p">,</span> <span class="n">codiceFiscale</span><span class="p">,</span> <span class="n">versione</span><span class="p">,</span> <span class="n">idSIS</span><span class="p">,</span>
+                    <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ragioneSociale</span> <span class="o">=</span> <span class="n">ragioneSociale</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">codiceFiscale</span> <span class="o">=</span> <span class="n">codiceFiscale</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">versione</span> <span class="o">=</span> <span class="n">versione</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">idSIS</span> <span class="o">=</span> <span class="n">idSIS</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__setattr__</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+
+</div>
+<div class="viewcode-block" id="Sede"><a class="viewcode-back" href="../../modules.html#openwastetracelib.objects.Sede">[docs]</a><span class="k">class</span> <span class="nc">Sede</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Sede object with idSIS. &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nomeSede</span><span class="p">,</span> <span class="n">codiceIstatLocalita</span><span class="p">,</span> <span class="n">codiceCatastale</span><span class="p">,</span> <span class="n">nazione</span><span class="p">,</span>
+                    <span class="n">siglaNazione</span><span class="p">,</span> <span class="n">indirizzo</span><span class="p">,</span> <span class="n">versione</span><span class="p">,</span> <span class="n">idSIS</span><span class="p">,</span> <span class="n">tipoSede</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                    <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nomeSede</span> <span class="o">=</span> <span class="n">nomeSede</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">codiceIstatLocalita</span> <span class="o">=</span> <span class="n">codiceIstatLocalita</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">codiceCatastale</span> <span class="o">=</span> <span class="n">codiceCatastale</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nazione</span> <span class="o">=</span> <span class="n">nazione</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">siglaNazione</span> <span class="o">=</span> <span class="n">siglaNazione</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">indirizzo</span> <span class="o">=</span> <span class="n">indirizzo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">versione</span> <span class="o">=</span> <span class="n">versione</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tipoSede</span> <span class="o">=</span> <span class="n">tipoSede</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">idSIS</span> <span class="o">=</span> <span class="n">idSIS</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__setattr__</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+
+</div>
+<div class="viewcode-block" id="Veicolo"><a class="viewcode-back" href="../../modules.html#openwastetracelib.objects.Veicolo">[docs]</a><span class="k">class</span> <span class="nc">Veicolo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Veicolo object with idSIS. &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">targa</span><span class="p">,</span> <span class="n">tipoVeicolo</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">statoVeicolo</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">targa</span> <span class="o">=</span> <span class="n">targa</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tipoVeicolo</span> <span class="o">=</span> <span class="n">tipoVeicolo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">statoVeicolo</span> <span class="o">=</span> <span class="n">statoVeicolo</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__setattr__</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">])</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">OpenWasteTrace v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Paolo Melchiorre.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

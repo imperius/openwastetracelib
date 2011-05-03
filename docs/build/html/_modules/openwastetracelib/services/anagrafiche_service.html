@@ -1,0 +1,442 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>openwastetracelib.services.anagrafiche_service &mdash; OpenWasteTrace v0.10 documentation</title>
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.10',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="OpenWasteTrace v0.10 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">OpenWasteTrace v0.10 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for openwastetracelib.services.anagrafiche_service</h1><pre>
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# OpenWasteTrace
+# Copyright (C) 2011 Paolo Melchiorre &lt;paolo.melchiorre@madec.it&gt;
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+
+"""
+This package contains the anagrafiche managment methods defined by Sistri.
+For more details on each, refer to the respective class's documentation.
+"""
+
+from .. objects import Azienda, Forme_giuridiche, Tipi_stato_impresa, \
+    Tipi_sede, Sede, Camere_commercio, Associazioni_categoria, \
+    Sottocategorie_star
+from .. base_service import OWTBaseService, OWTError
+
+
+<div class="viewcode-block" id="OWTInvalidAzienda"><a class="viewcode-back" href="../../../services.html#openwastetracelib.services.anagrafiche_service.OWTInvalidAzienda">[docs]</a>class OWTInvalidAzienda(OWTError):
+    """
+    Exception: Sent when a an error related invalid Azienda id.
+    """
+    pass
+
+</div>
+<div class="viewcode-block" id="GettingAziendaRequest"><a class="viewcode-back" href="../../../services.html#openwastetracelib.services.anagrafiche_service.GettingAziendaRequest">[docs]</a>class GettingAziendaRequest(OWTBaseService):
+    """
+    This class allows you to get an Azienda object.
+    By default, you can simply pass a identity string to the constructor.
+    """
+
+    def __init__(self, config_obj, *args, **kwargs):
+        """
+        Sends a get azienda request. The optional keyword args
+        detailed on L{OWTBaseService} apply here as well.
+        @type config_obj: L{OWTConfig}
+        @param config_obj: A valid OWTConfig object.
+        """
+        self._config_obj = config_obj
+        self.identity = None
+        self.codiceFiscaleAzienda = None
+        # Call the parent OWTBaseService class for basic setup work.
+        super(GettingAziendaRequest, self).__init__(self._config_obj,
+                                                    *args, **kwargs)
+
+    def _check_response_for_request_errors(self):
+        """
+        Checks the response to see if there were any errors.
+        """
+#        if self.response.HighestSeverity == "ERROR":
+#            for notification in self.response.Notifications:
+#                if notification.Severity == "ERROR":
+#                    if "Invalid tracking number" in notification.Message:
+#                        raise FedexInvalidTrackingNumber(notification.Code,
+#                                                         notification.Message)
+#                    else:
+#                        raise FedexError(notification.Code,
+#                                         notification.Message)
+        pass
+
+    def _assemble_and_send_request(self):
+        """
+        Fires off the SISTRI request.
+        @warning: NEVER CALL THIS METHOD DIRECTLY. CALL send_request(),
+        WHICH RESIDESON OWTBaseService AND IS INHERITED.
+        """
+        client = self.client
+        session = self._config_obj.session
+        parm = dict(identity=self.identity,
+                    parametriAggiuntivi="",
+                    codiceFiscaleAzienda=self.codiceFiscaleAzienda)
+        aziendaSistri = client.service.GetAzienda(**parm)
+        try:
+            sediSummary = []
+            if aziendaSistri.sediSummary:
+                for sedeSummary in aziendaSistri.sediSummary:
+                    tipoSede = None
+                    if sedeSummary.tipoSede:
+                        tipoSede = Tipi_sede(
+                            id_tipo_sede=sedeSummary.tipoSede.idCatalogo.\
+                                __repr__(),
+                            descrizione=sedeSummary.tipoSede.description.\
+                                __repr__()
+                        )
+                        if session.query(Tipi_sede).filter(Tipi_sede.\
+                            id_tipo_sede == tipoSede.id_tipo_sede).count() &gt; 0:
+                            tipoSede = session.query(Tipi_sede).filter(
+                                Tipi_sede.id_tipo_sede == tipoSede.\
+                                id_tipo_sede).first()
+                    sede = Sede(
+                        idSIS=sedeSummary.idSIS.__repr__(),
+                        nomeSede=sedeSummary.nomeSede.__repr__(),
+                        codiceIstatLocalita=sedeSummary.codiceIstatLocalita.\
+                            __repr__(),
+                        codiceCatastale=sedeSummary.codiceCatastale.__repr__(),
+                        nazione=sedeSummary.nazione.__repr__(),
+                        siglaNazione=sedeSummary.siglaNazione.__repr__(),
+                        indirizzo=sedeSummary.indirizzo.__repr__(),
+                        nrCivico=sedeSummary.nrCivico.__repr__(),
+                        cap=sedeSummary.cap.__repr__(),
+                        versione=sedeSummary.versione.long,
+                        tipoSede=tipoSede
+                    )
+                    if session.query(Sede).filter(Sede.idSIS == sede.idSIS).\
+                        count() &gt; 0:
+                        sede = session.query(Sede).filter(Sede.idSIS == sede.\
+                            idSIS).first()
+                    sediSummary.append(sede)
+                    session.merge(sede)
+            sedeLegale = None
+            if aziendaSistri.sedeLegale:
+                sedeLegaleSistri = aziendaSistri.sedeLegale
+                tipoSede = None
+                if sedeLegaleSistri.tipoSede:
+                    tipoSedeSistri = sedeLegaleSistri.tipoSede
+                    tipoSede = Tipi_sede(
+                        id_tipo_sede=tipoSedeSistri.idCatalogo.__repr__(),
+                        descrizione=tipoSedeSistri.description.__repr__()
+                    )
+                    if session.query(Tipi_sede).filter(Tipi_sede.\
+                        id_tipo_sede == tipoSede.id_tipo_sede).count() &gt; 0:
+                        tipoSede = session.query(Tipi_sede).filter(Tipi_sede.\
+                            id_tipo_sede == tipoSede.id_tipo_sede).first()
+                sedeLegale = Sede(
+                    idSIS=sedeLegaleSistri.idSIS.__repr__(),
+                    nomeSede=sedeLegaleSistri.nomeSede.__repr__(),
+                    codiceIstatLocalita=sedeLegaleSistri.codiceIstatLocalita.\
+                        __repr__(),
+                    codiceCatastale=sedeLegaleSistri.codiceCatastale.\
+                        __repr__(),
+                    nazione=sedeLegaleSistri.nazione.__repr__(),
+                    siglaNazione=sedeLegaleSistri.siglaNazione.__repr__(),
+                    indirizzo=sedeLegaleSistri.indirizzo.__repr__(),
+                    nrCivico=sedeLegaleSistri.nrCivico.__repr__(),
+                    cap=sedeLegaleSistri.cap.__repr__(),
+                    versione=sedeLegaleSistri.versione.long,
+                    tipoSede=tipoSede
+                )
+                if session.query(Sede).filter(Sede.idSIS == sedeLegale.idSIS).\
+                    count() &gt; 0:
+                    sedeLegale = session.query(Sede).filter(Sede.idSIS == \
+                        sedeLegale.idSIS).first()
+            formaGiuridica = None
+            if aziendaSistri.formaGiuridica:
+                formaGiuridica = Forme_giuridiche(
+                    id_tipo_forma_giuridica=aziendaSistri.formaGiuridica.\
+                        idCatalogo.__repr__(),
+                    descrizione_forma_giuridica=aziendaSistri.formaGiuridica.\
+                        description.__repr__(),
+                )
+                if session.query(Forme_giuridiche).filter(Forme_giuridiche.\
+                    id_tipo_forma_giuridica == formaGiuridica.\
+                    id_tipo_forma_giuridica).count() &gt; 0:
+                    formaGiuridica = session.query(Forme_giuridiche).\
+                        filter(Forme_giuridiche.id_tipo_forma_giuridica == \
+                        formaGiuridica.id_tipo_forma_giuridica).first()
+            tipoStatoImpresa = None
+            if aziendaSistri.tipoStatoImpresa:
+                tipoStatoImpresa = Tipi_stato_impresa(
+                    id_tipo_stato_impresa=aziendaSistri.tipoStatoImpresa.\
+                        idCatalogo.__repr__()
+                )
+                if session.query(Tipi_stato_impresa).\
+                    filter(Tipi_stato_impresa.id_tipo_stato_impresa == \
+                    tipoStatoImpresa.id_tipo_stato_impresa).count() &gt; 0:
+                    tipoStatoImpresa = session.query(Tipi_stato_impresa).\
+                        filter(Tipi_stato_impresa.id_tipo_stato_impresa == \
+                            tipoStatoImpresa.id_tipo_stato_impresa).first()
+            azienda = Azienda(
+                idSIS=aziendaSistri.idSIS.__repr__(),
+                ragioneSociale=aziendaSistri.ragioneSociale.__repr__(),
+                cognome=aziendaSistri.cognome.__repr__(),
+                nome=aziendaSistri.nome.__repr__(),
+                codiceFiscale=aziendaSistri.codiceFiscale.__repr__(),
+                pIva=aziendaSistri.pIva.__repr__(),
+                numeroIscrizioneAlbo=aziendaSistri.numeroIscrizioneAlbo.\
+                    __repr__(),
+                cciaaRea=aziendaSistri.cciaaRea.__repr__(),
+                numeroIscrizioneRea=aziendaSistri.numeroIscrizioneRea.\
+                    __repr__(),
+                codiceIstatAttPrincipale=aziendaSistri.\
+                    codiceIstatAttPrincipale.__repr__(),
+                dataIscrizioneStar=aziendaSistri.dataIscrizioneStar,
+                codiceAtecoAttPrincipale=aziendaSistri.\
+                    codiceAtecoAttPrincipale.__repr__(),
+                descrizioneAttPrincipale=aziendaSistri.\
+                    descrizioneAttPrincipale.__repr__(),
+                versione=aziendaSistri.versione.long,
+                sedeLegale=sedeLegale,
+                formaGiuridica=formaGiuridica,
+                tipoStatoImpresa=tipoStatoImpresa,
+                sediSummary=sediSummary,
+            )
+            session.merge(azienda)
+            session.commit()
+            response = "Ok"
+        except Exception, e:
+            response = e
+        return response
+
+</div>
+<div class="viewcode-block" id="GettingSedeRequest"><a class="viewcode-back" href="../../../services.html#openwastetracelib.services.anagrafiche_service.GettingSedeRequest">[docs]</a>class GettingSedeRequest(OWTBaseService):
+    """
+    This class allows you to get an Sede object.
+    By default, you can simply pass a identity string to the constructor.
+    """
+    def __init__(self, config_obj, *args, **kwargs):
+        """
+        Sends a get azienda request. The optional keyword args
+        detailed on L{OWTBaseService} apply here as well.
+        @type config_obj: L{OWTConfig}
+        @param config_obj: A valid OWTConfig object.
+        """
+        self._config_obj = config_obj
+        self.identity = None
+        self.idSIS = None
+        # Call the parent OWTBaseService class for basic setup work.
+        super(GettingSedeRequest, self).__init__(self._config_obj,
+                                                    *args, **kwargs)
+
+    def _check_response_for_request_errors(self):
+        """
+        Checks the response to see if there were any errors.
+        """
+#        if self.response.HighestSeverity == "ERROR":
+#            for notification in self.response.Notifications:
+#                if notification.Severity == "ERROR":
+#                    if "Invalid tracking number" in notification.Message:
+#                        raise FedexInvalidTrackingNumber(notification.Code,
+#                                                         notification.Message)
+#                    else:
+#                        raise FedexError(notification.Code,
+#                                         notification.Message)
+        pass
+
+    def _assemble_and_send_request(self):
+        """
+        Fires off the SISTRI request.
+        @warning: NEVER CALL THIS METHOD DIRECTLY. CALL send_request(),
+        WHICH RESIDESON OWTBaseService AND IS INHERITED.
+        """
+        client = self.client
+        session = self._config_obj.session
+        parm = dict(identity=self.identity,
+                    parametriAggiuntivi="",
+                    idSIS=self.idSIS)
+        sedeSistri = client.service.GetSede(**parm)
+        try:
+            sottocategorie = []
+            if sedeSistri.sottocategorie:
+                for sottocategoria in sedeSistri.sottocategorie:
+                    sottocategorie_star = Sottocategorie_star(
+                        id_sottocategoria_star=sottocategoria.idCatalogo.\
+                            __repr__(),
+                        descrizione_sottocategoria=sottocategoria.description.\
+                            __repr__()
+                    )
+                    if session.query(Sottocategorie_star).\
+                        filter(Sottocategorie_star.id_sottocategoria_star == \
+                        sottocategorie_star.id_sottocategoria_star).\
+                        count() &gt; 0:
+                        sottocategorie_star = session.\
+                            query(Sottocategorie_star).\
+                            filter(Sottocategorie_star.id_sottocategoria_star \
+                            == sottocategorie_star.id_sottocategoria_star).\
+                            first()
+                    sottocategorie.append(sottocategorie_star)
+            tipoSede = None
+            if sedeSistri.tipoSede:
+                tipoSede = Tipi_sede(
+                    id_tipo_sede=sedeSistri.tipoSede.idCatalogo.__repr__(),
+                    descrizione=sedeSistri.tipoSede.description.__repr__()
+                )
+                if session.query(Tipi_sede).filter(Tipi_sede.id_tipo_sede == \
+                    tipoSede.id_tipo_sede).count() &gt; 0:
+                    tipoSede = session.query(Tipi_sede).filter(Tipi_sede.\
+                        id_tipo_sede == tipoSede.id_tipo_sede).first()
+            cameraCommercio = None
+            if sedeSistri.cameraCommercio:
+                cameraCommercio = Camere_commercio(
+                    id_camera_commercio=sedeSistri.cameraCommercio.idCatalogo.\
+                        __repr__()
+                )
+                if session.query(Camere_commercio).filter(Camere_commercio.\
+                    id_camera_commercio == cameraCommercio.\
+                    id_camera_commercio).count() &gt; 0:
+                    cameraCommercio = session.query(Camere_commercio).\
+                        filter(Camere_commercio.id_camera_commercio == \
+                        cameraCommercio.id_camera_commercio).first()
+            associazioneCategoria = None
+            if sedeSistri.associazioneCategoria:
+                associazioneCategoria = Associazioni_categoria(
+                    id_associazione_categoria=sedeSistri.\
+                        associazioneCategoria.idCatalogo.__repr__()
+                )
+                if session.query(Associazioni_categoria).\
+                    filter(Associazioni_categoria.id_associazione_categoria\
+                    == associazioneCategoria.id_associazione_categoria).\
+                    count() &gt; 0:
+                    associazioneCategoria = session.\
+                        query(Associazioni_categoria).\
+                        filter(Associazioni_categoria.\
+                        id_associazione_categoria == associazioneCategoria.\
+                        id_associazione_categoria).first()
+            sede = Sede(
+                idSIS=sedeSistri.idSIS.__repr__(),
+                nomeSede=sedeSistri.nomeSede.__repr__(),
+                codiceIstatLocalita=sedeSistri.codiceIstatLocalita.__repr__(),
+                codiceCatastale=sedeSistri.codiceCatastale.__repr__(),
+                nazione=sedeSistri.nazione.__repr__(),
+                siglaNazione=sedeSistri.siglaNazione.__repr__(),
+                indirizzo=sedeSistri.indirizzo.__repr__(),
+                nrCivico=sedeSistri.nrCivico.__repr__(),
+                cap=sedeSistri.cap.__repr__(),
+                versione=sedeSistri.versione.long,
+                telefono=sedeSistri.telefono.__repr__(),
+                fax=sedeSistri.fax.__repr__(),
+                numeroAddetti=sedeSistri.numeroAddetti.long,
+                codiceIstatAttPrincipale=sedeSistri.codiceIstatAttPrincipale.\
+                    __repr__(),
+                codiceAtecoAttPrincipale=sedeSistri.codiceAtecoAttPrincipale.\
+                    __repr__(),
+                descrizioneAttPrincipale=sedeSistri.descrizioneAttPrincipale.\
+                    __repr__(),
+                numeroIscrizioneRea=sedeSistri.numeroIscrizioneRea.__repr__(),
+                numeroUla=sedeSistri.numeroUla.double,
+                latitudine=sedeSistri.latitudine.double,
+                longitudine=sedeSistri.longitudine.double,
+                tipoSede=tipoSede,
+                cameraCommercio=cameraCommercio,
+                associazioneCategoria=associazioneCategoria,
+                sottocategorie=sottocategorie
+            )
+            session.merge(sede)
+            session.commit()
+            response = "Ok"
+        except Exception, e:
+            response = e
+        return response</div>
+</pre>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">OpenWasteTrace v0.10 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Paolo Melchiorre.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

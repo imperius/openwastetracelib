@@ -1,0 +1,3 @@
+recursive-include data *.dtd *.wsdl
+recursive-include docs/build/html *.html *.js *.txt *.css *.png
+recursive-include examples *.txt *.py

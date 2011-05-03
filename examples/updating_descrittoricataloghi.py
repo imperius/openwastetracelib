@@ -23,7 +23,8 @@ This example shows how to updating all DescrittoriCataloghi objects.
 
 import logging
 from example_config import CONFIG_OBJ
-from openwastetracelib.services.cataloghi_service import UpdateDescrittoriCataloghiRequest
+from openwastetracelib.services.cataloghi_service import \
+    UpdateDescrittoriCataloghiRequest
 
 # Set this to the INFO level to see the response from Sistri printed in stdout.
 logging.basicConfig(level=logging.INFO)

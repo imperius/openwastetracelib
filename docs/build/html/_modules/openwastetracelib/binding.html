@@ -1,0 +1,267 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>openwastetracelib.binding &mdash; OpenWasteTrace v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="OpenWasteTrace v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">OpenWasteTrace v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for openwastetracelib.binding</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+
+<span class="c"># OpenWasteTrace</span>
+<span class="c"># Copyright (C) 2011 Paolo Melchiorre &lt;paolo.melchiorre@madec.it&gt;</span>
+<span class="c">#</span>
+<span class="c"># This program is free software: you can redistribute it and/or modify</span>
+<span class="c"># it under the terms of the GNU General Public License as published by</span>
+<span class="c"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c"># (at your option) any later version.</span>
+<span class="c">#</span>
+<span class="c"># This program is distributed in the hope that it will be useful,</span>
+<span class="c"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c"># GNU General Public License for more details.</span>
+<span class="c">#</span>
+<span class="c"># You should have received a copy of the GNU General Public License</span>
+<span class="c"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The I{owt_binding} module provides mapping for objects and tables.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">mapper</span><span class="p">,</span> <span class="n">relationship</span>
+<span class="kn">from</span> <span class="nn">objects</span> <span class="kn">import</span> <span class="n">Stati_scheda_sistri</span><span class="p">,</span> <span class="n">Stati_fisici_rifiuto</span><span class="p">,</span> \
+    <span class="n">Forme_giuridiche</span><span class="p">,</span> <span class="n">Tipi_reg_cronologico</span><span class="p">,</span> <span class="n">Operazioni_impianti</span><span class="p">,</span> \
+    <span class="n">Categorie_raee</span><span class="p">,</span> <span class="n">Tipi_veicolo</span><span class="p">,</span> <span class="n">Tipi_sede</span><span class="p">,</span> <span class="n">Tipi_registrazioni_crono</span><span class="p">,</span> \
+    <span class="n">Numeri_onu</span><span class="p">,</span> <span class="n">Localita_estere</span><span class="p">,</span> <span class="n">Associazioni_categoria</span><span class="p">,</span> \
+    <span class="n">Stati_registro_cronologico</span><span class="p">,</span> <span class="n">Tipi_imballaggi</span><span class="p">,</span> <span class="n">Sottocategorie_star</span><span class="p">,</span> \
+    <span class="n">Tipi_documento</span><span class="p">,</span> <span class="n">Classi_adr</span><span class="p">,</span> <span class="n">Ruoli_aziendali</span><span class="p">,</span> <span class="n">Stati_utente_idm</span><span class="p">,</span> \
+    <span class="n">Camere_commercio</span><span class="p">,</span> <span class="n">Tipi_esito_trasporto</span><span class="p">,</span> <span class="n">Stati_veicolo</span><span class="p">,</span> <span class="n">Cod_rec_1013</span><span class="p">,</span> \
+    <span class="n">Stati_registrazioni_crono</span><span class="p">,</span> <span class="n">Tipi_trasporto</span><span class="p">,</span> <span class="n">Tipologie_raee</span><span class="p">,</span> \
+    <span class="n">Codici_cer_iii_livello</span><span class="p">,</span> <span class="n">Tipi_stato_impresa</span><span class="p">,</span> <span class="n">Caratteristiche_pericolo</span><span class="p">,</span> \
+    <span class="n">Sottotipi_veicolo</span><span class="p">,</span> <span class="n">DescrittoreCatalogo</span><span class="p">,</span> <span class="n">Azienda</span><span class="p">,</span> <span class="n">Sede</span><span class="p">,</span> <span class="n">Veicolo</span>
+
+
+<div class="viewcode-block" id="OWTBinding"><a class="viewcode-back" href="../../modules.html#openwastetracelib.binding.OWTBinding">[docs]</a><span class="k">class</span> <span class="nc">OWTBinding</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base configuration class that is used for the binding.</span>
+<span class="sd">    These are generally passed to the OWT request classes as arguments.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">storage_obj</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        @type storage: L{OWTStorage}</span>
+<span class="sd">        @param storage: OWTStorage.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">storage</span> <span class="o">=</span> <span class="n">storage_obj</span>
+        <span class="sd">&quot;&quot;&quot;@ivar: OWTStorage.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapperStati_scheda_sistri</span> <span class="o">=</span> \
+            <span class="n">mapper</span><span class="p">(</span><span class="n">Stati_scheda_sistri</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">metadata_stati_scheda_sistri</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapperStati_fisici_rifiuto</span> <span class="o">=</span> \
+            <span class="n">mapper</span><span class="p">(</span><span class="n">Stati_fisici_rifiuto</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">metadata_stati_fisici_rifiuto</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapperForme_giuridiche</span> <span class="o">=</span> \
+            <span class="n">mapper</span><span class="p">(</span><span class="n">Forme_giuridiche</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">metadata_forme_giuridiche</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapperTipi_reg_cronologico</span> <span class="o">=</span> \
+            <span class="n">mapper</span><span class="p">(</span><span class="n">Tipi_reg_cronologico</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">metadata_tipi_reg_cronologico</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapperOperazioni_impianti</span> <span class="o">=</span> \
+            <span class="n">mapper</span><span class="p">(</span><span class="n">Operazioni_impianti</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">metadata_operazioni_impianti</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapperCategorie_raee</span> <span class="o">=</span> \
+            <span class="n">mapper</span><span class="p">(</span><span class="n">Categorie_raee</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">metadata_categorie_raee</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapperTipi_veicolo</span> <span class="o">=</span> \
+            <span class="n">mapper</span><span class="p">(</span><span class="n">Tipi_veicolo</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">metadata_tipi_veicolo</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapperTipi_sede</span> <span class="o">=</span> \
+            <span class="n">mapper</span><span class="p">(</span><span class="n">Tipi_sede</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">metadata_tipi_sede</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapperTipi_registrazioni_crono</span> <span class="o">=</span> \
+            <span class="n">mapper</span><span class="p">(</span><span class="n">Tipi_registrazioni_crono</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">metadata_tipi_registrazioni_crono</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapperNumeri_onu</span> <span class="o">=</span> \
+            <span class="n">mapper</span><span class="p">(</span><span class="n">Numeri_onu</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">metadata_numeri_onu</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapperLocalita_estere</span> <span class="o">=</span> \
+            <span class="n">mapper</span><span class="p">(</span><span class="n">Localita_estere</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">metadata_localita_estere</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapperAssociazioni_categoria</span> <span class="o">=</span> \
+            <span class="n">mapper</span><span class="p">(</span><span class="n">Associazioni_categoria</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">metadata_associazioni_categoria</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapperStati_registro_cronologico</span> <span class="o">=</span> \
+            <span class="n">mapper</span><span class="p">(</span><span class="n">Stati_registro_cronologico</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">metadata_stati_registro_cronologico</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapperTipi_imballaggi</span> <span class="o">=</span> \
+            <span class="n">mapper</span><span class="p">(</span><span class="n">Tipi_imballaggi</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">metadata_tipi_imballaggi</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapperSottocategorie_star</span> <span class="o">=</span> \
+            <span class="n">mapper</span><span class="p">(</span><span class="n">Sottocategorie_star</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">metadata_sottocategorie_star</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapperTipi_documento</span> <span class="o">=</span> \
+            <span class="n">mapper</span><span class="p">(</span><span class="n">Tipi_documento</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">metadata_tipi_documento</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapperClassi_adr</span> <span class="o">=</span> \
+            <span class="n">mapper</span><span class="p">(</span><span class="n">Classi_adr</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">metadata_classi_adr</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapperRuoli_aziendali</span> <span class="o">=</span> \
+            <span class="n">mapper</span><span class="p">(</span><span class="n">Ruoli_aziendali</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">metadata_ruoli_aziendali</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapperStati_utente_idm</span> <span class="o">=</span> \
+            <span class="n">mapper</span><span class="p">(</span><span class="n">Stati_utente_idm</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">metadata_stati_utente_idm</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapperCamere_commercio</span> <span class="o">=</span> \
+            <span class="n">mapper</span><span class="p">(</span><span class="n">Camere_commercio</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">metadata_camere_commercio</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapperTipi_esito_trasporto</span> <span class="o">=</span> \
+            <span class="n">mapper</span><span class="p">(</span><span class="n">Tipi_esito_trasporto</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">metadata_tipi_esito_trasporto</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapperStati_veicolo</span> <span class="o">=</span> \
+            <span class="n">mapper</span><span class="p">(</span><span class="n">Stati_veicolo</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">metadata_stati_veicolo</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapperCod_rec_1013</span> <span class="o">=</span> \
+            <span class="n">mapper</span><span class="p">(</span><span class="n">Cod_rec_1013</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">metadata_cod_rec_1013</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapperStati_registrazioni_crono</span> <span class="o">=</span> \
+            <span class="n">mapper</span><span class="p">(</span><span class="n">Stati_registrazioni_crono</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">metadata_stati_registrazioni_crono</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapperTipi_trasporto</span> <span class="o">=</span> \
+            <span class="n">mapper</span><span class="p">(</span><span class="n">Tipi_trasporto</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">metadata_tipi_trasporto</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapperTipologie_raee</span> <span class="o">=</span> \
+            <span class="n">mapper</span><span class="p">(</span><span class="n">Tipologie_raee</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">metadata_tipologie_raee</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapperCodici_cer_iii_livello</span> <span class="o">=</span> \
+            <span class="n">mapper</span><span class="p">(</span><span class="n">Codici_cer_iii_livello</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">metadata_codici_cer_iii_livello</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapperTipi_stato_impresa</span> <span class="o">=</span> \
+            <span class="n">mapper</span><span class="p">(</span><span class="n">Tipi_stato_impresa</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">metadata_tipi_stato_impresa</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapperCaratteristiche_pericolo</span> <span class="o">=</span> \
+            <span class="n">mapper</span><span class="p">(</span><span class="n">Caratteristiche_pericolo</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">metadata_caratteristiche_pericolo</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapperSottotipi_veicolo</span> <span class="o">=</span> \
+            <span class="n">mapper</span><span class="p">(</span><span class="n">Sottotipi_veicolo</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">metadata_sottotipi_veicolo</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapperDescrittoreCatalogo</span> <span class="o">=</span> \
+            <span class="n">mapper</span><span class="p">(</span><span class="n">DescrittoreCatalogo</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">metadata_descrittorecatalogo</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapperAzienda</span> <span class="o">=</span> \
+            <span class="n">mapper</span><span class="p">(</span><span class="n">Azienda</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">metadata_azienda</span><span class="p">,</span>
+                <span class="n">properties</span><span class="o">=</span><span class="p">{</span>
+                    <span class="s">&#39;formaGiuridica&#39;</span><span class="p">:</span> <span class="n">relationship</span><span class="p">(</span><span class="n">Forme_giuridiche</span><span class="p">),</span>
+                    <span class="s">&#39;tipoStatoImpresa&#39;</span><span class="p">:</span> <span class="n">relationship</span><span class="p">(</span><span class="n">Tipi_stato_impresa</span><span class="p">),</span>
+                    <span class="s">&#39;sedeLegale&#39;</span><span class="p">:</span> <span class="n">relationship</span><span class="p">(</span><span class="n">Sede</span><span class="p">,</span> <span class="n">uselist</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+                    <span class="s">&#39;sediSummary&#39;</span><span class="p">:</span> <span class="n">relationship</span><span class="p">(</span><span class="n">Sede</span><span class="p">,</span>
+                        <span class="n">secondary</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">metadata_sedisummary</span><span class="p">)</span>
+                <span class="p">}</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapperSede</span> <span class="o">=</span> \
+            <span class="n">mapper</span><span class="p">(</span><span class="n">Sede</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">metadata_sede</span><span class="p">,</span>
+                <span class="n">properties</span><span class="o">=</span><span class="p">{</span>
+                    <span class="s">&#39;tipoSede&#39;</span><span class="p">:</span> <span class="n">relationship</span><span class="p">(</span><span class="n">Tipi_sede</span><span class="p">),</span>
+                    <span class="s">&#39;cameraCommercio&#39;</span><span class="p">:</span> <span class="n">relationship</span><span class="p">(</span><span class="n">Camere_commercio</span><span class="p">),</span>
+                    <span class="s">&#39;associazioneCategoria&#39;</span><span class="p">:</span> <span class="n">relationship</span><span class="p">(</span>
+                        <span class="n">Associazioni_categoria</span><span class="p">),</span>
+                    <span class="s">&#39;sottocategorie&#39;</span><span class="p">:</span> <span class="n">relationship</span><span class="p">(</span><span class="n">Sottocategorie_star</span><span class="p">,</span>
+                        <span class="n">secondary</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">metadata_sottocategorie</span><span class="p">)</span>
+                <span class="p">}</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapperVeicoli</span> <span class="o">=</span> \
+            <span class="n">mapper</span><span class="p">(</span><span class="n">Veicolo</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">metadata_veicolo</span><span class="p">,</span>
+                <span class="n">properties</span><span class="o">=</span><span class="p">{</span>
+                    <span class="s">&#39;tipoVeicolo&#39;</span><span class="p">:</span> <span class="n">relationship</span><span class="p">(</span><span class="n">Tipi_veicolo</span><span class="p">),</span>
+                    <span class="s">&#39;sottotipoVeicolo&#39;</span><span class="p">:</span> <span class="n">relationship</span><span class="p">(</span><span class="n">Sottotipi_veicolo</span><span class="p">),</span>
+                    <span class="s">&#39;statoVeicolo&#39;</span><span class="p">:</span> <span class="n">relationship</span><span class="p">(</span><span class="n">Stati_veicolo</span><span class="p">),</span>
+                    <span class="s">&#39;codiciCerIIILivello&#39;</span><span class="p">:</span> <span class="n">relationship</span><span class="p">(</span>
+                        <span class="n">Codici_cer_iii_livello</span><span class="p">,</span>
+                        <span class="n">secondary</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">metadata_codiciceriiilivello</span><span class="p">)</span>
+                <span class="p">}</span>
+            <span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">OpenWasteTrace v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Paolo Melchiorre.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>
