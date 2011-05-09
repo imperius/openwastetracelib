@@ -74,8 +74,8 @@ class Categorie_raee(object):
 
 class Tipi_veicolo(object):
     """ """
-    def __init__(self, id_tipo_veicolo, descrizione, codice_tipo_veicolo,
-                    flag_rimorchio):
+    def __init__(self, id_tipo_veicolo, descrizione, codice_tipo_veicolo=None,
+                    flag_rimorchio=None):
         self.id_tipo_veicolo = id_tipo_veicolo
         self.descrizione = descrizione
         self.codice_tipo_veicolo = codice_tipo_veicolo
@@ -262,7 +262,7 @@ class Caratteristiche_pericolo(object):
 class Sottotipi_veicolo(object):
     """ """
     def __init__(self, id_sottotipo_veicolo, descrizione,
-                    codice_sottotipo_veicolo):
+                    codice_sottotipo_veicolo=None):
         self.id_sottotipo_veicolo = id_sottotipo_veicolo
         self.descrizione = descrizione
         self.codice_sottotipo_veicolo = codice_sottotipo_veicolo
@@ -308,9 +308,30 @@ class Sede(object):
 
 class Veicolo(object):
     """ Veicolo object with idSIS. """
-    def __init__(self, targa, tipoVeicolo=None, statoVeicolo=None, **kwargs):
+    def __init__(self, targa, sede=None, tipoVeicolo=None, statoVeicolo=None,
+                    **kwargs):
         self.targa = targa
+        self.sede = sede
         self.tipoVeicolo = tipoVeicolo
         self.statoVeicolo = statoVeicolo
+        for key in kwargs:
+            self.__setattr__(key, kwargs[key])
+
+
+class RegistroCronologico(object):
+    """ RegistroCronologico object with idSIS. """
+    def __init__(self, idSIS, idSISSede, codiceRegistroCronologico, versione,
+                    ultimoNumero, dataUltimoNumero, sottocategoria=None,
+                    statoRegistroCronologico=None, tipoRegCronologico=None,
+                    **kwargs):
+        self.idSIS = idSIS
+        self.idSISSede = idSISSede
+        self.codiceRegistroCronologico = codiceRegistroCronologico
+        self.versione = versione
+        self.ultimoNumero = ultimoNumero
+        self.dataUltimoNumero = dataUltimoNumero
+        self.statoRegistroCronologico = statoRegistroCronologico
+        self.tipoRegCronologico = tipoRegCronologico
+        self.sottocategoria = sottocategoria
         for key in kwargs:
             self.__setattr__(key, kwargs[key])

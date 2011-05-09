@@ -18,7 +18,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 """
-The I{owt_binding} module provides mapping for objects and tables.
+The OWTBinding module provides mapping for objects and tables.
 """
 
 from sqlalchemy.orm import mapper, relationship
@@ -31,7 +31,8 @@ from objects import Stati_scheda_sistri, Stati_fisici_rifiuto, \
     Camere_commercio, Tipi_esito_trasporto, Stati_veicolo, Cod_rec_1013, \
     Stati_registrazioni_crono, Tipi_trasporto, Tipologie_raee, \
     Codici_cer_iii_livello, Tipi_stato_impresa, Caratteristiche_pericolo, \
-    Sottotipi_veicolo, DescrittoreCatalogo, Azienda, Sede, Veicolo
+    Sottotipi_veicolo, DescrittoreCatalogo, Azienda, Sede, Veicolo, \
+    RegistroCronologico
 
 
 class OWTBinding(object):
@@ -41,11 +42,9 @@ class OWTBinding(object):
     """
     def __init__(self, storage_obj):
         """
-        @type storage: L{OWTStorage}
-        @param storage: OWTStorage.
+        storage: OWTStorage
         """
         self.storage = storage_obj
-        """@ivar: OWTStorage."""
         self.mapperStati_scheda_sistri = \
             mapper(Stati_scheda_sistri,
                 self.storage.metadata_stati_scheda_sistri)
@@ -159,18 +158,29 @@ class OWTBinding(object):
                     'associazioneCategoria': relationship(
                         Associazioni_categoria),
                     'sottocategorie': relationship(Sottocategorie_star,
-                        secondary=self.storage.metadata_sottocategorie)
+                        secondary=self.storage.metadata_sede_sottocategorie)
                 }
             )
-        self.mapperVeicoli = \
+        self.mapperVeicolo = \
             mapper(Veicolo,
                 self.storage.metadata_veicolo,
                 properties={
                     'tipoVeicolo': relationship(Tipi_veicolo),
                     'sottotipoVeicolo': relationship(Sottotipi_veicolo),
                     'statoVeicolo': relationship(Stati_veicolo),
+                    'sede': relationship(Sede, uselist=False),
                     'codiciCerIIILivello': relationship(
                         Codici_cer_iii_livello,
                         secondary=self.storage.metadata_codiciceriiilivello)
+                }
+            )
+        self.mapperRegistroCronologico = \
+            mapper(RegistroCronologico,
+                self.storage.metadata_registrocronologico,
+                properties={
+                    'statoRegistroCronologico': relationship(
+                        Stati_registro_cronologico),
+                    'tipoRegCronologico': relationship(Tipi_reg_cronologico),
+                    'sottocategoria': relationship(Sottocategorie_star)
                 }
             )

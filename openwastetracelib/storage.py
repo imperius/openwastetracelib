@@ -105,8 +105,8 @@ class OWTStorage(object):
                 Column('id_tipo_veicolo', String(255), nullable=False,
                         primary_key=True),
                 Column('descrizione', String(255), nullable=False),
-                Column('codice_tipo_veicolo', Integer, nullable=False),
-                Column('flag_rimorchio', Integer, nullable=False),
+                Column('codice_tipo_veicolo', Integer, nullable=True),
+                Column('flag_rimorchio', Integer, nullable=True),
             )
         self.metadata_tipi_sede = \
             Table('tipi_sede',
@@ -266,9 +266,9 @@ class OWTStorage(object):
                 self.metadata,
                 Column('id_codice_cer_iii_livello', String(255),
                         nullable=False, primary_key=True),
-                Column('escrizione_iii_livello', String(255), nullable=False),
-                Column('flag_pericoloso', Integer, nullable=False),
-                Column('flag_attivo', Integer, nullable=False),
+                Column('descrizione_iii_livello', String(255), nullable=False),
+                Column('flag_pericoloso', Integer, nullable=True),
+                Column('flag_attivo', Integer, nullable=True),
             )
         self.metadata_tipi_stato_impresa = \
             Table('tipi_stato_impresa',
@@ -289,7 +289,7 @@ class OWTStorage(object):
                 Column('id_sottotipo_veicolo', String(255), nullable=False,
                         primary_key=True),
                 Column('descrizione', String(255), nullable=False),
-                Column('codice_sottotipo_veicolo', Integer, nullable=False),
+                Column('codice_sottotipo_veicolo', Integer, nullable=True),
             )
         self.metadata_azienda = \
             Table('azienda',
@@ -347,7 +347,8 @@ class OWTStorage(object):
                         ForeignKey('camere_commercio.id_camera_commercio')
                 ),
                 Column('associazioneCategoriaFK', String(255),
-                        ForeignKey('associazioni_categoria.id_associazione_categoria')
+                    ForeignKey(\
+                        'associazioni_categoria.id_associazione_categoria')
                 ),
                 Column('codiceIstatAttPrincipale', String(255)),
                 Column('codiceAtecoAttPrincipale', String(255)),
@@ -357,8 +358,8 @@ class OWTStorage(object):
                 Column('latitudine', Float),
                 Column('longitudine', Float)
             )
-        self.metadata_sottocategorie = \
-            Table('sottocategorie',
+        self.metadata_sede_sottocategorie = \
+            Table('sede_sottocategorie',
                 self.metadata,
                 Column('sedeFK', String(255), ForeignKey('sede.idSIS')),
                 Column('sottocategorie_starFK', String(255),
@@ -369,6 +370,9 @@ class OWTStorage(object):
             Table('veicolo',
                 self.metadata,
                 Column('targa', String(255), nullable=False, primary_key=True),
+                Column('sedeFK', String(255),
+                        ForeignKey('sede.idSIS')
+                ),
                 Column('tipoVeicoloFK', String(255),
                     ForeignKey('tipi_veicolo.id_tipo_veicolo')
                 ),
@@ -387,7 +391,30 @@ class OWTStorage(object):
                 self.metadata,
                 Column('veicoloFK', String(255), ForeignKey('veicolo.targa')),
                 Column('codici_cer_iii_livelloFK', String(255),
-                    ForeignKey('codici_cer_iii_livello.id_codice_cer_iii_livello')
+                    ForeignKey(\
+                        'codici_cer_iii_livello.id_codice_cer_iii_livello')
                 )
+            )
+        self.metadata_registrocronologico = \
+            Table('registrocronologico',
+                self.metadata,
+                Column('idsis', String(255), nullable=False, primary_key=True),
+                Column('idSISSede', String(255), nullable=False),
+                Column('codiceRegistroCronologico', String(255),
+                        nullable=False),
+                Column('versione', BigInteger, nullable=False),
+                Column('ultimoNumero', BigInteger, nullable=True),
+                Column('dataUltimoNumero', DateTime, nullable=True),
+                Column('nomeUnitaOperativa', String(255), nullable=True),
+                Column('statoRegistroCronologicoFK', String(255),
+                    ForeignKey(\
+                    'stati_registro_cronologico.id_stato_registro_cronologico')
+                ),
+                Column('tipoRegCronologicoFK', String(255),
+                    ForeignKey('tipi_reg_cronologico.id_tipo_reg_cronologico')
+                ),
+                Column('sottocategoriaFK', String(255),
+                    ForeignKey('sottocategorie_star.id_sottocategoria_star')
+                ),
             )
         self.metadata.create_all(self.engine)

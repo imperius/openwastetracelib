@@ -24,7 +24,8 @@ For more details on each, refer to the respective class's documentation.
 
 from .. objects import Azienda, Forme_giuridiche, Tipi_stato_impresa, \
     Tipi_sede, Sede, Camere_commercio, Associazioni_categoria, \
-    Sottocategorie_star
+    Sottocategorie_star, Tipi_veicolo, Stati_veicolo, Sottotipi_veicolo, \
+    Codici_cer_iii_livello, Veicolo
 from .. base_service import OWTBaseService, OWTError
 
 
@@ -44,9 +45,8 @@ class GettingAziendaRequest(OWTBaseService):
     def __init__(self, config_obj, *args, **kwargs):
         """
         Sends a get azienda request. The optional keyword args
-        detailed on L{OWTBaseService} apply here as well.
-        @type config_obj: L{OWTConfig}
-        @param config_obj: A valid OWTConfig object.
+        detailed on OWTBaseService apply here as well.
+        config_obj: A valid OWTConfig object.
         """
         self._config_obj = config_obj
         self.identity = None
@@ -73,16 +73,27 @@ class GettingAziendaRequest(OWTBaseService):
     def _assemble_and_send_request(self):
         """
         Fires off the SISTRI request.
-        @warning: NEVER CALL THIS METHOD DIRECTLY. CALL send_request(),
+        warning: NEVER CALL THIS METHOD DIRECTLY. CALL send_request(),
         WHICH RESIDESON OWTBaseService AND IS INHERITED.
         """
         client = self.client
         session = self._config_obj.session
+        aziendaAllineata = 0
+        response = "None"
         parm = dict(identity=self.identity,
                     parametriAggiuntivi="",
                     codiceFiscaleAzienda=self.codiceFiscaleAzienda)
-        aziendaSistri = client.service.GetAzienda(**parm)
-        try:
+#        try:
+        versioneAnagraficaAzienda = \
+            client.service.GetVersioneAnagraficaAzienda(**parm)
+        aziendaAllineata = session.query(Azienda).\
+            filter(Azienda.codiceFiscale == parm['codiceFiscaleAzienda']).\
+            filter(Azienda.versione == versioneAnagraficaAzienda.long).count()
+#        except Exception, e:
+#            response = e
+        if aziendaAllineata <= 0:
+            aziendaSistri = client.service.GetAzienda(**parm)
+#        try:
             sediSummary = []
             if aziendaSistri.sediSummary:
                 for sedeSummary in aziendaSistri.sediSummary:
@@ -206,8 +217,8 @@ class GettingAziendaRequest(OWTBaseService):
             session.merge(azienda)
             session.commit()
             response = "Ok"
-        except Exception, e:
-            response = e
+#        except Exception, e:
+#            response = e
         return response
 
 
@@ -219,9 +230,8 @@ class GettingSedeRequest(OWTBaseService):
     def __init__(self, config_obj, *args, **kwargs):
         """
         Sends a get azienda request. The optional keyword args
-        detailed on L{OWTBaseService} apply here as well.
-        @type config_obj: L{OWTConfig}
-        @param config_obj: A valid OWTConfig object.
+        detailed on OWTBaseService apply here as well.
+        config_obj: A valid OWTConfig object.
         """
         self._config_obj = config_obj
         self.identity = None
@@ -248,7 +258,7 @@ class GettingSedeRequest(OWTBaseService):
     def _assemble_and_send_request(self):
         """
         Fires off the SISTRI request.
-        @warning: NEVER CALL THIS METHOD DIRECTLY. CALL send_request(),
+        warning: NEVER CALL THIS METHOD DIRECTLY. CALL send_request(),
         WHICH RESIDESON OWTBaseService AND IS INHERITED.
         """
         client = self.client
@@ -344,6 +354,149 @@ class GettingSedeRequest(OWTBaseService):
                 sottocategorie=sottocategorie
             )
             session.merge(sede)
+            session.commit()
+            response = "Ok"
+        except Exception, e:
+            response = e
+        return response
+
+
+class GettingVeicoliRequest(OWTBaseService):
+    """
+    This class allows you to updating all gVeicoli objects.
+    By default, you can simply pass a identity string to the constructor.
+    """
+
+    def __init__(self, config_obj, *args, **kwargs):
+        """
+        Sends an update cataloghi request. The optional keyword args
+        detailed on OWTBaseService apply here as well.
+        config_obj: A valid OWTConfig object.
+        """
+        self._config_obj = config_obj
+        self.identity = None
+        self.idSISSede = None
+        # Call the parent OWTBaseService class for basic setup work.
+        super(GettingVeicoliRequest, self).\
+            __init__(self._config_obj, *args, **kwargs)
+
+    def _check_response_for_request_errors(self):
+        """
+        Checks the response to see if there were any errors.
+        """
+#        if self.response.HighestSeverity == "ERROR":
+#            for notification in self.response.Notifications:
+#                if notification.Severity == "ERROR":
+#                    if "Invalid tracking number" in notification.Message:
+#                        raise FedexInvalidTrackingNumber(notification.Code,
+#                                                         notification.Message)
+#                    else:
+#                        raise FedexError(notification.Code,
+#                                         notification.Message)
+        pass
+
+    def _assemble_and_send_request(self):
+        """
+        Fires off the SISTRI request.
+        warning: NEVER CALL THIS METHOD DIRECTLY. CALL send_request(),
+        WHICH RESIDESON OWTBaseService AND IS INHERITED.
+        """
+        client = self.client
+        session = self._config_obj.session
+        parm = dict(identity=self.identity,
+                    parametriAggiuntivi="",
+                    idSISSede=self.idSISSede)
+        veicoliSistri = client.service.GetVeicoli(**parm)
+        try:
+            sede = None
+            if session.query(Sede).filter(
+                Sede.idSIS == parm['idSISSede']).count() > 0:
+                sede = session.query(Sede).filter(
+                    Sede.idSIS == parm['idSISSede']).first()
+            for veicoloSistri in veicoliSistri:
+                tipoVeicolo = None
+                if veicoloSistri.tipoVeicolo:
+                    tipoVeicoloSistri = veicoloSistri.tipoVeicolo
+                    tipoVeicolo = Tipi_veicolo(
+                        id_tipo_veicolo=tipoVeicoloSistri.idCatalogo.\
+                            __repr__(),
+                        descrizione=tipoVeicoloSistri.description.__repr__()
+                    )
+                    if session.query(Tipi_veicolo).filter(
+                        Tipi_veicolo.id_tipo_veicolo == \
+                        tipoVeicolo.id_tipo_veicolo).count() > 0:
+                        tipoVeicolo = session.query(Tipi_veicolo).filter(
+                            Tipi_veicolo.id_tipo_veicolo == \
+                            tipoVeicolo.id_tipo_veicolo).first()
+                statoVeicolo = None
+                if veicoloSistri.statoVeicolo:
+                    statoVeicoloSistri = veicoloSistri.statoVeicolo
+                    statoVeicolo = Stati_veicolo(
+                        id_stato_veicolo=statoVeicoloSistri.idCatalogo.\
+                            __repr__(),
+                        descrizione_stato_veicolo=statoVeicoloSistri.\
+                            description.__repr__()
+                    )
+                    if session.query(Stati_veicolo).filter(
+                        Stati_veicolo.id_stato_veicolo == \
+                        statoVeicolo.id_stato_veicolo).count() > 0:
+                        statoVeicolo = session.query(Stati_veicolo).filter(
+                            Stati_veicolo.id_stato_veicolo == \
+                            statoVeicolo.id_stato_veicolo).first()
+                sottotipoVeicolo = None
+                if veicoloSistri.sottotipoVeicolo:
+                    sottotipoVeicoloSistri = veicoloSistri.sottotipoVeicolo
+                    sottotipoVeicolo = Sottotipi_veicolo(
+                        id_sottotipo_veicolo=sottotipoVeicoloSistri.\
+                            idCatalogo.__repr__(),
+                        descrizione=sottotipoVeicoloSistri.description.\
+                            __repr__()
+                    )
+                    if session.query(Sottotipi_veicolo).filter(
+                        Sottotipi_veicolo.id_sottotipo_veicolo == \
+                        sottotipoVeicolo.id_sottotipo_veicolo).count() > 0:
+                        sottotipoVeicolo = session.query(Sottotipi_veicolo).\
+                            filter(Sottotipi_veicolo.id_sottotipo_veicolo == \
+                            sottotipoVeicolo.id_sottotipo_veicolo).first()
+                codiciCerIIILivello = []
+                if veicoloSistri.codiciCerIIILivello:
+                    codiciCerIIILivelloSistri = veicoloSistri.\
+                        codiciCerIIILivello
+                    for codiceCerIIILivello in codiciCerIIILivelloSistri:
+                        codici_cer_iii_livello = Codici_cer_iii_livello(
+                            id_codice_cer_iii_livello=codiceCerIIILivello.\
+                                idCatalogo.__repr__(),
+                            descrizione_iii_livello=codiceCerIIILivello.\
+                                description.__repr__()
+                        )
+                        if session.query(Codici_cer_iii_livello).\
+                            filter(Codici_cer_iii_livello.\
+                            id_codice_cer_iii_livello == \
+                            codici_cer_iii_livello.id_codice_cer_iii_livello).\
+                            count() > 0:
+                            codici_cer_iii_livello = session.\
+                                query(Codici_cer_iii_livello).\
+                                filter(Codici_cer_iii_livello.\
+                                id_codice_cer_iii_livello == \
+                                codici_cer_iii_livello.\
+                                id_codice_cer_iii_livello).first()
+                        codiciCerIIILivello.append(codici_cer_iii_livello)
+                annoImmatricolazione = None
+                annoImmatricolazioneSistri = veicoloSistri.annoImmatricolazione
+                if annoImmatricolazioneSistri:
+                    annoImmatricolazione = annoImmatricolazioneSistri.long
+                veicolo = Veicolo(
+                    targa=veicoloSistri.targa.__repr__(),
+                    marca=veicoloSistri.marca.__repr__(),
+                    modello=veicoloSistri.modello.__repr__(),
+                    annoImmatricolazione=annoImmatricolazione,
+                    sede=sede,
+                    tipoVeicolo=tipoVeicolo,
+                    statoVeicolo=statoVeicolo,
+                    sottotipoVeicolo=sottotipoVeicolo,
+                    codiciCerIIILivello=codiciCerIIILivello
+                )
+                session.merge(veicolo)
             session.commit()
             response = "Ok"
         except Exception, e:
