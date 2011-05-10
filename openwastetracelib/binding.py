@@ -158,7 +158,10 @@ class OWTBinding(object):
                     'associazioneCategoria': relationship(
                         Associazioni_categoria),
                     'sottocategorie': relationship(Sottocategorie_star,
-                        secondary=self.storage.metadata_sede_sottocategorie)
+                        secondary=self.storage.metadata_sede_sottocategorie),
+                    'veicoli': relationship(Veicolo, backref='sede'),
+                    'registricronologici': relationship(RegistroCronologico,
+                        backref='idSISSede')
                 }
             )
         self.mapperVeicolo = \
@@ -168,7 +171,6 @@ class OWTBinding(object):
                     'tipoVeicolo': relationship(Tipi_veicolo),
                     'sottotipoVeicolo': relationship(Sottotipi_veicolo),
                     'statoVeicolo': relationship(Stati_veicolo),
-                    'sede': relationship(Sede, uselist=False),
                     'codiciCerIIILivello': relationship(
                         Codici_cer_iii_livello,
                         secondary=self.storage.metadata_codiciceriiilivello)

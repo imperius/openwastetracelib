@@ -408,11 +408,11 @@ class GettingVeicoliRequest(OWTBaseService):
                     idSISSede=self.idSISSede)
         veicoliSistri = client.service.GetVeicoli(**parm)
         try:
-            sede = None
-            if session.query(Sede).filter(
-                Sede.idSIS == parm['idSISSede']).count() > 0:
-                sede = session.query(Sede).filter(
-                    Sede.idSIS == parm['idSISSede']).first()
+#            sede = None
+#            if session.query(Sede).filter(
+#                Sede.idSIS == parm['idSISSede']).count() > 0:
+#                sede = session.query(Sede).filter(
+#                    Sede.idSIS == parm['idSISSede']).first()
             for veicoloSistri in veicoliSistri:
                 tipoVeicolo = None
                 if veicoloSistri.tipoVeicolo:
@@ -490,7 +490,7 @@ class GettingVeicoliRequest(OWTBaseService):
                     marca=veicoloSistri.marca.__repr__(),
                     modello=veicoloSistri.modello.__repr__(),
                     annoImmatricolazione=annoImmatricolazione,
-                    sede=sede,
+#                    sede=sede,
                     tipoVeicolo=tipoVeicolo,
                     statoVeicolo=statoVeicolo,
                     sottotipoVeicolo=sottotipoVeicolo,

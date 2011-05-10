@@ -308,10 +308,9 @@ class Sede(object):
 
 class Veicolo(object):
     """ Veicolo object with idSIS. """
-    def __init__(self, targa, sede=None, tipoVeicolo=None, statoVeicolo=None,
+    def __init__(self, targa, tipoVeicolo=None, statoVeicolo=None,
                     **kwargs):
         self.targa = targa
-        self.sede = sede
         self.tipoVeicolo = tipoVeicolo
         self.statoVeicolo = statoVeicolo
         for key in kwargs:
@@ -320,12 +319,11 @@ class Veicolo(object):
 
 class RegistroCronologico(object):
     """ RegistroCronologico object with idSIS. """
-    def __init__(self, idSIS, idSISSede, codiceRegistroCronologico, versione,
+    def __init__(self, idSIS, codiceRegistroCronologico, versione,
                     ultimoNumero, dataUltimoNumero, sottocategoria=None,
                     statoRegistroCronologico=None, tipoRegCronologico=None,
                     **kwargs):
         self.idSIS = idSIS
-        self.idSISSede = idSISSede
         self.codiceRegistroCronologico = codiceRegistroCronologico
         self.versione = versione
         self.ultimoNumero = ultimoNumero

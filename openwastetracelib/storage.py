@@ -370,9 +370,6 @@ class OWTStorage(object):
             Table('veicolo',
                 self.metadata,
                 Column('targa', String(255), nullable=False, primary_key=True),
-                Column('sedeFK', String(255),
-                        ForeignKey('sede.idSIS')
-                ),
                 Column('tipoVeicoloFK', String(255),
                     ForeignKey('tipi_veicolo.id_tipo_veicolo')
                 ),
@@ -385,6 +382,7 @@ class OWTStorage(object):
                 Column('annoImmatricolazione', BigInteger, nullable=True),
                 Column('marca', String(255), nullable=True),
                 Column('modello', String(255), nullable=True),
+                Column('sedeFK', String(255), ForeignKey('sede.idSIS'))
             )
         self.metadata_codiciceriiilivello = \
             Table('codiciceriiilivello',
@@ -399,15 +397,14 @@ class OWTStorage(object):
             Table('registrocronologico',
                 self.metadata,
                 Column('idsis', String(255), nullable=False, primary_key=True),
-                Column('idSISSede', String(255), nullable=False),
+                Column('idSISSedeFK', String(255), ForeignKey('sede.idSIS')),
                 Column('codiceRegistroCronologico', String(255),
                         nullable=False),
                 Column('versione', BigInteger, nullable=False),
                 Column('ultimoNumero', BigInteger, nullable=True),
                 Column('dataUltimoNumero', DateTime, nullable=True),
                 Column('nomeUnitaOperativa', String(255), nullable=True),
-                Column('statoRegistroCronologicoFK', String(255),
-                    ForeignKey(\
+                Column('statoRegistroCronologicoFK', String(255), ForeignKey(\
                     'stati_registro_cronologico.id_stato_registro_cronologico')
                 ),
                 Column('tipoRegCronologicoFK', String(255),
