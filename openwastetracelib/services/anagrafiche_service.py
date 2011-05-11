@@ -78,22 +78,11 @@ class GettingAziendaRequest(OWTBaseService):
         """
         client = self.client
         session = self._config_obj.session
-        aziendaAllineata = 0
-        response = "None"
         parm = dict(identity=self.identity,
                     parametriAggiuntivi="",
                     codiceFiscaleAzienda=self.codiceFiscaleAzienda)
-#        try:
-        versioneAnagraficaAzienda = \
-            client.service.GetVersioneAnagraficaAzienda(**parm)
-        aziendaAllineata = session.query(Azienda).\
-            filter(Azienda.codiceFiscale == parm['codiceFiscaleAzienda']).\
-            filter(Azienda.versione == versioneAnagraficaAzienda.long).count()
-#        except Exception, e:
-#            response = e
-        if aziendaAllineata <= 0:
+        try:
             aziendaSistri = client.service.GetAzienda(**parm)
-#        try:
             sediSummary = []
             if aziendaSistri.sediSummary:
                 for sedeSummary in aziendaSistri.sediSummary:
@@ -217,8 +206,89 @@ class GettingAziendaRequest(OWTBaseService):
             session.merge(azienda)
             session.commit()
             response = "Ok"
-#        except Exception, e:
-#            response = e
+        except Exception, e:
+            response = e
+        return response
+
+
+class UpdatingAziendaRequest(OWTBaseService):
+    """
+    This class allows you to update an Azienda object.
+    By default, you can simply pass a identity string to the constructor.
+    """
+
+    def __init__(self, config_obj, *args, **kwargs):
+        """
+        Sends a get azienda request. The optional keyword args
+        detailed on OWTBaseService apply here as well.
+        config_obj: A valid OWTConfig object.
+        """
+        self._config_obj = config_obj
+        self.identity = None
+        self.codiceFiscaleAzienda = None
+        # Call the parent OWTBaseService class for basic setup work.
+        super(UpdatingAziendaRequest, self).__init__(self._config_obj,
+                                                    *args, **kwargs)
+
+    def _check_response_for_request_errors(self):
+        """
+        Checks the response to see if there were any errors.
+        """
+#        if self.response.HighestSeverity == "ERROR":
+#            for notification in self.response.Notifications:
+#                if notification.Severity == "ERROR":
+#                    if "Invalid tracking number" in notification.Message:
+#                        raise FedexInvalidTrackingNumber(notification.Code,
+#                                                         notification.Message)
+#                    else:
+#                        raise FedexError(notification.Code,
+#                                         notification.Message)
+        pass
+
+    def _assemble_and_send_request(self):
+        """
+        Fires off the SISTRI request.
+        warning: NEVER CALL THIS METHOD DIRECTLY. CALL send_request(),
+        WHICH RESIDESON OWTBaseService AND IS INHERITED.
+        """
+        client = self.client
+        session = self._config_obj.session
+        aziendaAllineata = 0
+        response = "None"
+        parm = dict(identity=self.identity,
+                    parametriAggiuntivi="",
+                    codiceFiscaleAzienda=self.codiceFiscaleAzienda)
+        try:
+            versioneAnagraficaAzienda = \
+                client.service.GetVersioneAnagraficaAzienda(**parm)
+            aziendaAllineata = session.query(Azienda).\
+                filter(Azienda.codiceFiscale == parm['codiceFiscaleAzienda']).\
+                filter(Azienda.versione == versioneAnagraficaAzienda.long).\
+                count()
+        except Exception, e:
+            response = e
+        if not aziendaAllineata > 0:
+            azienda = GettingAziendaRequest(self._config_obj)
+            azienda.codiceFiscaleAzienda = self.codiceFiscaleAzienda
+            azienda.identity = self.identity
+            azienda.send_request()
+            response = azienda.response
+        sedi = []
+        try:
+            if session.query(Azienda).filter(Azienda.codiceFiscale == \
+                parm['codiceFiscaleAzienda']).count() > 0:
+                azienda = session.query(Azienda).\
+                    filter(Azienda.codiceFiscale == \
+                    parm['codiceFiscaleAzienda']).first()
+                sedi = azienda.sediSummary
+        except Exception, e:
+            response = e
+        for sede in sedi:
+            veicolo = GettingVeicoliRequest(self._config_obj)
+            veicolo.identity = self.identity
+            veicolo.idSISSede = sede.idSIS
+            veicolo.send_request()
+            response = veicolo.response
         return response
 
 
@@ -401,18 +471,19 @@ class GettingVeicoliRequest(OWTBaseService):
         warning: NEVER CALL THIS METHOD DIRECTLY. CALL send_request(),
         WHICH RESIDESON OWTBaseService AND IS INHERITED.
         """
+        response = "None"
         client = self.client
         session = self._config_obj.session
         parm = dict(identity=self.identity,
                     parametriAggiuntivi="",
                     idSISSede=self.idSISSede)
-        veicoliSistri = client.service.GetVeicoli(**parm)
         try:
-#            sede = None
-#            if session.query(Sede).filter(
-#                Sede.idSIS == parm['idSISSede']).count() > 0:
-#                sede = session.query(Sede).filter(
-#                    Sede.idSIS == parm['idSISSede']).first()
+            veicoliSistri = client.service.GetVeicoli(**parm)
+            sede = None
+            if session.query(Sede).filter(
+                Sede.idSIS == parm['idSISSede']).count() > 0:
+                sede = session.query(Sede).filter(
+                    Sede.idSIS == parm['idSISSede']).first()
             for veicoloSistri in veicoliSistri:
                 tipoVeicolo = None
                 if veicoloSistri.tipoVeicolo:
@@ -490,7 +561,7 @@ class GettingVeicoliRequest(OWTBaseService):
                     marca=veicoloSistri.marca.__repr__(),
                     modello=veicoloSistri.modello.__repr__(),
                     annoImmatricolazione=annoImmatricolazione,
-#                    sede=sede,
+                    sede=sede,
                     tipoVeicolo=tipoVeicolo,
                     statoVeicolo=statoVeicolo,
                     sottotipoVeicolo=sottotipoVeicolo,
