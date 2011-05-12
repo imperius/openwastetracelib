@@ -78,8 +78,8 @@ class OWTStorage(object):
                 Column('id_tipo_reg_cronologico', String(255), nullable=False,
                         primary_key=True),
                 Column('descrizione_tipo_reg_crono', String(255),
-                        nullable=False),
-                Column('macro_categoria', String(255), nullable=False),
+                        nullable=True),
+                Column('macro_categoria', String(255), nullable=True),
             )
         self.metadata_operazioni_impianti = \
             Table('operazioni_impianti',
@@ -396,7 +396,7 @@ class OWTStorage(object):
         self.metadata_registrocronologico = \
             Table('registrocronologico',
                 self.metadata,
-                Column('idsis', String(255), nullable=False, primary_key=True),
+                Column('idSIS', String(255), nullable=False, primary_key=True),
                 Column('idSISSedeFK', String(255), ForeignKey('sede.idSIS')),
                 Column('codiceRegistroCronologico', String(255),
                         nullable=False),

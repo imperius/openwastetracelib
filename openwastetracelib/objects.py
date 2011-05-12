@@ -48,8 +48,8 @@ class Forme_giuridiche(object):
 
 class Tipi_reg_cronologico(object):
     """ """
-    def __init__(self, id_tipo_reg_cronologico, descrizione_tipo_reg_crono,
-                    macro_categoria):
+    def __init__(self, id_tipo_reg_cronologico,
+                    descrizione_tipo_reg_crono=None, macro_categoria=None):
         self.id_tipo_reg_cronologico = id_tipo_reg_cronologico
         self.descrizione_tipo_reg_crono = descrizione_tipo_reg_crono
         self.macro_categoria = macro_categoria

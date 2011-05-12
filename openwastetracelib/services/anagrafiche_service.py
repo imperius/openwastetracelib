@@ -25,7 +25,8 @@ For more details on each, refer to the respective class's documentation.
 from .. objects import Azienda, Forme_giuridiche, Tipi_stato_impresa, \
     Tipi_sede, Sede, Camere_commercio, Associazioni_categoria, \
     Sottocategorie_star, Tipi_veicolo, Stati_veicolo, Sottotipi_veicolo, \
-    Codici_cer_iii_livello, Veicolo
+    Codici_cer_iii_livello, Veicolo, Stati_registro_cronologico, \
+    RegistroCronologico, Tipi_reg_cronologico
 from .. base_service import OWTBaseService, OWTError
 
 
@@ -34,181 +35,6 @@ class OWTInvalidAzienda(OWTError):
     Exception: Sent when a an error related invalid Azienda id.
     """
     pass
-
-
-class GettingAziendaRequest(OWTBaseService):
-    """
-    This class allows you to get an Azienda object.
-    By default, you can simply pass a identity string to the constructor.
-    """
-
-    def __init__(self, config_obj, *args, **kwargs):
-        """
-        Sends a get azienda request. The optional keyword args
-        detailed on OWTBaseService apply here as well.
-        config_obj: A valid OWTConfig object.
-        """
-        self._config_obj = config_obj
-        self.identity = None
-        self.codiceFiscaleAzienda = None
-        # Call the parent OWTBaseService class for basic setup work.
-        super(GettingAziendaRequest, self).__init__(self._config_obj,
-                                                    *args, **kwargs)
-
-    def _check_response_for_request_errors(self):
-        """
-        Checks the response to see if there were any errors.
-        """
-#        if self.response.HighestSeverity == "ERROR":
-#            for notification in self.response.Notifications:
-#                if notification.Severity == "ERROR":
-#                    if "Invalid tracking number" in notification.Message:
-#                        raise FedexInvalidTrackingNumber(notification.Code,
-#                                                         notification.Message)
-#                    else:
-#                        raise FedexError(notification.Code,
-#                                         notification.Message)
-        pass
-
-    def _assemble_and_send_request(self):
-        """
-        Fires off the SISTRI request.
-        warning: NEVER CALL THIS METHOD DIRECTLY. CALL send_request(),
-        WHICH RESIDESON OWTBaseService AND IS INHERITED.
-        """
-        client = self.client
-        session = self._config_obj.session
-        parm = dict(identity=self.identity,
-                    parametriAggiuntivi="",
-                    codiceFiscaleAzienda=self.codiceFiscaleAzienda)
-        try:
-            aziendaSistri = client.service.GetAzienda(**parm)
-            sediSummary = []
-            if aziendaSistri.sediSummary:
-                for sedeSummary in aziendaSistri.sediSummary:
-                    tipoSede = None
-                    if sedeSummary.tipoSede:
-                        tipoSede = Tipi_sede(
-                            id_tipo_sede=sedeSummary.tipoSede.idCatalogo.\
-                                __repr__(),
-                            descrizione=sedeSummary.tipoSede.description.\
-                                __repr__()
-                        )
-                        if session.query(Tipi_sede).filter(Tipi_sede.\
-                            id_tipo_sede == tipoSede.id_tipo_sede).count() > 0:
-                            tipoSede = session.query(Tipi_sede).filter(
-                                Tipi_sede.id_tipo_sede == tipoSede.\
-                                id_tipo_sede).first()
-                    sede = Sede(
-                        idSIS=sedeSummary.idSIS.__repr__(),
-                        nomeSede=sedeSummary.nomeSede.__repr__(),
-                        codiceIstatLocalita=sedeSummary.codiceIstatLocalita.\
-                            __repr__(),
-                        codiceCatastale=sedeSummary.codiceCatastale.__repr__(),
-                        nazione=sedeSummary.nazione.__repr__(),
-                        siglaNazione=sedeSummary.siglaNazione.__repr__(),
-                        indirizzo=sedeSummary.indirizzo.__repr__(),
-                        nrCivico=sedeSummary.nrCivico.__repr__(),
-                        cap=sedeSummary.cap.__repr__(),
-                        versione=sedeSummary.versione.long,
-                        tipoSede=tipoSede
-                    )
-                    if session.query(Sede).filter(Sede.idSIS == sede.idSIS).\
-                        count() > 0:
-                        sede = session.query(Sede).filter(Sede.idSIS == sede.\
-                            idSIS).first()
-                    sediSummary.append(sede)
-                    session.merge(sede)
-            sedeLegale = None
-            if aziendaSistri.sedeLegale:
-                sedeLegaleSistri = aziendaSistri.sedeLegale
-                tipoSede = None
-                if sedeLegaleSistri.tipoSede:
-                    tipoSedeSistri = sedeLegaleSistri.tipoSede
-                    tipoSede = Tipi_sede(
-                        id_tipo_sede=tipoSedeSistri.idCatalogo.__repr__(),
-                        descrizione=tipoSedeSistri.description.__repr__()
-                    )
-                    if session.query(Tipi_sede).filter(Tipi_sede.\
-                        id_tipo_sede == tipoSede.id_tipo_sede).count() > 0:
-                        tipoSede = session.query(Tipi_sede).filter(Tipi_sede.\
-                            id_tipo_sede == tipoSede.id_tipo_sede).first()
-                sedeLegale = Sede(
-                    idSIS=sedeLegaleSistri.idSIS.__repr__(),
-                    nomeSede=sedeLegaleSistri.nomeSede.__repr__(),
-                    codiceIstatLocalita=sedeLegaleSistri.codiceIstatLocalita.\
-                        __repr__(),
-                    codiceCatastale=sedeLegaleSistri.codiceCatastale.\
-                        __repr__(),
-                    nazione=sedeLegaleSistri.nazione.__repr__(),
-                    siglaNazione=sedeLegaleSistri.siglaNazione.__repr__(),
-                    indirizzo=sedeLegaleSistri.indirizzo.__repr__(),
-                    nrCivico=sedeLegaleSistri.nrCivico.__repr__(),
-                    cap=sedeLegaleSistri.cap.__repr__(),
-                    versione=sedeLegaleSistri.versione.long,
-                    tipoSede=tipoSede
-                )
-                if session.query(Sede).filter(Sede.idSIS == sedeLegale.idSIS).\
-                    count() > 0:
-                    sedeLegale = session.query(Sede).filter(Sede.idSIS == \
-                        sedeLegale.idSIS).first()
-            formaGiuridica = None
-            if aziendaSistri.formaGiuridica:
-                formaGiuridica = Forme_giuridiche(
-                    id_tipo_forma_giuridica=aziendaSistri.formaGiuridica.\
-                        idCatalogo.__repr__(),
-                    descrizione_forma_giuridica=aziendaSistri.formaGiuridica.\
-                        description.__repr__(),
-                )
-                if session.query(Forme_giuridiche).filter(Forme_giuridiche.\
-                    id_tipo_forma_giuridica == formaGiuridica.\
-                    id_tipo_forma_giuridica).count() > 0:
-                    formaGiuridica = session.query(Forme_giuridiche).\
-                        filter(Forme_giuridiche.id_tipo_forma_giuridica == \
-                        formaGiuridica.id_tipo_forma_giuridica).first()
-            tipoStatoImpresa = None
-            if aziendaSistri.tipoStatoImpresa:
-                tipoStatoImpresa = Tipi_stato_impresa(
-                    id_tipo_stato_impresa=aziendaSistri.tipoStatoImpresa.\
-                        idCatalogo.__repr__()
-                )
-                if session.query(Tipi_stato_impresa).\
-                    filter(Tipi_stato_impresa.id_tipo_stato_impresa == \
-                    tipoStatoImpresa.id_tipo_stato_impresa).count() > 0:
-                    tipoStatoImpresa = session.query(Tipi_stato_impresa).\
-                        filter(Tipi_stato_impresa.id_tipo_stato_impresa == \
-                            tipoStatoImpresa.id_tipo_stato_impresa).first()
-            azienda = Azienda(
-                idSIS=aziendaSistri.idSIS.__repr__(),
-                ragioneSociale=aziendaSistri.ragioneSociale.__repr__(),
-                cognome=aziendaSistri.cognome.__repr__(),
-                nome=aziendaSistri.nome.__repr__(),
-                codiceFiscale=aziendaSistri.codiceFiscale.__repr__(),
-                pIva=aziendaSistri.pIva.__repr__(),
-                numeroIscrizioneAlbo=aziendaSistri.numeroIscrizioneAlbo.\
-                    __repr__(),
-                cciaaRea=aziendaSistri.cciaaRea.__repr__(),
-                numeroIscrizioneRea=aziendaSistri.numeroIscrizioneRea.\
-                    __repr__(),
-                codiceIstatAttPrincipale=aziendaSistri.\
-                    codiceIstatAttPrincipale.__repr__(),
-                dataIscrizioneStar=aziendaSistri.dataIscrizioneStar,
-                codiceAtecoAttPrincipale=aziendaSistri.\
-                    codiceAtecoAttPrincipale.__repr__(),
-                descrizioneAttPrincipale=aziendaSistri.\
-                    descrizioneAttPrincipale.__repr__(),
-                versione=aziendaSistri.versione.long,
-                sedeLegale=sedeLegale,
-                formaGiuridica=formaGiuridica,
-                tipoStatoImpresa=tipoStatoImpresa,
-                sediSummary=sediSummary,
-            )
-            session.merge(azienda)
-            session.commit()
-            response = "Ok"
-        except Exception, e:
-            response = e
-        return response
 
 
 class UpdatingAziendaRequest(OWTBaseService):
@@ -289,6 +115,193 @@ class UpdatingAziendaRequest(OWTBaseService):
             veicolo.idSISSede = sede.idSIS
             veicolo.send_request()
             response = veicolo.response
+        for sede in sedi:
+            registroCronologico = GettingRegistroCronologicoRequest(
+                self._config_obj)
+            registroCronologico.identity = self.identity
+            registroCronologico.idSISSede = sede.idSIS
+            registroCronologico.send_request()
+            response = registroCronologico.response
+        return response
+
+
+class GettingAziendaRequest(OWTBaseService):
+    """
+    This class allows you to get an Azienda object.
+    By default, you can simply pass a identity string to the constructor.
+    """
+
+    def __init__(self, config_obj, *args, **kwargs):
+        """
+        Sends a get azienda request. The optional keyword args
+        detailed on OWTBaseService apply here as well.
+        config_obj: A valid OWTConfig object.
+        """
+        self._config_obj = config_obj
+        self.identity = None
+        self.codiceFiscaleAzienda = None
+        # Call the parent OWTBaseService class for basic setup work.
+        super(GettingAziendaRequest, self).__init__(self._config_obj,
+                                                    *args, **kwargs)
+
+    def _check_response_for_request_errors(self):
+        """
+        Checks the response to see if there were any errors.
+        """
+#        if self.response.HighestSeverity == "ERROR":
+#            for notification in self.response.Notifications:
+#                if notification.Severity == "ERROR":
+#                    if "Invalid tracking number" in notification.Message:
+#                        raise FedexInvalidTrackingNumber(notification.Code,
+#                                                         notification.Message)
+#                    else:
+#                        raise FedexError(notification.Code,
+#                                         notification.Message)
+        pass
+
+    def _assemble_and_send_request(self):
+        """
+        Fires off the SISTRI request.
+        warning: NEVER CALL THIS METHOD DIRECTLY. CALL send_request(),
+        WHICH RESIDESON OWTBaseService AND IS INHERITED.
+        """
+        client = self.client
+        session = self._config_obj.session
+        parm = dict(identity=self.identity,
+                    parametriAggiuntivi="",
+                    codiceFiscaleAzienda=self.codiceFiscaleAzienda)
+        try:
+            aziendaSistri = client.service.GetAzienda(**parm)
+            if aziendaSistri:
+                sediSummary = []
+                if aziendaSistri.sediSummary:
+                    for sedeSummary in aziendaSistri.sediSummary:
+                        tipoSede = None
+                        if sedeSummary.tipoSede:
+                            tipoSede = Tipi_sede(
+                                id_tipo_sede=sedeSummary.tipoSede.idCatalogo.\
+                                    __repr__(),
+                                descrizione=sedeSummary.tipoSede.description.\
+                                    __repr__()
+                            )
+                            if session.query(Tipi_sede).filter(Tipi_sede.\
+                                id_tipo_sede == tipoSede.id_tipo_sede).\
+                                count() > 0:
+                                tipoSede = session.query(Tipi_sede).filter(
+                                    Tipi_sede.id_tipo_sede == tipoSede.\
+                                    id_tipo_sede).first()
+                        sede = Sede(
+                            idSIS=sedeSummary.idSIS.__repr__(),
+                            nomeSede=sedeSummary.nomeSede.__repr__(),
+                            codiceIstatLocalita=sedeSummary.\
+                                codiceIstatLocalita.__repr__(),
+                            codiceCatastale=sedeSummary.codiceCatastale.\
+                                __repr__(),
+                            nazione=sedeSummary.nazione.__repr__(),
+                            siglaNazione=sedeSummary.siglaNazione.__repr__(),
+                            indirizzo=sedeSummary.indirizzo.__repr__(),
+                            nrCivico=sedeSummary.nrCivico.__repr__(),
+                            cap=sedeSummary.cap.__repr__(),
+                            versione=sedeSummary.versione.long,
+                            tipoSede=tipoSede
+                        )
+                        if session.query(Sede).filter(Sede.idSIS == \
+                            sede.idSIS).count() > 0:
+                            sede = session.query(Sede).filter(Sede.idSIS == \
+                                sede.idSIS).first()
+                        sediSummary.append(sede)
+                        session.merge(sede)
+                sedeLegale = None
+                if aziendaSistri.sedeLegale:
+                    sedeLegaleSistri = aziendaSistri.sedeLegale
+                    tipoSede = None
+                    if sedeLegaleSistri.tipoSede:
+                        tipoSedeSistri = sedeLegaleSistri.tipoSede
+                        tipoSede = Tipi_sede(
+                            id_tipo_sede=tipoSedeSistri.idCatalogo.__repr__(),
+                            descrizione=tipoSedeSistri.description.__repr__()
+                        )
+                        if session.query(Tipi_sede).filter(Tipi_sede.\
+                            id_tipo_sede == tipoSede.id_tipo_sede).count() > 0:
+                            tipoSede = session.query(Tipi_sede).filter(
+                                Tipi_sede.id_tipo_sede == \
+                                tipoSede.id_tipo_sede).first()
+                    sedeLegale = Sede(
+                        idSIS=sedeLegaleSistri.idSIS.__repr__(),
+                        nomeSede=sedeLegaleSistri.nomeSede.__repr__(),
+                        codiceIstatLocalita=sedeLegaleSistri.\
+                            codiceIstatLocalita.__repr__(),
+                        codiceCatastale=sedeLegaleSistri.codiceCatastale.\
+                            __repr__(),
+                        nazione=sedeLegaleSistri.nazione.__repr__(),
+                        siglaNazione=sedeLegaleSistri.siglaNazione.__repr__(),
+                        indirizzo=sedeLegaleSistri.indirizzo.__repr__(),
+                        nrCivico=sedeLegaleSistri.nrCivico.__repr__(),
+                        cap=sedeLegaleSistri.cap.__repr__(),
+                        versione=sedeLegaleSistri.versione.long,
+                        tipoSede=tipoSede
+                    )
+                    if session.query(Sede).filter(Sede.idSIS == \
+                        sedeLegale.idSIS).count() > 0:
+                        sedeLegale = session.query(Sede).filter(Sede.idSIS == \
+                            sedeLegale.idSIS).first()
+                formaGiuridica = None
+                if aziendaSistri.formaGiuridica:
+                    formaGiuridica = Forme_giuridiche(
+                        id_tipo_forma_giuridica=aziendaSistri.formaGiuridica.\
+                            idCatalogo.__repr__(),
+                        descrizione_forma_giuridica=aziendaSistri.\
+                            formaGiuridica.description.__repr__(),
+                    )
+                    if session.query(Forme_giuridiche).filter(\
+                        Forme_giuridiche.id_tipo_forma_giuridica == \
+                        formaGiuridica.id_tipo_forma_giuridica).count() > 0:
+                        formaGiuridica = session.query(Forme_giuridiche).\
+                            filter(Forme_giuridiche.id_tipo_forma_giuridica \
+                            == formaGiuridica.id_tipo_forma_giuridica).first()
+                tipoStatoImpresa = None
+                if aziendaSistri.tipoStatoImpresa:
+                    tipoStatoImpresa = Tipi_stato_impresa(
+                        id_tipo_stato_impresa=aziendaSistri.tipoStatoImpresa.\
+                            idCatalogo.__repr__()
+                    )
+                    if session.query(Tipi_stato_impresa).\
+                        filter(Tipi_stato_impresa.id_tipo_stato_impresa == \
+                        tipoStatoImpresa.id_tipo_stato_impresa).count() > 0:
+                        tipoStatoImpresa = session.query(Tipi_stato_impresa).\
+                            filter(Tipi_stato_impresa.id_tipo_stato_impresa \
+                                == tipoStatoImpresa.id_tipo_stato_impresa).\
+                                first()
+                azienda = Azienda(
+                    idSIS=aziendaSistri.idSIS.__repr__(),
+                    ragioneSociale=aziendaSistri.ragioneSociale.__repr__(),
+                    cognome=aziendaSistri.cognome.__repr__(),
+                    nome=aziendaSistri.nome.__repr__(),
+                    codiceFiscale=aziendaSistri.codiceFiscale.__repr__(),
+                    pIva=aziendaSistri.pIva.__repr__(),
+                    numeroIscrizioneAlbo=aziendaSistri.numeroIscrizioneAlbo.\
+                        __repr__(),
+                    cciaaRea=aziendaSistri.cciaaRea.__repr__(),
+                    numeroIscrizioneRea=aziendaSistri.numeroIscrizioneRea.\
+                        __repr__(),
+                    codiceIstatAttPrincipale=aziendaSistri.\
+                        codiceIstatAttPrincipale.__repr__(),
+                    dataIscrizioneStar=aziendaSistri.dataIscrizioneStar,
+                    codiceAtecoAttPrincipale=aziendaSistri.\
+                        codiceAtecoAttPrincipale.__repr__(),
+                    descrizioneAttPrincipale=aziendaSistri.\
+                        descrizioneAttPrincipale.__repr__(),
+                    versione=aziendaSistri.versione.long,
+                    sedeLegale=sedeLegale,
+                    formaGiuridica=formaGiuridica,
+                    tipoStatoImpresa=tipoStatoImpresa,
+                    sediSummary=sediSummary,
+                )
+                session.merge(azienda)
+                session.commit()
+                response = "Ok"
+        except Exception, e:
+            response = e
         return response
 
 
@@ -336,8 +349,8 @@ class GettingSedeRequest(OWTBaseService):
         parm = dict(identity=self.identity,
                     parametriAggiuntivi="",
                     idSIS=self.idSIS)
-        sedeSistri = client.service.GetSede(**parm)
         try:
+            sedeSistri = client.service.GetSede(**parm)
             sottocategorie = []
             if sedeSistri.sottocategorie:
                 for sottocategoria in sedeSistri.sottocategorie:
@@ -433,7 +446,7 @@ class GettingSedeRequest(OWTBaseService):
 
 class GettingVeicoliRequest(OWTBaseService):
     """
-    This class allows you to updating all gVeicoli objects.
+    This class allows you to updating all Veicoli objects.
     By default, you can simply pass a identity string to the constructor.
     """
 
@@ -553,11 +566,11 @@ class GettingVeicoliRequest(OWTBaseService):
                                 id_codice_cer_iii_livello).first()
                         codiciCerIIILivello.append(codici_cer_iii_livello)
                 annoImmatricolazione = None
-                annoImmatricolazioneSistri = veicoloSistri.annoImmatricolazione
-                if annoImmatricolazioneSistri:
-                    annoImmatricolazione = annoImmatricolazioneSistri.long
+                if veicoloSistri.annoImmatricolazione:
+                    annoImmatricolazione = veicoloSistri.annoImmatricolazione.\
+                        long
                 veicolo = Veicolo(
-                    targa=veicoloSistri.targa.__repr__(),
+                    targa=veicoloSistri.targa,
                     marca=veicoloSistri.marca.__repr__(),
                     modello=veicoloSistri.modello.__repr__(),
                     annoImmatricolazione=annoImmatricolazione,
@@ -568,6 +581,156 @@ class GettingVeicoliRequest(OWTBaseService):
                     codiciCerIIILivello=codiciCerIIILivello
                 )
                 session.merge(veicolo)
+            session.commit()
+            response = "Ok"
+        except Exception, e:
+            response = e
+        return response
+
+
+class GettingRegistroCronologicoRequest(OWTBaseService):
+    """
+    This class allows you to updating all RegistroCronologico objects.
+    By default, you can simply pass a identity string to the constructor.
+    """
+
+    def __init__(self, config_obj, *args, **kwargs):
+        """
+        Sends an update cataloghi request. The optional keyword args
+        detailed on OWTBaseService apply here as well.
+        config_obj: A valid OWTConfig object.
+        """
+        self._config_obj = config_obj
+        self.identity = None
+        self.idSISSede = None
+        # Call the parent OWTBaseService class for basic setup work.
+        super(GettingRegistroCronologicoRequest, self).\
+            __init__(self._config_obj, *args, **kwargs)
+
+    def _check_response_for_request_errors(self):
+        """
+        Checks the response to see if there were any errors.
+        """
+#        if self.response.HighestSeverity == "ERROR":
+#            for notification in self.response.Notifications:
+#                if notification.Severity == "ERROR":
+#                    if "Invalid tracking number" in notification.Message:
+#                        raise FedexInvalidTrackingNumber(notification.Code,
+#                                                         notification.Message)
+#                    else:
+#                        raise FedexError(notification.Code,
+#                                         notification.Message)
+        pass
+
+    def _assemble_and_send_request(self):
+        """
+        Fires off the SISTRI request.
+        warning: NEVER CALL THIS METHOD DIRECTLY. CALL send_request(),
+        WHICH RESIDESON OWTBaseService AND IS INHERITED.
+        """
+        response = "None"
+        client = self.client
+        session = self._config_obj.session
+        parm = dict(identity=self.identity,
+                    parametriAggiuntivi="",
+                    idSISSede=self.idSISSede)
+        try:
+            registroCronologicoSistri = client.service.\
+                GetRegistroCronologico(**parm)
+            sede = None
+            if session.query(Sede).filter(
+                Sede.idSIS == parm['idSISSede']).count() > 0:
+                sede = session.query(Sede).filter(
+                    Sede.idSIS == parm['idSISSede']).first()
+            for registroSistri in registroCronologicoSistri:
+                statoRegistroCronologico = None
+                if 'statoRegistroCronologico' in registroSistri:
+                    statoRegistroSistri = registroSistri.\
+                        statoRegistroCronologico
+                    statoRegistroCronologico = Stati_registro_cronologico(
+                        id_stato_registro_cronologico=statoRegistroSistri.\
+                            idCatalogo.__repr__(),
+                        descrizione_stato_reg_crono=statoRegistroSistri.\
+                            description.__repr__()
+                    )
+                    if session.query(Stati_registro_cronologico).filter(
+                        Stati_registro_cronologico.\
+                        id_stato_registro_cronologico == \
+                        statoRegistroCronologico.id_stato_registro_cronologico\
+                        ).count() > 0:
+                        statoRegistroCronologico = session.query(\
+                            Stati_registro_cronologico).filter(\
+                            Stati_registro_cronologico.\
+                            id_stato_registro_cronologico == \
+                            statoRegistroCronologico.\
+                            id_stato_registro_cronologico).first()
+                tipoRegCronologico = None
+                if 'tipoRegCronologico' in registroSistri:
+                    tipoRegCronologicoSistri = registroSistri.\
+                        tipoRegCronologico
+                    tipoRegCronologico = Tipi_reg_cronologico(
+                        id_tipo_reg_cronologico=tipoRegCronologicoSistri.\
+                            idCatalogo.__repr__(),
+                        descrizione_tipo_reg_crono=tipoRegCronologicoSistri.\
+                            description.__repr__()
+                    )
+                    if session.query(Tipi_reg_cronologico).filter(
+                        Tipi_reg_cronologico.id_tipo_reg_cronologico == \
+                        tipoRegCronologico.id_tipo_reg_cronologico).\
+                        count() > 0:
+                        tipoRegCronologico = session.query(
+                            Tipi_reg_cronologico).filter(Tipi_reg_cronologico.\
+                            id_tipo_reg_cronologico == \
+                            tipoRegCronologico.id_tipo_reg_cronologico).\
+                            first()
+                sottocategoria = None
+                if 'sottocategoria' in registroSistri:
+                    sottocategoriaSistri = registroSistri.sottocategoria
+                    sottocategoria = Sottocategorie_star(
+                        id_sottocategoria_star=sottocategoriaSistri.\
+                            idCatalogo.__repr__(),
+                        descrizione_sottocategoria=sottocategoriaSistri.\
+                            description.__repr__()
+                    )
+                    if session.query(Sottocategorie_star).filter(
+                        Sottocategorie_star.id_sottocategoria_star == \
+                        sottocategoria.id_sottocategoria_star).count() > 0:
+                        sottocategoria = session.query(Sottocategorie_star).\
+                            filter(Sottocategorie_star.id_sottocategoria_star \
+                            == sottocategoria.id_sottocategoria_star).first()
+                idSIS = None
+                if 'idSIS' in registroSistri:
+                    idSIS = registroSistri.idSIS
+                codiceRegistroCronologico = None
+                if 'codiceRegistroCronologico' in registroSistri:
+                    codiceRegistroCronologico = registroSistri.\
+                        codiceRegistroCronologico.__repr__()
+                nomeUnitaOperativa = None
+                if 'nomeUnitaOperativa' in registroSistri:
+                    nomeUnitaOperativa = registroSistri.nomeUnitaOperativa.\
+                        __repr__()
+                versione = None
+                if 'versione' in registroSistri:
+                    versione = registroSistri.versione.long
+                ultimoNumero = None
+                if 'ultimoNumero' in registroSistri:
+                    ultimoNumero = registroSistri.ultimoNumero.long
+                dataUltimoNumero = None
+                if 'dataUltimoNumero' in registroSistri:
+                    dataUltimoNumero = registroSistri.dataUltimoNumero.long
+                registroCronologico = RegistroCronologico(
+                    idSIS=idSIS,
+                    codiceRegistroCronologico=codiceRegistroCronologico,
+                    nomeUnitaOperativa=nomeUnitaOperativa,
+                    dataUltimoNumero=dataUltimoNumero,
+                    versione=versione,
+                    ultimoNumero=ultimoNumero,
+                    idSISSede=sede,
+                    statoRegistroCronologico=statoRegistroCronologico,
+                    tipoRegCronologico=tipoRegCronologico,
+                    sottocategoria=sottocategoria
+                )
+                session.merge(registroCronologico)
             session.commit()
             response = "Ok"
         except Exception, e:
