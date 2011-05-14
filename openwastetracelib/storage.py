@@ -343,7 +343,7 @@ class OWTStorage(object):
                 Column('telefono', String(255)),
                 Column('fax', String(255)),
                 Column('numeroAddetti', BigInteger),
-                Column('cameraCommercioFK', String(255),
+                Column('cameraCommercioFK', Integer,
                         ForeignKey('camere_commercio.id_camera_commercio')
                 ),
                 Column('associazioneCategoriaFK', String(255),
