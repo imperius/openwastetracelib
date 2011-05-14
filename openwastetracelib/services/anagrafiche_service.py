@@ -170,8 +170,12 @@ class GettingAziendaRequest(OWTBaseService):
         parm = dict(identity=self.identity,
                     parametriAggiuntivi="",
                     codiceFiscaleAzienda=self.codiceFiscaleAzienda)
+        aziendaSistri = None
         try:
             aziendaSistri = client.service.GetAzienda(**parm)
+        except Exception, e:
+            response = e.fault.detail.GetAzienda_fault.errorMessage
+        try:
             if aziendaSistri:
                 sediSummary = []
                 if aziendaSistri.sediSummary:
@@ -349,96 +353,104 @@ class GettingSedeRequest(OWTBaseService):
         parm = dict(identity=self.identity,
                     parametriAggiuntivi="",
                     idSIS=self.idSIS)
+        sedeSistri = None
         try:
             sedeSistri = client.service.GetSede(**parm)
-            sottocategorie = []
-            if sedeSistri.sottocategorie:
-                for sottocategoria in sedeSistri.sottocategorie:
-                    sottocategorie_star = Sottocategorie_star(
-                        id_sottocategoria_star=sottocategoria.idCatalogo.\
-                            __repr__(),
-                        descrizione_sottocategoria=sottocategoria.description.\
-                            __repr__()
-                    )
-                    if session.query(Sottocategorie_star).\
-                        filter(Sottocategorie_star.id_sottocategoria_star == \
-                        sottocategorie_star.id_sottocategoria_star).\
-                        count() > 0:
-                        sottocategorie_star = session.\
-                            query(Sottocategorie_star).\
+        except Exception, e:
+            response = e.fault.detail.GetSede_fault.errorMessage
+        try:
+            if sedeSistri:
+                sottocategorie = []
+                if sedeSistri.sottocategorie:
+                    for sottocategoria in sedeSistri.sottocategorie:
+                        sottocategorie_star = Sottocategorie_star(
+                            id_sottocategoria_star=sottocategoria.idCatalogo.\
+                                __repr__(),
+                            descrizione_sottocategoria=sottocategoria.\
+                            description.__repr__()
+                        )
+                        if session.query(Sottocategorie_star).\
                             filter(Sottocategorie_star.id_sottocategoria_star \
                             == sottocategorie_star.id_sottocategoria_star).\
-                            first()
-                    sottocategorie.append(sottocategorie_star)
-            tipoSede = None
-            if sedeSistri.tipoSede:
-                tipoSede = Tipi_sede(
-                    id_tipo_sede=sedeSistri.tipoSede.idCatalogo.__repr__(),
-                    descrizione=sedeSistri.tipoSede.description.__repr__()
-                )
-                if session.query(Tipi_sede).filter(Tipi_sede.id_tipo_sede == \
-                    tipoSede.id_tipo_sede).count() > 0:
-                    tipoSede = session.query(Tipi_sede).filter(Tipi_sede.\
-                        id_tipo_sede == tipoSede.id_tipo_sede).first()
-            cameraCommercio = None
-            if sedeSistri.cameraCommercio:
-                cameraCommercio = Camere_commercio(
-                    id_camera_commercio=sedeSistri.cameraCommercio.idCatalogo.\
-                        __repr__()
-                )
-                if session.query(Camere_commercio).filter(Camere_commercio.\
-                    id_camera_commercio == cameraCommercio.\
-                    id_camera_commercio).count() > 0:
-                    cameraCommercio = session.query(Camere_commercio).\
-                        filter(Camere_commercio.id_camera_commercio == \
-                        cameraCommercio.id_camera_commercio).first()
-            associazioneCategoria = None
-            if sedeSistri.associazioneCategoria:
-                associazioneCategoria = Associazioni_categoria(
-                    id_associazione_categoria=sedeSistri.\
-                        associazioneCategoria.idCatalogo.__repr__()
-                )
-                if session.query(Associazioni_categoria).\
-                    filter(Associazioni_categoria.id_associazione_categoria\
-                    == associazioneCategoria.id_associazione_categoria).\
-                    count() > 0:
-                    associazioneCategoria = session.\
-                        query(Associazioni_categoria).\
+                            count() > 0:
+                            sottocategorie_star = session.\
+                                query(Sottocategorie_star).\
+                                filter(Sottocategorie_star.\
+                                id_sottocategoria_star == sottocategorie_star.\
+                                id_sottocategoria_star).first()
+                        sottocategorie.append(sottocategorie_star)
+                tipoSede = None
+                if sedeSistri.tipoSede:
+                    tipoSede = Tipi_sede(
+                        id_tipo_sede=sedeSistri.tipoSede.idCatalogo.__repr__(),
+                        descrizione=sedeSistri.tipoSede.description.__repr__()
+                    )
+                    if session.query(Tipi_sede).filter(Tipi_sede.id_tipo_sede \
+                        == tipoSede.id_tipo_sede).count() > 0:
+                        tipoSede = session.query(Tipi_sede).filter(Tipi_sede.\
+                            id_tipo_sede == tipoSede.id_tipo_sede).first()
+                cameraCommercio = None
+                if sedeSistri.cameraCommercio:
+                    cameraCommercio = Camere_commercio(
+                        id_camera_commercio=sedeSistri.cameraCommercio.\
+                        idCatalogo.__repr__()
+                    )
+                    if session.query(Camere_commercio).filter(
+                        Camere_commercio.id_camera_commercio == \
+                        cameraCommercio.id_camera_commercio).count() > 0:
+                        cameraCommercio = session.query(Camere_commercio).\
+                            filter(Camere_commercio.id_camera_commercio == \
+                            cameraCommercio.id_camera_commercio).first()
+                associazioneCategoria = None
+                if sedeSistri.associazioneCategoria:
+                    associazioneCategoria = Associazioni_categoria(
+                        id_associazione_categoria=sedeSistri.\
+                            associazioneCategoria.idCatalogo.__repr__()
+                    )
+                    if session.query(Associazioni_categoria).\
                         filter(Associazioni_categoria.\
                         id_associazione_categoria == associazioneCategoria.\
-                        id_associazione_categoria).first()
-            sede = Sede(
-                idSIS=sedeSistri.idSIS.__repr__(),
-                nomeSede=sedeSistri.nomeSede.__repr__(),
-                codiceIstatLocalita=sedeSistri.codiceIstatLocalita.__repr__(),
-                codiceCatastale=sedeSistri.codiceCatastale.__repr__(),
-                nazione=sedeSistri.nazione.__repr__(),
-                siglaNazione=sedeSistri.siglaNazione.__repr__(),
-                indirizzo=sedeSistri.indirizzo.__repr__(),
-                nrCivico=sedeSistri.nrCivico.__repr__(),
-                cap=sedeSistri.cap.__repr__(),
-                versione=sedeSistri.versione.long,
-                telefono=sedeSistri.telefono.__repr__(),
-                fax=sedeSistri.fax.__repr__(),
-                numeroAddetti=sedeSistri.numeroAddetti.long,
-                codiceIstatAttPrincipale=sedeSistri.codiceIstatAttPrincipale.\
-                    __repr__(),
-                codiceAtecoAttPrincipale=sedeSistri.codiceAtecoAttPrincipale.\
-                    __repr__(),
-                descrizioneAttPrincipale=sedeSistri.descrizioneAttPrincipale.\
-                    __repr__(),
-                numeroIscrizioneRea=sedeSistri.numeroIscrizioneRea.__repr__(),
-                numeroUla=sedeSistri.numeroUla.double,
-                latitudine=sedeSistri.latitudine.double,
-                longitudine=sedeSistri.longitudine.double,
-                tipoSede=tipoSede,
-                cameraCommercio=cameraCommercio,
-                associazioneCategoria=associazioneCategoria,
-                sottocategorie=sottocategorie
-            )
-            session.merge(sede)
-            session.commit()
-            response = "Ok"
+                        id_associazione_categoria).count() > 0:
+                        associazioneCategoria = session.\
+                            query(Associazioni_categoria).\
+                            filter(Associazioni_categoria.\
+                            id_associazione_categoria == \
+                            associazioneCategoria.id_associazione_categoria).\
+                            first()
+                sede = Sede(
+                    idSIS=sedeSistri.idSIS.__repr__(),
+                    nomeSede=sedeSistri.nomeSede.__repr__(),
+                    codiceIstatLocalita=sedeSistri.codiceIstatLocalita.\
+                        __repr__(),
+                    codiceCatastale=sedeSistri.codiceCatastale.__repr__(),
+                    nazione=sedeSistri.nazione.__repr__(),
+                    siglaNazione=sedeSistri.siglaNazione.__repr__(),
+                    indirizzo=sedeSistri.indirizzo.__repr__(),
+                    nrCivico=sedeSistri.nrCivico.__repr__(),
+                    cap=sedeSistri.cap.__repr__(),
+                    versione=sedeSistri.versione.long,
+                    telefono=sedeSistri.telefono.__repr__(),
+                    fax=sedeSistri.fax.__repr__(),
+                    numeroAddetti=sedeSistri.numeroAddetti.long,
+                    codiceIstatAttPrincipale=sedeSistri.\
+                        codiceIstatAttPrincipale.__repr__(),
+                    codiceAtecoAttPrincipale=sedeSistri.\
+                        codiceAtecoAttPrincipale.__repr__(),
+                    descrizioneAttPrincipale=sedeSistri.\
+                        descrizioneAttPrincipale.__repr__(),
+                    numeroIscrizioneRea=sedeSistri.numeroIscrizioneRea.\
+                        __repr__(),
+                    numeroUla=sedeSistri.numeroUla.double,
+                    latitudine=sedeSistri.latitudine.double,
+                    longitudine=sedeSistri.longitudine.double,
+                    tipoSede=tipoSede,
+                    cameraCommercio=cameraCommercio,
+                    associazioneCategoria=associazioneCategoria,
+                    sottocategorie=sottocategorie
+                )
+                session.merge(sede)
+                session.commit()
+                response = "Ok"
         except Exception, e:
             response = e
         return response
@@ -490,99 +502,124 @@ class GettingVeicoliRequest(OWTBaseService):
         parm = dict(identity=self.identity,
                     parametriAggiuntivi="",
                     idSISSede=self.idSISSede)
+        veicoliSistri = None
         try:
             veicoliSistri = client.service.GetVeicoli(**parm)
-            sede = None
-            if session.query(Sede).filter(
-                Sede.idSIS == parm['idSISSede']).count() > 0:
-                sede = session.query(Sede).filter(
-                    Sede.idSIS == parm['idSISSede']).first()
-            for veicoloSistri in veicoliSistri:
-                tipoVeicolo = None
-                if veicoloSistri.tipoVeicolo:
-                    tipoVeicoloSistri = veicoloSistri.tipoVeicolo
-                    tipoVeicolo = Tipi_veicolo(
-                        id_tipo_veicolo=tipoVeicoloSistri.idCatalogo.\
-                            __repr__(),
-                        descrizione=tipoVeicoloSistri.description.__repr__()
-                    )
-                    if session.query(Tipi_veicolo).filter(
-                        Tipi_veicolo.id_tipo_veicolo == \
-                        tipoVeicolo.id_tipo_veicolo).count() > 0:
-                        tipoVeicolo = session.query(Tipi_veicolo).filter(
+        except Exception, e:
+            response = e.fault.detail.GetVeicoli_fault.errorMessage
+        try:
+            if veicoliSistri:
+                sede = None
+                if session.query(Sede).filter(
+                    Sede.idSIS == parm['idSISSede']).count() > 0:
+                    sede = session.query(Sede).filter(
+                        Sede.idSIS == parm['idSISSede']).first()
+                for veicoloSistri in veicoliSistri:
+                    tipoVeicolo = None
+                    if veicoloSistri.tipoVeicolo:
+                        tipoVeicoloSistri = veicoloSistri.tipoVeicolo
+                        descrizione = None
+                        if tipoVeicoloSistri.description:
+                            descrizione = tipoVeicoloSistri.description
+                        if tipoVeicoloSistri.idCatalogo:
+                            tipoVeicolo = Tipi_veicolo(
+                                id_tipo_veicolo=tipoVeicoloSistri.idCatalogo,
+                                descrizione=descrizione
+                            )
+                        if session.query(Tipi_veicolo).filter(
                             Tipi_veicolo.id_tipo_veicolo == \
-                            tipoVeicolo.id_tipo_veicolo).first()
-                statoVeicolo = None
-                if veicoloSistri.statoVeicolo:
-                    statoVeicoloSistri = veicoloSistri.statoVeicolo
-                    statoVeicolo = Stati_veicolo(
-                        id_stato_veicolo=statoVeicoloSistri.idCatalogo.\
-                            __repr__(),
-                        descrizione_stato_veicolo=statoVeicoloSistri.\
-                            description.__repr__()
-                    )
-                    if session.query(Stati_veicolo).filter(
-                        Stati_veicolo.id_stato_veicolo == \
-                        statoVeicolo.id_stato_veicolo).count() > 0:
-                        statoVeicolo = session.query(Stati_veicolo).filter(
+                            tipoVeicolo.id_tipo_veicolo).count() > 0:
+                            tipoVeicolo = session.query(Tipi_veicolo).filter(
+                                Tipi_veicolo.id_tipo_veicolo == \
+                                tipoVeicolo.id_tipo_veicolo).first()
+                    statoVeicolo = None
+                    if veicoloSistri.statoVeicolo:
+                        statoVeicoloSistri = veicoloSistri.statoVeicolo
+                        descrizione = None
+                        if statoVeicoloSistri.description:
+                            descrizione = statoVeicoloSistri.description
+                        if statoVeicoloSistri.idCatalogo:
+                            statoVeicolo = Stati_veicolo(
+                                id_stato_veicolo=statoVeicoloSistri.idCatalogo,
+                                descrizione_stato_veicolo=descrizione
+                            )
+                        if session.query(Stati_veicolo).filter(
                             Stati_veicolo.id_stato_veicolo == \
-                            statoVeicolo.id_stato_veicolo).first()
-                sottotipoVeicolo = None
-                if veicoloSistri.sottotipoVeicolo:
-                    sottotipoVeicoloSistri = veicoloSistri.sottotipoVeicolo
-                    sottotipoVeicolo = Sottotipi_veicolo(
-                        id_sottotipo_veicolo=sottotipoVeicoloSistri.\
-                            idCatalogo.__repr__(),
-                        descrizione=sottotipoVeicoloSistri.description.\
-                            __repr__()
-                    )
-                    if session.query(Sottotipi_veicolo).filter(
-                        Sottotipi_veicolo.id_sottotipo_veicolo == \
-                        sottotipoVeicolo.id_sottotipo_veicolo).count() > 0:
-                        sottotipoVeicolo = session.query(Sottotipi_veicolo).\
-                            filter(Sottotipi_veicolo.id_sottotipo_veicolo == \
-                            sottotipoVeicolo.id_sottotipo_veicolo).first()
-                codiciCerIIILivello = []
-                if veicoloSistri.codiciCerIIILivello:
-                    codiciCerIIILivelloSistri = veicoloSistri.\
-                        codiciCerIIILivello
-                    for codiceCerIIILivello in codiciCerIIILivelloSistri:
-                        codici_cer_iii_livello = Codici_cer_iii_livello(
-                            id_codice_cer_iii_livello=codiceCerIIILivello.\
-                                idCatalogo.__repr__(),
-                            descrizione_iii_livello=codiceCerIIILivello.\
-                                description.__repr__()
-                        )
-                        if session.query(Codici_cer_iii_livello).\
-                            filter(Codici_cer_iii_livello.\
-                            id_codice_cer_iii_livello == \
-                            codici_cer_iii_livello.id_codice_cer_iii_livello).\
-                            count() > 0:
-                            codici_cer_iii_livello = session.\
-                                query(Codici_cer_iii_livello).\
+                            statoVeicolo.id_stato_veicolo).count() > 0:
+                            statoVeicolo = session.query(Stati_veicolo).filter(
+                                Stati_veicolo.id_stato_veicolo == \
+                                statoVeicolo.id_stato_veicolo).first()
+                    sottotipoVeicolo = None
+                    if veicoloSistri.sottotipoVeicolo:
+                        sottotipoVeicoloSistri = veicoloSistri.sottotipoVeicolo
+                        descrizione = None
+                        if sottotipoVeicoloSistri.description:
+                            descrizione = sottotipoVeicoloSistri.description
+                        if sottotipoVeicoloSistri.idCatalogo:
+                            sottotipoVeicolo = Sottotipi_veicolo(
+                                id_sottotipo_veicolo=sottotipoVeicoloSistri.\
+                                    idCatalogo,
+                                descrizione=descrizione
+                            )
+                        if session.query(Sottotipi_veicolo).filter(
+                            Sottotipi_veicolo.id_sottotipo_veicolo == \
+                            sottotipoVeicolo.id_sottotipo_veicolo).count() > 0:
+                            sottotipoVeicolo = session.query(
+                                Sottotipi_veicolo).filter(Sottotipi_veicolo.\
+                                id_sottotipo_veicolo == sottotipoVeicolo.\
+                                id_sottotipo_veicolo).first()
+                    codiciCerIIILivello = []
+                    if veicoloSistri.codiciCerIIILivello:
+                        codiciCerIIILivelloSistri = veicoloSistri.\
+                            codiciCerIIILivello
+                        for codiceCerIIILivello in codiciCerIIILivelloSistri:
+                            descrizione = None
+                            if codiceCerIIILivello.description:
+                                descrizione = codiceCerIIILivello.description
+                            if codiceCerIIILivello.idCatalogo:
+                                id = codiceCerIIILivello.idCatalogo
+                                codici_cer_iii_livello = \
+                                    Codici_cer_iii_livello(
+                                    id_codice_cer_iii_livello=id,
+                                    descrizione_iii_livello=descrizione
+                                )
+                            if session.query(Codici_cer_iii_livello).\
                                 filter(Codici_cer_iii_livello.\
                                 id_codice_cer_iii_livello == \
                                 codici_cer_iii_livello.\
-                                id_codice_cer_iii_livello).first()
-                        codiciCerIIILivello.append(codici_cer_iii_livello)
-                annoImmatricolazione = None
-                if veicoloSistri.annoImmatricolazione:
-                    annoImmatricolazione = veicoloSistri.annoImmatricolazione.\
-                        long
-                veicolo = Veicolo(
-                    targa=veicoloSistri.targa,
-                    marca=veicoloSistri.marca.__repr__(),
-                    modello=veicoloSistri.modello.__repr__(),
-                    annoImmatricolazione=annoImmatricolazione,
-                    sede=sede,
-                    tipoVeicolo=tipoVeicolo,
-                    statoVeicolo=statoVeicolo,
-                    sottotipoVeicolo=sottotipoVeicolo,
-                    codiciCerIIILivello=codiciCerIIILivello
-                )
-                session.merge(veicolo)
-            session.commit()
-            response = "Ok"
+                                id_codice_cer_iii_livello).count() > 0:
+                                codici_cer_iii_livello = session.\
+                                    query(Codici_cer_iii_livello).\
+                                    filter(Codici_cer_iii_livello.\
+                                    id_codice_cer_iii_livello == \
+                                    codici_cer_iii_livello.\
+                                    id_codice_cer_iii_livello).first()
+                            codiciCerIIILivello.append(codici_cer_iii_livello)
+                    marca = None
+                    if veicoloSistri.marca:
+                        marca = veicoloSistri.marca
+                    modello = None
+                    if veicoloSistri.modello:
+                        modello = veicoloSistri.modello
+                    annoImmatricolazione = None
+                    if veicoloSistri.annoImmatricolazione:
+                        annoImmatricolazione = veicoloSistri.\
+                            annoImmatricolazione.long
+                    if veicoloSistri.targa:
+                        veicolo = Veicolo(
+                            targa=veicoloSistri.targa,
+                            marca=marca,
+                            modello=modello,
+                            annoImmatricolazione=annoImmatricolazione,
+                            sede=sede,
+                            tipoVeicolo=tipoVeicolo,
+                            statoVeicolo=statoVeicolo,
+                            sottotipoVeicolo=sottotipoVeicolo,
+                            codiciCerIIILivello=codiciCerIIILivello
+                        )
+                        session.merge(veicolo)
+                session.commit()
+                response = "Ok"
         except Exception, e:
             response = e
         return response
@@ -634,105 +671,112 @@ class GettingRegistroCronologicoRequest(OWTBaseService):
         parm = dict(identity=self.identity,
                     parametriAggiuntivi="",
                     idSISSede=self.idSISSede)
+        registroCronologicoSistri = None
         try:
             registroCronologicoSistri = client.service.\
                 GetRegistroCronologico(**parm)
-            sede = None
-            if session.query(Sede).filter(
-                Sede.idSIS == parm['idSISSede']).count() > 0:
-                sede = session.query(Sede).filter(
-                    Sede.idSIS == parm['idSISSede']).first()
-            for registroSistri in registroCronologicoSistri:
-                statoRegistroCronologico = None
-                if 'statoRegistroCronologico' in registroSistri:
-                    statoRegistroSistri = registroSistri.\
-                        statoRegistroCronologico
-                    statoRegistroCronologico = Stati_registro_cronologico(
-                        id_stato_registro_cronologico=statoRegistroSistri.\
-                            idCatalogo.__repr__(),
-                        descrizione_stato_reg_crono=statoRegistroSistri.\
-                            description.__repr__()
-                    )
-                    if session.query(Stati_registro_cronologico).filter(
-                        Stati_registro_cronologico.\
-                        id_stato_registro_cronologico == \
-                        statoRegistroCronologico.id_stato_registro_cronologico\
-                        ).count() > 0:
-                        statoRegistroCronologico = session.query(\
-                            Stati_registro_cronologico).filter(\
+        except Exception, e:
+#            import pdb; pdb.set_trace()
+            response = e.fault.detail.GetRegistroCronologico_fault.errorMessage
+        try:
+            if registroCronologicoSistri:
+                sede = None
+                if session.query(Sede).filter(
+                    Sede.idSIS == parm['idSISSede']).count() > 0:
+                    sede = session.query(Sede).filter(
+                        Sede.idSIS == parm['idSISSede']).first()
+                for registroSistri in registroCronologicoSistri:
+                    statoRegistroCronologico = None
+                    if 'statoRegistroCronologico' in registroSistri:
+                        statoRegistroSistri = registroSistri.\
+                            statoRegistroCronologico
+                        statoRegistroCronologico = Stati_registro_cronologico(
+                            id_stato_registro_cronologico=statoRegistroSistri.\
+                                idCatalogo.__repr__(),
+                            descrizione_stato_reg_crono=statoRegistroSistri.\
+                                description.__repr__()
+                        )
+                        if session.query(Stati_registro_cronologico).filter(
                             Stati_registro_cronologico.\
                             id_stato_registro_cronologico == \
                             statoRegistroCronologico.\
-                            id_stato_registro_cronologico).first()
-                tipoRegCronologico = None
-                if 'tipoRegCronologico' in registroSistri:
-                    tipoRegCronologicoSistri = registroSistri.\
-                        tipoRegCronologico
-                    tipoRegCronologico = Tipi_reg_cronologico(
-                        id_tipo_reg_cronologico=tipoRegCronologicoSistri.\
-                            idCatalogo.__repr__(),
-                        descrizione_tipo_reg_crono=tipoRegCronologicoSistri.\
-                            description.__repr__()
-                    )
-                    if session.query(Tipi_reg_cronologico).filter(
-                        Tipi_reg_cronologico.id_tipo_reg_cronologico == \
-                        tipoRegCronologico.id_tipo_reg_cronologico).\
-                        count() > 0:
-                        tipoRegCronologico = session.query(
-                            Tipi_reg_cronologico).filter(Tipi_reg_cronologico.\
-                            id_tipo_reg_cronologico == \
+                            id_stato_registro_cronologico).count() > 0:
+                            statoRegistroCronologico = session.query(\
+                                Stati_registro_cronologico).filter(\
+                                Stati_registro_cronologico.\
+                                id_stato_registro_cronologico == \
+                                statoRegistroCronologico.\
+                                id_stato_registro_cronologico).first()
+                    tipoRegCronologico = None
+                    if 'tipoRegCronologico' in registroSistri:
+                        tipoRegSistri = registroSistri.tipoRegCronologico
+                        tipoRegCronologico = Tipi_reg_cronologico(
+                            id_tipo_reg_cronologico=tipoRegSistri.\
+                                idCatalogo.__repr__(),
+                            descrizione_tipo_reg_crono=tipoRegSistri.\
+                                description.__repr__()
+                        )
+                        if session.query(Tipi_reg_cronologico).filter(
+                            Tipi_reg_cronologico.id_tipo_reg_cronologico == \
                             tipoRegCronologico.id_tipo_reg_cronologico).\
-                            first()
-                sottocategoria = None
-                if 'sottocategoria' in registroSistri:
-                    sottocategoriaSistri = registroSistri.sottocategoria
-                    sottocategoria = Sottocategorie_star(
-                        id_sottocategoria_star=sottocategoriaSistri.\
-                            idCatalogo.__repr__(),
-                        descrizione_sottocategoria=sottocategoriaSistri.\
-                            description.__repr__()
+                            count() > 0:
+                            tipoRegCronologico = session.query(
+                                Tipi_reg_cronologico).filter(
+                                Tipi_reg_cronologico.id_tipo_reg_cronologico \
+                                == tipoRegCronologico.\
+                                id_tipo_reg_cronologico).first()
+                    sottocategoria = None
+                    if 'sottocategoria' in registroSistri:
+                        sottocategoriaSistri = registroSistri.sottocategoria
+                        sottocategoria = Sottocategorie_star(
+                            id_sottocategoria_star=sottocategoriaSistri.\
+                                idCatalogo.__repr__(),
+                            descrizione_sottocategoria=sottocategoriaSistri.\
+                                description.__repr__()
+                        )
+                        if session.query(Sottocategorie_star).filter(
+                            Sottocategorie_star.id_sottocategoria_star == \
+                            sottocategoria.id_sottocategoria_star).count() > 0:
+                            sottocategoria = session.query(
+                                Sottocategorie_star).filter(
+                                Sottocategorie_star.id_sottocategoria_star \
+                                == sottocategoria.id_sottocategoria_star).\
+                                first()
+                    idSIS = None
+                    if 'idSIS' in registroSistri:
+                        idSIS = registroSistri.idSIS
+                    codiceRegistroCronologico = None
+                    if 'codiceRegistroCronologico' in registroSistri:
+                        codiceRegistroCronologico = registroSistri.\
+                            codiceRegistroCronologico.__repr__()
+                    nomeUnitaOperativa = None
+                    if 'nomeUnitaOperativa' in registroSistri:
+                        nomeUnitaOperativa = registroSistri.\
+                            nomeUnitaOperativa.__repr__()
+                    versione = None
+                    if 'versione' in registroSistri:
+                        versione = registroSistri.versione.long
+                    ultimoNumero = None
+                    if 'ultimoNumero' in registroSistri:
+                        ultimoNumero = registroSistri.ultimoNumero.long
+                    dataUltimoNumero = None
+                    if 'dataUltimoNumero' in registroSistri:
+                        dataUltimoNumero = registroSistri.dataUltimoNumero.long
+                    registroCronologico = RegistroCronologico(
+                        idSIS=idSIS,
+                        codiceRegistroCronologico=codiceRegistroCronologico,
+                        nomeUnitaOperativa=nomeUnitaOperativa,
+                        dataUltimoNumero=dataUltimoNumero,
+                        versione=versione,
+                        ultimoNumero=ultimoNumero,
+                        idSISSede=sede,
+                        statoRegistroCronologico=statoRegistroCronologico,
+                        tipoRegCronologico=tipoRegCronologico,
+                        sottocategoria=sottocategoria
                     )
-                    if session.query(Sottocategorie_star).filter(
-                        Sottocategorie_star.id_sottocategoria_star == \
-                        sottocategoria.id_sottocategoria_star).count() > 0:
-                        sottocategoria = session.query(Sottocategorie_star).\
-                            filter(Sottocategorie_star.id_sottocategoria_star \
-                            == sottocategoria.id_sottocategoria_star).first()
-                idSIS = None
-                if 'idSIS' in registroSistri:
-                    idSIS = registroSistri.idSIS
-                codiceRegistroCronologico = None
-                if 'codiceRegistroCronologico' in registroSistri:
-                    codiceRegistroCronologico = registroSistri.\
-                        codiceRegistroCronologico.__repr__()
-                nomeUnitaOperativa = None
-                if 'nomeUnitaOperativa' in registroSistri:
-                    nomeUnitaOperativa = registroSistri.nomeUnitaOperativa.\
-                        __repr__()
-                versione = None
-                if 'versione' in registroSistri:
-                    versione = registroSistri.versione.long
-                ultimoNumero = None
-                if 'ultimoNumero' in registroSistri:
-                    ultimoNumero = registroSistri.ultimoNumero.long
-                dataUltimoNumero = None
-                if 'dataUltimoNumero' in registroSistri:
-                    dataUltimoNumero = registroSistri.dataUltimoNumero.long
-                registroCronologico = RegistroCronologico(
-                    idSIS=idSIS,
-                    codiceRegistroCronologico=codiceRegistroCronologico,
-                    nomeUnitaOperativa=nomeUnitaOperativa,
-                    dataUltimoNumero=dataUltimoNumero,
-                    versione=versione,
-                    ultimoNumero=ultimoNumero,
-                    idSISSede=sede,
-                    statoRegistroCronologico=statoRegistroCronologico,
-                    tipoRegCronologico=tipoRegCronologico,
-                    sottocategoria=sottocategoria
-                )
-                session.merge(registroCronologico)
-            session.commit()
-            response = "Ok"
+                    session.merge(registroCronologico)
+                session.commit()
+                response = "Ok"
         except Exception, e:
             response = e
         return response

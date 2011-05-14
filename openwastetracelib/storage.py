@@ -45,7 +45,7 @@ class OWTStorage(object):
                 self.metadata,
                 Column('catalogo', String(255), nullable=False,
                         primary_key=True),
-                Column('versione', Integer, nullable=False),
+                Column('versione', Integer, nullable=True),
                 Column('descrizione', String(255), nullable=True),
             )
         self.metadata_stati_scheda_sistri = \
@@ -53,7 +53,7 @@ class OWTStorage(object):
                 self.metadata,
                 Column('id_stato_scheda_sistri', String(255), nullable=False,
                         primary_key=True),
-                Column('stato_scheda_sistri', String(255), nullable=False),
+                Column('stato_scheda_sistri', String(255), nullable=True),
             )
         self.metadata_stati_fisici_rifiuto = \
             Table('stati_fisici_rifiuto',
@@ -61,8 +61,8 @@ class OWTStorage(object):
                 Column('id_stato_fisico_rifiuto', String(255), nullable=False,
                         primary_key=True),
                 Column('descr_stato_fisico_rifiuto', String(255),
-                        nullable=False),
-                Column('codice_stato_fisico', String(255), nullable=False),
+                        nullable=True),
+                Column('codice_stato_fisico', String(255), nullable=True),
             )
         self.metadata_forme_giuridiche = \
             Table('forme_giuridiche',
@@ -87,9 +87,9 @@ class OWTStorage(object):
                 Column('id_operazione_impianto', String(255), nullable=False,
                         primary_key=True),
                 Column('id_tipo_operazione_impianto', String(255),
-                        nullable=False),
-                Column('operazione_impianto', String(255), nullable=False),
-                Column('ordinamento', Integer, nullable=False),
+                        nullable=True),
+                Column('operazione_impianto', String(255), nullable=True),
+                Column('ordinamento', Integer, nullable=True),
             )
         self.metadata_categorie_raee = \
             Table('categorie_raee',
@@ -97,14 +97,14 @@ class OWTStorage(object):
                 Column('id_categoria_raee', String(255), nullable=False,
                         primary_key=True),
                 Column('descrizione_categoria_raee', String(255),
-                        nullable=False),
+                        nullable=True),
             )
         self.metadata_tipi_veicolo = \
             Table('tipi_veicolo',
                 self.metadata,
                 Column('id_tipo_veicolo', String(255), nullable=False,
                         primary_key=True),
-                Column('descrizione', String(255), nullable=False),
+                Column('descrizione', String(255), nullable=True),
                 Column('codice_tipo_veicolo', Integer, nullable=True),
                 Column('flag_rimorchio', Integer, nullable=True),
             )
@@ -119,22 +119,22 @@ class OWTStorage(object):
                 self.metadata,
                 Column('id_tipo_registrazione_crono', String(255),
                         nullable=False, primary_key=True),
-                Column('descr_tipo_reg_crono', String(255), nullable=False),
+                Column('descr_tipo_reg_crono', String(255), nullable=True),
             )
         self.metadata_numeri_onu = \
             Table('numeri_onu',
                 self.metadata,
                 Column('id_numero_onu', String(255), nullable=False,
                         primary_key=True),
-                Column('descrizione_numero_onu', String(255), nullable=False),
+                Column('descrizione_numero_onu', String(255), nullable=True),
             )
         self.metadata_localita_estere = \
             Table('localita_estere',
                 self.metadata,
                 Column('id_localita', Integer, nullable=False,
                         primary_key=True),
-                Column('nazione', String(255), nullable=False),
-                Column('sigla_nazione', String(255), nullable=False),
+                Column('nazione', String(255), nullable=True),
+                Column('sigla_nazione', String(255), nullable=True),
             )
         self.metadata_associazioni_categoria = \
             Table('associazioni_categoria',
@@ -152,15 +152,15 @@ class OWTStorage(object):
                 Column('id_stato_registro_cronologico', String(255),
                         nullable=False, primary_key=True),
                 Column('descrizione_stato_reg_crono', String(255),
-                        nullable=False),
+                        nullable=True),
             )
         self.metadata_tipi_imballaggi = \
             Table('tipi_imballaggi',
                 self.metadata,
                 Column('id_tipo_imballaggio', Integer, nullable=False,
                         primary_key=True),
-                Column('tipo_imballaggio', String(255), nullable=False),
-                Column('codice_imballaggio', String(255), nullable=False),
+                Column('tipo_imballaggio', String(255), nullable=True),
+                Column('codice_imballaggio', String(255), nullable=True),
             )
         self.metadata_sottocategorie_star = \
             Table('sottocategorie_star',
@@ -176,21 +176,21 @@ class OWTStorage(object):
                 self.metadata,
                 Column('id_tipo_documento', String(255), nullable=False,
                         primary_key=True),
-                Column('descrizione', String(255), nullable=False),
+                Column('descrizione', String(255), nullable=True),
             )
         self.metadata_classi_adr = \
             Table('classi_adr',
                 self.metadata,
                 Column('id_classe_adr', String(255), nullable=False,
                         primary_key=True),
-                Column('descrizione_classe_adr', String(255), nullable=False),
+                Column('descrizione_classe_adr', String(255), nullable=True),
             )
         self.metadata_ruoli_aziendali = \
             Table('ruoli_aziendali',
                 self.metadata,
                 Column('id_ruolo_aziendale', String(255), nullable=False,
                         primary_key=True),
-                Column('ruolo_aziendale', String(255), nullable=False),
+                Column('ruolo_aziendale', String(255), nullable=True),
             )
         self.metadata_stati_utente_idm = \
             Table('stati_utente_idm',
@@ -220,7 +220,7 @@ class OWTStorage(object):
                 self.metadata,
                 Column('id_esito_trasporto', String(255), nullable=False,
                         primary_key=True),
-                Column('descr_esito_trasporto', String(255), nullable=False),
+                Column('descr_esito_trasporto', String(255), nullable=True),
             )
         self.metadata_stati_veicolo = \
             Table('stati_veicolo',
@@ -228,14 +228,14 @@ class OWTStorage(object):
                 Column('id_stato_veicolo', String(255), nullable=False,
                         primary_key=True),
                 Column('descrizione_stato_veicolo', String(255),
-                        nullable=False),
+                        nullable=True),
             )
         self.metadata_cod_rec_1013 = \
             Table('cod_rec_1013',
                 self.metadata,
                 Column('id_cod_rec_1013', String(255), nullable=False,
                         primary_key=True),
-                Column('descrizione_cod_rec', String(255), nullable=False),
+                Column('descrizione_cod_rec', String(255), nullable=True),
             )
         self.metadata_stati_registrazioni_crono = \
             Table('stati_registrazioni_crono',
@@ -243,7 +243,7 @@ class OWTStorage(object):
                 Column('id_stato_registrazione_crono', String(255),
                         nullable=False, primary_key=True),
                 Column('descrizione_stato_reg_crono', String(255),
-                        nullable=False),
+                        nullable=True),
             )
         self.metadata_tipi_trasporto = \
             Table('tipi_trasporto',
@@ -251,7 +251,7 @@ class OWTStorage(object):
                 Column('id_tipo_trasporto', Integer, nullable=False,
                         primary_key=True),
                 Column('descrizione_tipo_trasporto', String(255),
-                        nullable=False),
+                        nullable=True),
             )
         self.metadata_tipologie_raee = \
             Table('tipologie_raee',
@@ -259,14 +259,14 @@ class OWTStorage(object):
                 Column('id_tipologia_raee', String(255), nullable=False,
                         primary_key=True),
                 Column('descrizione_tipologia_raee', String(255),
-                        nullable=False),
+                        nullable=True),
             )
         self.metadata_codici_cer_iii_livello = \
             Table('codici_cer_iii_livello',
                 self.metadata,
                 Column('id_codice_cer_iii_livello', String(255),
                         nullable=False, primary_key=True),
-                Column('descrizione_iii_livello', String(255), nullable=False),
+                Column('descrizione_iii_livello', String(255), nullable=True),
                 Column('flag_pericoloso', Integer, nullable=True),
                 Column('flag_attivo', Integer, nullable=True),
             )
@@ -281,21 +281,21 @@ class OWTStorage(object):
                 self.metadata,
                 Column('id_caratteristica_pericolo', String(255),
                         nullable=False, primary_key=True),
-                Column('descr_car_pericolo', String(255), nullable=False),
+                Column('descr_car_pericolo', String(255), nullable=True),
             )
         self.metadata_sottotipi_veicolo = \
             Table('sottotipi_veicolo',
                 self.metadata,
                 Column('id_sottotipo_veicolo', String(255), nullable=False,
                         primary_key=True),
-                Column('descrizione', String(255), nullable=False),
+                Column('descrizione', String(255), nullable=True),
                 Column('codice_sottotipo_veicolo', Integer, nullable=True),
             )
         self.metadata_azienda = \
             Table('azienda',
                 self.metadata,
                 Column('idSIS', String(255), nullable=False, primary_key=True),
-                Column('ragioneSociale', String(255), nullable=False),
+                Column('ragioneSociale', String(255), nullable=True),
                 Column('cognome', String(255)),
                 Column('nome', String(255)),
                 Column('formaGiuridicaFK', String(255),
@@ -304,7 +304,7 @@ class OWTStorage(object):
                 Column('tipoStatoImpresaFK', String(255),
                         ForeignKey('tipi_stato_impresa.id_tipo_stato_impresa')
                 ),
-                Column('codiceFiscale', String(25), nullable=False),
+                Column('codiceFiscale', String(25), nullable=True),
                 Column('pIva', String(11)),
                 Column('numeroIscrizioneAlbo', String(255)),
                 Column('cciaaRea', String(255)),
@@ -313,7 +313,7 @@ class OWTStorage(object):
                 Column('dataIscrizioneStar', DateTime),
                 Column('codiceAtecoAttPrincipale', String(255)),
                 Column('descrizioneAttPrincipale', String(255)),
-                Column('versione', BigInteger, nullable=False),
+                Column('versione', BigInteger, nullable=True),
                 Column('sedeLegaleFK', String(255),
                         ForeignKey('sede.idSIS')
                 ),
@@ -331,13 +331,13 @@ class OWTStorage(object):
                 Column('tipoSedeFK', String(255),
                         ForeignKey('tipi_sede.id_tipo_sede')
                 ),
-                Column('nomeSede', String(255), nullable=False),
-                Column('codiceIstatLocalita', String(255), nullable=False),
-                Column('codiceCatastale', String(255), nullable=False),
-                Column('nazione', String(255), nullable=False),
-                Column('siglaNazione', String(255), nullable=False),
-                Column('indirizzo', String(255), nullable=False),
-                Column('versione', BigInteger, nullable=False),
+                Column('nomeSede', String(255), nullable=True),
+                Column('codiceIstatLocalita', String(255), nullable=True),
+                Column('codiceCatastale', String(255), nullable=True),
+                Column('nazione', String(255), nullable=True),
+                Column('siglaNazione', String(255), nullable=True),
+                Column('indirizzo', String(255), nullable=True),
+                Column('versione', BigInteger, nullable=True),
                 Column('nrCivico', String(255)),
                 Column('cap', String(255)),
                 Column('telefono', String(255)),
@@ -399,8 +399,8 @@ class OWTStorage(object):
                 Column('idSIS', String(255), nullable=False, primary_key=True),
                 Column('idSISSedeFK', String(255), ForeignKey('sede.idSIS')),
                 Column('codiceRegistroCronologico', String(255),
-                        nullable=False),
-                Column('versione', BigInteger, nullable=False),
+                        nullable=True),
+                Column('versione', BigInteger, nullable=True),
                 Column('ultimoNumero', BigInteger, nullable=True),
                 Column('dataUltimoNumero', DateTime, nullable=True),
                 Column('nomeUnitaOperativa', String(255), nullable=True),

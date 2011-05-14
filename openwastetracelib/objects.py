@@ -24,248 +24,242 @@ The I{objects} module provides objects definition.
 
 class Stati_scheda_sistri(object):
     """ """
-    def __init__(self, id_stato_scheda_sistri, stato_scheda_sistri):
+    def __init__(self, id_stato_scheda_sistri, **kwargs):
         self.id_stato_scheda_sistri = id_stato_scheda_sistri
-        self.stato_scheda_sistri = stato_scheda_sistri
+        for key in kwargs:
+            self.__setattr__(key, kwargs[key])
 
 
 class Stati_fisici_rifiuto(object):
     """ """
-    def __init__(self, id_stato_fisico_rifiuto, descr_stato_fisico_rifiuto,
-                    codice_stato_fisico):
+    def __init__(self, id_stato_fisico_rifiuto, **kwargs):
         self.id_stato_fisico_rifiuto = id_stato_fisico_rifiuto
-        self.descr_stato_fisico_rifiuto = descr_stato_fisico_rifiuto
-        self.codice_stato_fisico = codice_stato_fisico
+        for key in kwargs:
+            self.__setattr__(key, kwargs[key])
 
 
 class Forme_giuridiche(object):
     """ """
-    def __init__(self, id_tipo_forma_giuridica,
-                    descrizione_forma_giuridica=None):
+    def __init__(self, id_tipo_forma_giuridica, **kwargs):
         self.id_tipo_forma_giuridica = id_tipo_forma_giuridica
-        self.descrizione_forma_giuridica = descrizione_forma_giuridica
+        for key in kwargs:
+            self.__setattr__(key, kwargs[key])
 
 
 class Tipi_reg_cronologico(object):
     """ """
-    def __init__(self, id_tipo_reg_cronologico,
-                    descrizione_tipo_reg_crono=None, macro_categoria=None):
+    def __init__(self, id_tipo_reg_cronologico, **kwargs):
         self.id_tipo_reg_cronologico = id_tipo_reg_cronologico
-        self.descrizione_tipo_reg_crono = descrizione_tipo_reg_crono
-        self.macro_categoria = macro_categoria
+        for key in kwargs:
+            self.__setattr__(key, kwargs[key])
 
 
 class Operazioni_impianti(object):
     """ """
-    def __init__(self, id_operazione_impianto, id_tipo_operazione_impianto,
-                    operazione_impianto, ordinamento):
+    def __init__(self, id_operazione_impianto, **kwargs):
         self.id_operazione_impianto = id_operazione_impianto
-        self.id_tipo_operazione_impianto = id_tipo_operazione_impianto
-        self.operazione_impianto = operazione_impianto
-        self.ordinamento = ordinamento
+        for key in kwargs:
+            self.__setattr__(key, kwargs[key])
 
 
 class Categorie_raee(object):
     """ """
-    def __init__(self, id_categoria_raee, descrizione_categoria_raee):
+    def __init__(self, id_categoria_raee, **kwargs):
         self.id_categoria_raee = id_categoria_raee
-        self.descrizione_categoria_raee = descrizione_categoria_raee
+        for key in kwargs:
+            self.__setattr__(key, kwargs[key])
 
 
 class Tipi_veicolo(object):
     """ """
-    def __init__(self, id_tipo_veicolo, descrizione, codice_tipo_veicolo=None,
-                    flag_rimorchio=None):
+    def __init__(self, id_tipo_veicolo, **kwargs):
         self.id_tipo_veicolo = id_tipo_veicolo
-        self.descrizione = descrizione
-        self.codice_tipo_veicolo = codice_tipo_veicolo
-        self.flag_rimorchio = flag_rimorchio
+        for key in kwargs:
+            self.__setattr__(key, kwargs[key])
 
 
 class Tipi_sede(object):
     """ """
-    def __init__(self, id_tipo_sede, descrizione=None):
+    def __init__(self, id_tipo_sede, **kwargs):
         self.id_tipo_sede = id_tipo_sede
-        self.descrizione = descrizione
+        for key in kwargs:
+            self.__setattr__(key, kwargs[key])
 
 
 class Tipi_registrazioni_crono(object):
     """ """
-    def __init__(self, id_tipo_registrazione_crono, descr_tipo_reg_crono):
+    def __init__(self, id_tipo_registrazione_crono, **kwargs):
         self.id_tipo_registrazione_crono = id_tipo_registrazione_crono
-        self.descr_tipo_reg_crono = descr_tipo_reg_crono
+        for key in kwargs:
+            self.__setattr__(key, kwargs[key])
 
 
 class Numeri_onu(object):
     """ """
-    def __init__(self, id_numero_onu, descrizione_numero_onu):
+    def __init__(self, id_numero_onu, **kwargs):
         self.id_numero_onu = id_numero_onu
-        self.descrizione_numero_onu = descrizione_numero_onu
+        for key in kwargs:
+            self.__setattr__(key, kwargs[key])
 
 
 class Localita_estere(object):
     """ """
-    def __init__(self, id_localita, nazione, sigla_nazione):
+    def __init__(self, id_localita, **kwargs):
         self.id_localita = id_localita
-        self.nazione = nazione
-        self.sigla_nazione = sigla_nazione
+        for key in kwargs:
+            self.__setattr__(key, kwargs[key])
 
 
 class Associazioni_categoria(object):
     """ """
-    def __init__(self, id_associazione_categoria, ass_categoria_nome=None,
-                    id_accordo=None, sigla_provincia=None, sigla_cciaa=None):
+    def __init__(self, id_associazione_categoria, **kwargs):
         self.id_associazione_categoria = id_associazione_categoria
-        self.ass_categoria_nome = ass_categoria_nome
-        self.id_accordo = id_accordo
-        self.sigla_provincia = sigla_provincia
-        self.sigla_cciaa = sigla_cciaa
+        for key in kwargs:
+            self.__setattr__(key, kwargs[key])
 
 
 class Stati_registro_cronologico(object):
     """ """
-    def __init__(self, id_stato_registro_cronologico,
-                    descrizione_stato_reg_crono):
+    def __init__(self, id_stato_registro_cronologico, **kwargs):
         self.id_stato_registro_cronologico = id_stato_registro_cronologico
-        self.descrizione_stato_reg_crono = descrizione_stato_reg_crono
+        for key in kwargs:
+            self.__setattr__(key, kwargs[key])
 
 
 class Tipi_imballaggi(object):
     """ """
-    def __init__(self, id_tipo_imballaggio, tipo_imballaggio,
-                    codice_imballaggio):
+    def __init__(self, id_tipo_imballaggio, **kwargs):
         self.id_tipo_imballaggio = id_tipo_imballaggio
-        self.tipo_imballaggio = tipo_imballaggio
-        self.codice_imballaggio = codice_imballaggio
+        for key in kwargs:
+            self.__setattr__(key, kwargs[key])
 
 
 class Sottocategorie_star(object):
     """ """
-    def __init__(self, id_sottocategoria_star, id_categoria_star=None,
-                    descrizione_sottocategoria=None):
+    def __init__(self, id_sottocategoria_star, **kwargs):
         self.id_sottocategoria_star = id_sottocategoria_star
-        self.id_categoria_star = id_categoria_star
-        self.descrizione_sottocategoria = descrizione_sottocategoria
+        for key in kwargs:
+            self.__setattr__(key, kwargs[key])
 
 
 class Tipi_documento(object):
     """ """
-    def __init__(self, id_tipo_documento, descrizione):
+    def __init__(self, id_tipo_documento, **kwargs):
         self.id_tipo_documento = id_tipo_documento
-        self.descrizione = descrizione
+        for key in kwargs:
+            self.__setattr__(key, kwargs[key])
 
 
 class Classi_adr(object):
     """ """
-    def __init__(self, id_classe_adr, descrizione_classe_adr):
+    def __init__(self, id_classe_adr, **kwargs):
         self.id_classe_adr = id_classe_adr
-        self.descrizione_classe_adr = descrizione_classe_adr
+        for key in kwargs:
+            self.__setattr__(key, kwargs[key])
 
 
 class Ruoli_aziendali(object):
     """ """
-    def __init__(self, id_ruolo_aziendale, ruolo_aziendale):
+    def __init__(self, id_ruolo_aziendale, **kwargs):
         self.id_ruolo_aziendale = id_ruolo_aziendale
-        self.ruolo_aziendale = ruolo_aziendale
+        for key in kwargs:
+            self.__setattr__(key, kwargs[key])
 
 
 class Stati_utente_idm(object):
     """ """
-    def __init__(self, id_stato_utente_idm):
+    def __init__(self, id_stato_utente_idm, **kwargs):
         self.id_stato_utente_idm = id_stato_utente_idm
+        for key in kwargs:
+            self.__setattr__(key, kwargs[key])
 
 
 class Camere_commercio(object):
     """ """
-    def __init__(self, id_camera_commercio, indirizzo=None, numero_civico=None,
-                    cap=None, nome_persona_riferimento=None,
-                    cognome_persona_riferimento=None,
-                    email_persona_riferimento=None,
-                    telefono_persona_riferimento=None, sigla_cciaa=None):
+    def __init__(self, id_camera_commercio, **kwargs):
         self.id_camera_commercio = id_camera_commercio
-        self.indirizzo = indirizzo
-        self.numero_civico = numero_civico
-        self.cap = cap
-        self.nome_persona_riferimento = nome_persona_riferimento
-        self.cognome_persona_riferimento = cognome_persona_riferimento
-        self.email_persona_riferimento = email_persona_riferimento
-        self.telefono_persona_riferimento = telefono_persona_riferimento
-        self.sigla_cciaa = sigla_cciaa
+        for key in kwargs:
+            self.__setattr__(key, kwargs[key])
 
 
 class Tipi_esito_trasporto(object):
     """ """
-    def __init__(self, id_esito_trasporto, descr_esito_trasporto):
+    def __init__(self, id_esito_trasporto, **kwargs):
         self.id_esito_trasporto = id_esito_trasporto
-        self.descr_esito_trasporto = descr_esito_trasporto
+        for key in kwargs:
+            self.__setattr__(key, kwargs[key])
 
 
 class Stati_veicolo(object):
     """ """
-    def __init__(self, id_stato_veicolo, descrizione_stato_veicolo):
+    def __init__(self, id_stato_veicolo, **kwargs):
         self.id_stato_veicolo = id_stato_veicolo
-        self.descrizione_stato_veicolo = descrizione_stato_veicolo
+        for key in kwargs:
+            self.__setattr__(key, kwargs[key])
 
 
 class Cod_rec_1013(object):
     """ """
-    def __init__(self, id_cod_rec_1013, descrizione_cod_rec):
+    def __init__(self, id_cod_rec_1013, **kwargs):
         self.id_cod_rec_1013 = id_cod_rec_1013
-        self.descrizione_cod_rec = descrizione_cod_rec
+        for key in kwargs:
+            self.__setattr__(key, kwargs[key])
 
 
 class Stati_registrazioni_crono(object):
     """ """
-    def __init__(self, id_stato_registrazione_crono,
-                    descrizione_stato_reg_crono):
+    def __init__(self, id_stato_registrazione_crono, **kwargs):
         self.id_stato_registrazione_crono = id_stato_registrazione_crono
-        self.descrizione_stato_reg_crono = descrizione_stato_reg_crono
+        for key in kwargs:
+            self.__setattr__(key, kwargs[key])
 
 
 class Tipi_trasporto(object):
     """ """
-    def __init__(self, id_tipo_trasporto, descrizione_tipo_trasporto):
+    def __init__(self, id_tipo_trasporto, **kwargs):
         self.id_tipo_trasporto = id_tipo_trasporto
-        self.descrizione_tipo_trasporto = descrizione_tipo_trasporto
+        for key in kwargs:
+            self.__setattr__(key, kwargs[key])
 
 
 class Tipologie_raee(object):
     """ """
-    def __init__(self, id_tipologia_raee, descrizione_tipologia_raee):
+    def __init__(self, id_tipologia_raee, **kwargs):
         self.id_tipologia_raee = id_tipologia_raee
-        self.descrizione_tipologia_raee = descrizione_tipologia_raee
+        for key in kwargs:
+            self.__setattr__(key, kwargs[key])
 
 
 class Codici_cer_iii_livello(object):
     """ """
-    def __init__(self, id_codice_cer_iii_livello, escrizione_iii_livello,
-                    flag_pericoloso, flag_attivo):
+    def __init__(self, id_codice_cer_iii_livello, **kwargs):
         self.id_codice_cer_iii_livello = id_codice_cer_iii_livello
-        self.escrizione_iii_livello = escrizione_iii_livello
-        self.flag_pericoloso = flag_pericoloso
-        self.flag_attivo = flag_attivo
+        for key in kwargs:
+            self.__setattr__(key, kwargs[key])
 
 
 class Tipi_stato_impresa(object):
     """ """
-    def __init__(self, id_tipo_stato_impresa):
+    def __init__(self, id_tipo_stato_impresa, **kwargs):
         self.id_tipo_stato_impresa = id_tipo_stato_impresa
+        for key in kwargs:
+            self.__setattr__(key, kwargs[key])
 
 
 class Caratteristiche_pericolo(object):
     """ """
-    def __init__(self, id_caratteristica_pericolo, descr_car_pericolo):
+    def __init__(self, id_caratteristica_pericolo, **kwargs):
         self.id_caratteristica_pericolo = id_caratteristica_pericolo
-        self.descr_car_pericolo = descr_car_pericolo
+        for key in kwargs:
+            self.__setattr__(key, kwargs[key])
 
 
 class Sottotipi_veicolo(object):
     """ """
-    def __init__(self, id_sottotipo_veicolo, descrizione,
-                    codice_sottotipo_veicolo=None):
+    def __init__(self, id_sottotipo_veicolo, **kwargs):
         self.id_sottotipo_veicolo = id_sottotipo_veicolo
-        self.descrizione = descrizione
-        self.codice_sottotipo_veicolo = codice_sottotipo_veicolo
+        for key in kwargs:
+            self.__setattr__(key, kwargs[key])
 
 
 class DescrittoreCatalogo(object):
@@ -308,11 +302,8 @@ class Sede(object):
 
 class Veicolo(object):
     """ Veicolo object with idSIS. """
-    def __init__(self, targa, tipoVeicolo=None, statoVeicolo=None,
-                    **kwargs):
+    def __init__(self, targa, **kwargs):
         self.targa = targa
-        self.tipoVeicolo = tipoVeicolo
-        self.statoVeicolo = statoVeicolo
         for key in kwargs:
             self.__setattr__(key, kwargs[key])
 
