@@ -346,7 +346,7 @@ class OWTStorage(object):
                 Column('cameraCommercioFK', Integer,
                         ForeignKey('camere_commercio.id_camera_commercio')
                 ),
-                Column('associazioneCategoriaFK', String(255),
+                Column('associazioneCategoriaFK', Integer,
                     ForeignKey(\
                         'associazioni_categoria.id_associazione_categoria')
                 ),
