@@ -168,7 +168,7 @@ class OWTBinding(object):
                     'tipoVeicolo': relationship(Tipi_veicolo),
                     'sottotipoVeicolo': relationship(Sottotipi_veicolo),
                     'statoVeicolo': relationship(Stati_veicolo),
-                    'sede': relationship(Sede, backref='veicoli'),
+                    'sede': relationship(Sede),
                     'codiciCerIIILivello': relationship(
                         Codici_cer_iii_livello,
                         secondary=self.storage.metadata_codiciceriiilivello)
@@ -182,7 +182,6 @@ class OWTBinding(object):
                         Stati_registro_cronologico),
                     'tipoRegCronologico': relationship(Tipi_reg_cronologico),
                     'sottocategoria': relationship(Sottocategorie_star),
-                    'idSISSede': relationship(Sede,
-                        backref='registricronologici')
+                    'idSISSede': relationship(Sede)
                 }
             )

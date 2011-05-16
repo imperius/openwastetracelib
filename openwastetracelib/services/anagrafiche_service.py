@@ -52,9 +52,11 @@ class UpdatingAziendaRequest(OWTBaseService):
         self._config_obj = config_obj
         self.identity = None
         self.codiceFiscaleAzienda = None
-        # Call the parent OWTBaseService class for basic setup work.
-        super(UpdatingAziendaRequest, self).__init__(self._config_obj,
-                                                    *args, **kwargs)
+        super(UpdatingAziendaRequest, self).__init__(self._config_obj, *args,
+            **kwargs)
+        """
+        Call the parent OWTBaseService class for basic setup work.
+        """
 
     def _check_response_for_request_errors(self):
         """
@@ -140,9 +142,11 @@ class GettingAziendaRequest(OWTBaseService):
         self._config_obj = config_obj
         self.identity = None
         self.codiceFiscaleAzienda = None
-        # Call the parent OWTBaseService class for basic setup work.
-        super(GettingAziendaRequest, self).__init__(self._config_obj,
-                                                    *args, **kwargs)
+        super(GettingAziendaRequest, self).__init__(self._config_obj, *args,
+            **kwargs)
+        """
+        Call the parent OWTBaseService class for basic setup work.
+        """
 
     def _check_response_for_request_errors(self):
         """
@@ -323,9 +327,11 @@ class GettingSedeRequest(OWTBaseService):
         self._config_obj = config_obj
         self.identity = None
         self.idSIS = None
-        # Call the parent OWTBaseService class for basic setup work.
-        super(GettingSedeRequest, self).__init__(self._config_obj,
-                                                    *args, **kwargs)
+        super(GettingSedeRequest, self).__init__(self._config_obj, *args,
+            **kwargs)
+        """
+        Call the parent OWTBaseService class for basic setup work.
+        """
 
     def _check_response_for_request_errors(self):
         """
@@ -471,9 +477,11 @@ class GettingVeicoliRequest(OWTBaseService):
         self._config_obj = config_obj
         self.identity = None
         self.idSISSede = None
-        # Call the parent OWTBaseService class for basic setup work.
         super(GettingVeicoliRequest, self).\
             __init__(self._config_obj, *args, **kwargs)
+        """
+        Call the parent OWTBaseService class for basic setup work.
+        """
 
     def _check_response_for_request_errors(self):
         """
@@ -510,10 +518,10 @@ class GettingVeicoliRequest(OWTBaseService):
         try:
             if veicoliSistri:
                 sede = None
-                if session.query(Sede).filter(
-                    Sede.idSIS == parm['idSISSede']).count() > 0:
-                    sede = session.query(Sede).filter(
-                        Sede.idSIS == parm['idSISSede']).first()
+                res = session.query(Sede).filter(Sede.idSIS == \
+                    parm['idSISSede'])
+                if res.count() > 0:
+                    sede = res.first()
                 for veicoloSistri in veicoliSistri:
                     tipoVeicolo = None
                     if veicoloSistri.tipoVeicolo:
@@ -526,12 +534,11 @@ class GettingVeicoliRequest(OWTBaseService):
                                 id_tipo_veicolo=tipoVeicoloSistri.idCatalogo,
                                 descrizione=descrizione
                             )
-                        if session.query(Tipi_veicolo).filter(
+                        res = session.query(Tipi_veicolo).filter(
                             Tipi_veicolo.id_tipo_veicolo == \
-                            tipoVeicolo.id_tipo_veicolo).count() > 0:
-                            tipoVeicolo = session.query(Tipi_veicolo).filter(
-                                Tipi_veicolo.id_tipo_veicolo == \
-                                tipoVeicolo.id_tipo_veicolo).first()
+                            tipoVeicolo.id_tipo_veicolo)
+                        if res.count() > 0:
+                            tipoVeicolo = res.first()
                     statoVeicolo = None
                     if veicoloSistri.statoVeicolo:
                         statoVeicoloSistri = veicoloSistri.statoVeicolo
@@ -543,12 +550,11 @@ class GettingVeicoliRequest(OWTBaseService):
                                 id_stato_veicolo=statoVeicoloSistri.idCatalogo,
                                 descrizione_stato_veicolo=descrizione
                             )
-                        if session.query(Stati_veicolo).filter(
+                        res = session.query(Stati_veicolo).filter(
                             Stati_veicolo.id_stato_veicolo == \
-                            statoVeicolo.id_stato_veicolo).count() > 0:
-                            statoVeicolo = session.query(Stati_veicolo).filter(
-                                Stati_veicolo.id_stato_veicolo == \
-                                statoVeicolo.id_stato_veicolo).first()
+                            statoVeicolo.id_stato_veicolo)
+                        if res.count() > 0:
+                            statoVeicolo = res.first()
                     sottotipoVeicolo = None
                     if veicoloSistri.sottotipoVeicolo:
                         sottotipoVeicoloSistri = veicoloSistri.sottotipoVeicolo
@@ -561,13 +567,11 @@ class GettingVeicoliRequest(OWTBaseService):
                                     idCatalogo,
                                 descrizione=descrizione
                             )
-                        if session.query(Sottotipi_veicolo).filter(
+                        res = session.query(Sottotipi_veicolo).filter(
                             Sottotipi_veicolo.id_sottotipo_veicolo == \
-                            sottotipoVeicolo.id_sottotipo_veicolo).count() > 0:
-                            sottotipoVeicolo = session.query(
-                                Sottotipi_veicolo).filter(Sottotipi_veicolo.\
-                                id_sottotipo_veicolo == sottotipoVeicolo.\
-                                id_sottotipo_veicolo).first()
+                            sottotipoVeicolo.id_sottotipo_veicolo)
+                        if res.count() > 0:
+                            sottotipoVeicolo = res.first()
                     codiciCerIIILivello = []
                     if veicoloSistri.codiciCerIIILivello:
                         codiciCerIIILivelloSistri = veicoloSistri.\
@@ -583,17 +587,13 @@ class GettingVeicoliRequest(OWTBaseService):
                                     id_codice_cer_iii_livello=id,
                                     descrizione_iii_livello=descrizione
                                 )
-                            if session.query(Codici_cer_iii_livello).\
+                            res = session.query(Codici_cer_iii_livello).\
                                 filter(Codici_cer_iii_livello.\
                                 id_codice_cer_iii_livello == \
                                 codici_cer_iii_livello.\
-                                id_codice_cer_iii_livello).count() > 0:
-                                codici_cer_iii_livello = session.\
-                                    query(Codici_cer_iii_livello).\
-                                    filter(Codici_cer_iii_livello.\
-                                    id_codice_cer_iii_livello == \
-                                    codici_cer_iii_livello.\
-                                    id_codice_cer_iii_livello).first()
+                                id_codice_cer_iii_livello)
+                            if res.count() > 0:
+                                codici_cer_iii_livello = res.first()
                             codiciCerIIILivello.append(codici_cer_iii_livello)
                     marca = None
                     if veicoloSistri.marca:
@@ -640,9 +640,11 @@ class GettingRegistroCronologicoRequest(OWTBaseService):
         self._config_obj = config_obj
         self.identity = None
         self.idSISSede = None
-        # Call the parent OWTBaseService class for basic setup work.
         super(GettingRegistroCronologicoRequest, self).\
             __init__(self._config_obj, *args, **kwargs)
+        """
+        Call the parent OWTBaseService class for basic setup work.
+        """
 
     def _check_response_for_request_errors(self):
         """
@@ -676,15 +678,14 @@ class GettingRegistroCronologicoRequest(OWTBaseService):
             registroCronologicoSistri = client.service.\
                 GetRegistroCronologico(**parm)
         except Exception, e:
-#            import pdb; pdb.set_trace()
             response = e.fault.detail.GetRegistroCronologico_fault.errorMessage
         try:
             if registroCronologicoSistri:
                 sede = None
-                if session.query(Sede).filter(
-                    Sede.idSIS == parm['idSISSede']).count() > 0:
-                    sede = session.query(Sede).filter(
-                        Sede.idSIS == parm['idSISSede']).first()
+                res = session.query(Sede).filter(Sede.idSIS == \
+                    parm['idSISSede'])
+                if res.count() > 0:
+                    sede = res.first()
                 for registroSistri in registroCronologicoSistri:
                     statoRegistroCronologico = None
                     if 'statoRegistroCronologico' in registroSistri:
@@ -696,17 +697,13 @@ class GettingRegistroCronologicoRequest(OWTBaseService):
                             descrizione_stato_reg_crono=statoRegistroSistri.\
                                 description.__repr__()
                         )
-                        if session.query(Stati_registro_cronologico).filter(
+                        res = session.query(Stati_registro_cronologico).filter(
                             Stati_registro_cronologico.\
                             id_stato_registro_cronologico == \
                             statoRegistroCronologico.\
-                            id_stato_registro_cronologico).count() > 0:
-                            statoRegistroCronologico = session.query(\
-                                Stati_registro_cronologico).filter(\
-                                Stati_registro_cronologico.\
-                                id_stato_registro_cronologico == \
-                                statoRegistroCronologico.\
-                                id_stato_registro_cronologico).first()
+                            id_stato_registro_cronologico)
+                        if res.count() > 0:
+                            statoRegistroCronologico = res.first()
                     tipoRegCronologico = None
                     if 'tipoRegCronologico' in registroSistri:
                         tipoRegSistri = registroSistri.tipoRegCronologico
@@ -716,15 +713,11 @@ class GettingRegistroCronologicoRequest(OWTBaseService):
                             descrizione_tipo_reg_crono=tipoRegSistri.\
                                 description.__repr__()
                         )
-                        if session.query(Tipi_reg_cronologico).filter(
+                        res = session.query(Tipi_reg_cronologico).filter(
                             Tipi_reg_cronologico.id_tipo_reg_cronologico == \
-                            tipoRegCronologico.id_tipo_reg_cronologico).\
-                            count() > 0:
-                            tipoRegCronologico = session.query(
-                                Tipi_reg_cronologico).filter(
-                                Tipi_reg_cronologico.id_tipo_reg_cronologico \
-                                == tipoRegCronologico.\
-                                id_tipo_reg_cronologico).first()
+                            tipoRegCronologico.id_tipo_reg_cronologico)
+                        if res.count() > 0:
+                            tipoRegCronologico = res.first()
                     sottocategoria = None
                     if 'sottocategoria' in registroSistri:
                         sottocategoriaSistri = registroSistri.sottocategoria
@@ -734,14 +727,11 @@ class GettingRegistroCronologicoRequest(OWTBaseService):
                             descrizione_sottocategoria=sottocategoriaSistri.\
                                 description.__repr__()
                         )
-                        if session.query(Sottocategorie_star).filter(
+                        res = session.query(Sottocategorie_star).filter(
                             Sottocategorie_star.id_sottocategoria_star == \
-                            sottocategoria.id_sottocategoria_star).count() > 0:
-                            sottocategoria = session.query(
-                                Sottocategorie_star).filter(
-                                Sottocategorie_star.id_sottocategoria_star \
-                                == sottocategoria.id_sottocategoria_star).\
-                                first()
+                            sottocategoria.id_sottocategoria_star)
+                        if res.count() > 0:
+                            sottocategoria = res.first()
                     idSIS = None
                     if 'idSIS' in registroSistri:
                         idSIS = registroSistri.idSIS

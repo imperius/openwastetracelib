@@ -228,7 +228,7 @@ class OWTStorage(object):
                 Column('id_stato_veicolo', String(255), nullable=False,
                         primary_key=True),
                 Column('descrizione_stato_veicolo', String(255),
-                        nullable=True),
+                        nullable=True)
             )
         self.metadata_cod_rec_1013 = \
             Table('cod_rec_1013',
