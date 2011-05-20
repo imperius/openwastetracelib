@@ -58,7 +58,7 @@ KEYWORDS = 'sistri soap suds wsdl wrapper'
 
 setup(
     name='OpenWasteTrace',
-    version="0.10",
+    version="0.11",
     description='Sistri Web Services Soap API wrapper.',
     long_description=LONG_DESCRIPTION,
     author='Paolo Melchiorre',

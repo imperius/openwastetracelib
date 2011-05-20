@@ -464,7 +464,7 @@ class GettingSedeRequest(OWTBaseService):
 
 class GettingVeicoliRequest(OWTBaseService):
     """
-    This class allows you to updating all Veicoli objects.
+    This class allows you to getting all Veicoli objects.
     By default, you can simply pass a identity string to the constructor.
     """
 
