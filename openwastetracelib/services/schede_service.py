@@ -97,11 +97,11 @@ class GettingElencoMovimentazioniRequest(OWTBaseService):
                 if 'movimentazioni' in elencoMovimentazioni:
                     movimentazioniSistri = elencoMovimentazioni.movimentazioni
                     for movimentazioneSistri in movimentazioniSistri:
-                        causaleFineMovimentazione = None
+                        causaleFineMov = None
                         if 'causaleFineMovimentazione' in movimentazioneSistri:
                             causaleFineSistri = \
                                 movimentazioneSistri.causaleFineMovimentazione
-                            causaleFineMovimentazione = Causali_mov(
+                            causaleFineMov = Causali_mov(
                                 id_causale_mov=causaleFineSistri.\
                                     idCatalogo.__repr__(),
                                 descrizione_causale_mov=causaleFineSistri.\
@@ -109,10 +109,9 @@ class GettingElencoMovimentazioniRequest(OWTBaseService):
                             )
                             res = session.query(Causali_mov).filter(
                                 Causali_mov.id_causale_mov == \
-                                causaleFineMovimentazione.\
-                                id_causale_mov)
+                                causaleFineMov.id_causale_mov)
                             if res.count() > 0:
-                                causaleFineMovimentazione = res.first()
+                                causaleFineMov = res.first()
                         idSIS = None
                         if 'idSIS' in movimentazioneSistri:
                             idSIS = movimentazioneSistri.idSIS
@@ -122,26 +121,26 @@ class GettingElencoMovimentazioniRequest(OWTBaseService):
                         versione = None
                         if 'versione' in movimentazioneSistri:
                             versione = movimentazioneSistri.versione.long
-                        movimentazioneNumeroSerie = None
+                        movNumeroSerie = None
                         if 'movimentazioneNumeroSerie' in movimentazioneSistri:
-                            movimentazioneNumeroSerie = \
+                            movNumeroSerie = \
                                 movimentazioneSistri.movimentazioneNumeroSerie
                         dataMovimentazione = None
                         if 'dataMovimentazione' in movimentazioneSistri:
                             dataMovimentazione = \
                                 movimentazioneSistri.dataMovimentazione
-                        dataOraFineMovimentazione = None
+                        dataOraFineMov = None
                         if 'dataOraFineMovimentazione' in movimentazioneSistri:
-                            dataOraFineMovimentazione = \
+                            dataOraFineMov = \
                                 movimentazioneSistri.dataOraFineMovimentazione
                         movimentazione = Movimentazione(
                             idSIS=idSIS,
                             idSISTRI=idSISTRI,
                             versione=versione,
                             dataMovimentazione=dataMovimentazione,
-                            movimentazioneNumeroSerie=movimentazioneNumeroSerie,
-                            dataOraFineMovimentazione=dataOraFineMovimentazione,
-                            causaleFineMovimentazione=causaleFineMovimentazione
+                            movimentazioneNumeroSerie=movNumeroSerie,
+                            dataOraFineMovimentazione=dataOraFineMov,
+                            causaleFineMovimentazione=causaleFineMov
                         )
                         session.merge(movimentazione)
                 session.commit()

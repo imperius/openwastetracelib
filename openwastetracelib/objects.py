@@ -55,7 +55,6 @@ class Categorie_raee(object):
             self.__setattr__(key, kwargs[key])
 
 
-# FIXME
 class Causali_mov(object):
     """ """
     def __init__(self, id_causale_mov, **kwargs):
@@ -64,7 +63,6 @@ class Causali_mov(object):
             self.__setattr__(key, kwargs[key])
 
 
-# FIXME
 class Causali_reg(object):
     """ """
     def __init__(self, id_causale_reg, **kwargs):
@@ -73,11 +71,10 @@ class Causali_reg(object):
             self.__setattr__(key, kwargs[key])
 
 
-# FIXME
 class Causali_scheda(object):
     """ """
-    def __init__(self, id_causale_scheda, **kwargs):
-        self.id_causale_scheda = id_causale_scheda
+    def __init__(self, id_causale_sch, **kwargs):
+        self.id_causale_sch = id_causale_sch
         for key in kwargs:
             self.__setattr__(key, kwargs[key])
 
@@ -356,6 +353,17 @@ class Sede(object):
         self.versione = versione
         self.tipoSede = tipoSede
         self.idSIS = idSIS
+        for key in kwargs:
+            self.__setattr__(key, kwargs[key])
+
+
+class Tratta_Base(object):
+    """ Tratta_Base object with idSIS."""
+    def __init__(self, progressivo, idSISSede_trasportatore,
+            flagOperatoreLogistico, **kwargs):
+        self.progressivo = progressivo
+        self.idSISSede_trasportatore = idSISSede_trasportatore
+        self.flagOperatoreLogistico = flagOperatoreLogistico
         for key in kwargs:
             self.__setattr__(key, kwargs[key])
 

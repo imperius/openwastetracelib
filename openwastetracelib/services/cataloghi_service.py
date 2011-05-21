@@ -97,30 +97,38 @@ class UpdateCataloghiRequest(OWTBaseService):
         6. Recupero il catalogo in formato xml e lo mostro
         """
         client = self.client
+        session = self._config_obj.session
         parm = dict(identity=self.identity)
-        elencocataloghi = client.service.GetElencoCataloghi(**parm)
+        elencocataloghi = None
         try:
-            for descrittorecatalogo in elencocataloghi:
-                catalogonome = descrittorecatalogo.catalogo.__repr__()
-                catalogoclasse = catalogonome.capitalize()
-                classe = getattr(objects, catalogoclasse)
-                catalogoxml = client.service.GetCatalogo(self.identity,
-                                                catalogonome).encode("utf-8")
-                xmltree = ElementTree.XML(catalogoxml)
-                records = xmltree.find('records')
-                for record in records.findall('record'):
-                    fields = record.findall('field')
-                    emptyvariables = [u'' for i in range(len(fields))]
-                    classenuova = classe(*emptyvariables)
-                    for field in fields:
-                        nome = field.findtext('nome').lower()
-                        valore = field.findtext('valore')
-                        tipo = field.findtext('tipo')[:3].lower()
-                        if tipo == 'int':
-                            valore = int(valore)
-                        classenuova.__setattr__(nome, valore)
-                    self._config_obj.session.merge(classenuova)
-            self._config_obj.session.commit()
+            elencocataloghi = client.service.GetElencoCataloghi(**parm)
+        except Exception, e:
+            response = \
+                e.fault.detail.GetElencoCataloghi_fault.errorMessage
+        try:
+            if elencocataloghi:
+                for descrittorecatalogo in elencocataloghi:
+                    catalogonome = descrittorecatalogo.catalogo.__repr__()
+                    catalogoclasse = catalogonome.capitalize()
+                    classe = getattr(objects, catalogoclasse)
+                    catalogoxml = client.service.GetCatalogo(self.identity,
+                        catalogonome).encode("utf-8")
+                    xmltree = ElementTree.XML(catalogoxml)
+                    records = xmltree.find('records')
+                    for record in records.findall('record'):
+                        fields = record.findall('field')
+#                        emptyvariables = [u'' for i in range(len(fields))]
+                        emptyvariables = [u'']
+                        classenuova = classe(*emptyvariables)
+                        for field in fields:
+                            nome = field.findtext('nome').lower()
+                            valore = field.findtext('valore')
+                            tipo = field.findtext('tipo')[:3].lower()
+                            if tipo == 'int':
+                                valore = int(valore)
+                            classenuova.__setattr__(nome, valore)
+                        session.merge(classenuova)
+            session.commit()
             response = "Ok"
         except Exception, e:
             response = e
@@ -168,18 +176,37 @@ class UpdateDescrittoriCataloghiRequest(OWTBaseService):
         WHICH RESIDESON OWTBaseService AND IS INHERITED.
         """
         client = self.client
+        session = self._config_obj.session
         parm = dict(identity=self.identity)
-        elencocataloghi = client.service.GetElencoCataloghi(**parm)
+        elencocataloghi = None
         try:
-            for descrittorecatalogo in elencocataloghi:
-                catalogo = descrittorecatalogo.catalogo.__repr__()
-                versione = int(descrittorecatalogo.versione)
-                descrizione = descrittorecatalogo.descrizione.__repr__()
-                nuovodescrittorecatalogo = DescrittoreCatalogo(catalogo,
-                    versione, descrizione)
-                self._config_obj.session.merge(nuovodescrittorecatalogo)
-            self._config_obj.session.commit()
-            response = "Ok"
+            elencocataloghi = client.service.GetElencoCataloghi(**parm)
+        except Exception, e:
+            response = \
+                e.fault.detail.GetElencoCataloghi_fault.errorMessage
+        try:
+            response = "Info:"
+            if elencocataloghi:
+                for descrittorecatalogo in elencocataloghi:
+                    descrizione = None
+                    if 'descrizione' in descrittorecatalogo:
+                        descrizione = descrittorecatalogo.descrizione
+                    if ('catalogo' and 'versione') in descrittorecatalogo:
+                        catalogo = descrittorecatalogo.catalogo
+                        versione = int(descrittorecatalogo.versione)
+                        res = session.query(DescrittoreCatalogo).filter(
+                            DescrittoreCatalogo.catalogo == catalogo)
+                        if res.count() > 0:
+                            vecchiaversione = res.first().versione
+                            if versione != vecchiaversione:
+                                response += " [" + catalogo + "] versione" + \
+                                    " da " + str(vecchiaversione) + \
+                                    " a " + str(versione)
+                        nuovodescrittorecatalogo = DescrittoreCatalogo(
+                            catalogo, versione, descrizione)
+                        session.merge(nuovodescrittorecatalogo)
+            response += " [OK]"
+            session.commit()
         except Exception, e:
             response = e
         return response

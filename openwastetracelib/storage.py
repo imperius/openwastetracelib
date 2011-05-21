@@ -83,32 +83,28 @@ class OWTStorage(object):
                 Column('descrizione_categoria_raee', String(255),
                         nullable=True),
             )
-        # FIXME
         self.metadata_causali_mov = \
             Table('causali_mov',
                 self.metadata,
                 Column('id_causale_mov', String(255), nullable=False,
                         primary_key=True),
-                Column('descrizione_causale_mov', String(255),
-                        nullable=True),
+                Column('descrizione', String(255), nullable=True)
             )
-        # FIXME
         self.metadata_causali_reg = \
             Table('causali_reg',
                 self.metadata,
                 Column('id_causale_reg', String(255), nullable=False,
                         primary_key=True),
-                Column('descrizione_causale_reg', String(255),
-                        nullable=True),
+                Column('descrizione', String(255), nullable=True),
+                Column('tipo', String(255), nullable=True)
             )
-        # FIXME
         self.metadata_causali_scheda = \
             Table('causali_scheda',
                 self.metadata,
-                Column('id_causale_scheda', String(255), nullable=False,
+                Column('id_causale_sch', String(255), nullable=False,
                         primary_key=True),
-                Column('descrizione_causale_scheda', String(255),
-                        nullable=True),
+                Column('descrizione', String(255), nullable=True),
+                Column('tipo', String(255), nullable=True)
             )
         self.metadata_classi_adr = \
             Table('classi_adr',
@@ -347,6 +343,7 @@ class OWTStorage(object):
                 Column('versione', Integer, nullable=True),
                 Column('descrizione', String(255), nullable=True),
             )
+        #FIXME: idSISSchedeAssociate come ForeignKey
         self.metadata_movimentazione = \
             Table('movimentazione',
                 self.metadata,
@@ -421,6 +418,17 @@ class OWTStorage(object):
                 Column('latitudine', Float),
                 Column('longitudine', Float)
             )
+        #FIXME: Manca la primarykey e idSISSede_trasportatore come ForeignKey
+#        self.metadata_tratta_base = \
+#            Table('tratta_base',
+#                self.metadata,
+#                Column('progressivo', BigInteger, nullable=False),
+#                Column('idSISSede_trasportatore', String(255),
+#                    nullable=False),
+#                Column('flagOperatoreLogistico', Boolean, nullable=False),
+#                Column('versioneSede_trasportatore', BigInteger,
+#                    nullable=True)
+#            )
         self.metadata_veicolo = \
             Table('veicolo',
                 self.metadata,

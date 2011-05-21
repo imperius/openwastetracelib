@@ -58,15 +58,12 @@ class OWTBinding(object):
         self.mapperCategorie_raee = \
             mapper(Categorie_raee,
                 self.storage.metadata_categorie_raee)
-        # FIXME
         self.mapperCausali_mov = \
             mapper(Causali_mov,
                 self.storage.metadata_causali_mov)
-        # FIXME
         self.mapperCausali_reg = \
             mapper(Causali_reg,
                 self.storage.metadata_causali_reg)
-        # FIXME
         self.mapperCausali_scheda = \
             mapper(Causali_scheda,
                 self.storage.metadata_causali_scheda)
