@@ -22,7 +22,7 @@ This package contains the schde managment methods defined by Sistri.
 For more details on each, refer to the respective class's documentation.
 """
 
-from .. objects import Causali_mov, Movimentazione
+from .. objects import Causali_mov, Movimentazione, Sede, Tratta_base
 from .. base_service import OWTBaseService, OWTError
 
 
@@ -97,21 +97,6 @@ class GettingElencoMovimentazioniRequest(OWTBaseService):
                 if 'movimentazioni' in elencoMovimentazioni:
                     movimentazioniSistri = elencoMovimentazioni.movimentazioni
                     for movimentazioneSistri in movimentazioniSistri:
-                        causaleFineMov = None
-                        if 'causaleFineMovimentazione' in movimentazioneSistri:
-                            causaleFineSistri = \
-                                movimentazioneSistri.causaleFineMovimentazione
-                            causaleFineMov = Causali_mov(
-                                id_causale_mov=causaleFineSistri.\
-                                    idCatalogo.__repr__(),
-                                descrizione_causale_mov=causaleFineSistri.\
-                                    description.__repr__()
-                            )
-                            res = session.query(Causali_mov).filter(
-                                Causali_mov.id_causale_mov == \
-                                causaleFineMov.id_causale_mov)
-                            if res.count() > 0:
-                                causaleFineMov = res.first()
                         idSIS = None
                         if 'idSIS' in movimentazioneSistri:
                             idSIS = movimentazioneSistri.idSIS
@@ -133,6 +118,62 @@ class GettingElencoMovimentazioniRequest(OWTBaseService):
                         if 'dataOraFineMovimentazione' in movimentazioneSistri:
                             dataOraFineMov = \
                                 movimentazioneSistri.dataOraFineMovimentazione
+                        causaleFineMov = None
+                        if 'causaleFineMovimentazione' in movimentazioneSistri:
+                            causaleFineSistri = \
+                                movimentazioneSistri.causaleFineMovimentazione
+                            causaleFineMov = Causali_mov(
+                                id_causale_mov=causaleFineSistri.\
+                                    idCatalogo.__repr__(),
+                                descrizione_causale_mov=causaleFineSistri.\
+                                    description.__repr__()
+                            )
+                            res = session.query(Causali_mov).filter(
+                                Causali_mov.id_causale_mov == \
+                                causaleFineMov.id_causale_mov)
+                            if res.count() > 0:
+                                causaleFineMov = res.first()
+                        tratteTrasporto = []
+                        if 'tratteTrasporto' in movimentazioneSistri:
+                            tratteSistri = \
+                                movimentazioneSistri.tratteTrasporto
+                            for tratta in tratteSistri:
+                                progressivo = None
+                                if 'progressivo' in tratta:
+                                    progressivo = int(tratta.progressivo.long)
+                                idTratta = None
+                                if idSIS and progressivo >= 0:
+                                    idTratta = idSIS + '-' + str(progressivo)
+                                flagOperatore = None
+                                if 'flagOperatoreLogistico' in tratta:
+                                    flagOperatore = \
+                                    tratta.flagOperatoreLogistico.boolean
+                                versioneSede = None
+                                if 'versioneSede_trasportatore' in tratta:
+                                    versioneSede = \
+                                    tratta.versioneSede_trasportatore.long
+                                sedeTrasportatore = None
+                                if 'idSISSede_trasportatore' in tratta:
+                                    idSISSede = tratta.idSISSede_trasportatore
+                                    res = session.query(Sede).filter(
+                                        Sede.idSIS == idSISSede)
+                                    if res.count() > 0:
+                                        sedeTrasportatore = res.first()
+                                tratta_base = None
+                                tratta_base = Tratta_base(
+                                    idTratta=idTratta,
+                                    progressivo=progressivo,
+                                    flagOperatoreLogistico=flagOperatore,
+                                    versioneSede_trasportatore=versioneSede,
+                                    idSISSede_trasportatore=sedeTrasportatore
+                                )
+                                res = session.query(Tratta_base).filter(
+                                    Tratta_base.idTratta == \
+                                    tratta_base.idTratta)
+                                if res.count() > 0:
+                                    tratta_base = res.first()
+                                if tratta_base:
+                                    tratteTrasporto.append(tratta_base)
                         movimentazione = Movimentazione(
                             idSIS=idSIS,
                             idSISTRI=idSISTRI,
@@ -140,7 +181,8 @@ class GettingElencoMovimentazioniRequest(OWTBaseService):
                             dataMovimentazione=dataMovimentazione,
                             movimentazioneNumeroSerie=movNumeroSerie,
                             dataOraFineMovimentazione=dataOraFineMov,
-                            causaleFineMovimentazione=causaleFineMov
+                            causaleFineMovimentazione=causaleFineMov,
+                            tratteTrasporto=tratteTrasporto
                         )
                         session.merge(movimentazione)
                 session.commit()

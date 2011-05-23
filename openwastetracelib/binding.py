@@ -32,7 +32,8 @@ from objects import Associazioni_categoria, Azienda, Camere_commercio, \
     Stati_registro_cronologico, Stati_scheda_sistri, Stati_utente_idm, \
     Stati_veicolo, Tipi_documento, Tipi_esito_trasporto, Tipi_imballaggi, \
     Tipi_reg_cronologico, Tipi_registrazioni_crono, Tipi_sede, \
-    Tipi_stato_impresa, Tipi_trasporto, Tipi_veicolo, Tipologie_raee, Veicolo
+    Tipi_stato_impresa, Tipi_trasporto, Tipi_veicolo, Tipologie_raee, \
+    Tratta_base, Veicolo
 
 
 class OWTBinding(object):
@@ -154,7 +155,7 @@ class OWTBinding(object):
                     'tipoStatoImpresa': relationship(Tipi_stato_impresa),
                     'sedeLegale': relationship(Sede, uselist=False),
                     'sediSummary': relationship(Sede,
-                        secondary=self.storage.metadata_sedisummary)
+                        secondary=self.storage.metadata_azienda_sedisummary)
                 }
             )
         self.mapperDescrittoreCatalogo = \
@@ -164,7 +165,8 @@ class OWTBinding(object):
             mapper(Movimentazione,
                 self.storage.metadata_movimentazione,
                 properties={
-                    'causaleFineMovimentazione': relationship(Causali_mov)
+                    'causaleFineMovimentazione': relationship(Causali_mov),
+                    'tratteTrasporto': relationship(Tratta_base),
                 }
             )
         self.mapperRegistroCronologico = \
@@ -190,6 +192,13 @@ class OWTBinding(object):
                         secondary=self.storage.metadata_sede_sottocategorie)
                 }
             )
+        self.mapperTratta_base = \
+            mapper(Tratta_base,
+                self.storage.metadata_tratta_base,
+                properties={
+                    'idSISSede_trasportatore': relationship(Sede)
+                }
+            )
         self.mapperVeicolo = \
             mapper(Veicolo,
                 self.storage.metadata_veicolo,
@@ -200,6 +209,6 @@ class OWTBinding(object):
                     'sede': relationship(Sede),
                     'codiciCerIIILivello': relationship(
                         Codici_cer_iii_livello,
-                        secondary=self.storage.metadata_codiciceriiilivello)
+                        secondary=self.storage.metadata_veicolo_codiciceriii)
                 }
             )

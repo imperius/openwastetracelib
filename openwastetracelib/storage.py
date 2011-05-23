@@ -22,8 +22,8 @@ The L{storage} module contains the L{OWTStorage} class.
 It stores information about storage.
 """
 
-from sqlalchemy import Table, Column, MetaData, ForeignKey, Integer, String, \
-    DateTime, BigInteger, Float
+from sqlalchemy import BigInteger, Boolean, Column, DateTime, Float, \
+    ForeignKey, Integer, MetaData, String, Table
 
 
 class OWTStorage(object):
@@ -343,7 +343,7 @@ class OWTStorage(object):
                 Column('versione', Integer, nullable=True),
                 Column('descrizione', String(255), nullable=True),
             )
-        #FIXME: idSISSchedeAssociate come ForeignKey
+        #FIXME: idSISSchedeAssociate come ForeignKey su SchedaSISTRI ?
         self.metadata_movimentazione = \
             Table('movimentazione',
                 self.metadata,
@@ -357,8 +357,6 @@ class OWTStorage(object):
                     ForeignKey('causali_mov.id_causale_mov')
                 ),
 #                name="idSISSchedeAssociate" nillable="true" type="xsd:string"
-#                    maxOccurs="unbounded" minOccurs="0"
-#                name="tratteTrasporto" nillable="true" type="tns:Tratta_Base"
 #                    maxOccurs="unbounded" minOccurs="0"
 #                name="identificativoMovimentazioneAssociata" nillable="true"
 #                    type="tns:IdMovimentazioneAssociata" minOccurs="0"
@@ -418,17 +416,21 @@ class OWTStorage(object):
                 Column('latitudine', Float),
                 Column('longitudine', Float)
             )
-        #FIXME: Manca la primarykey e idSISSede_trasportatore come ForeignKey
-#        self.metadata_tratta_base = \
-#            Table('tratta_base',
-#                self.metadata,
-#                Column('progressivo', BigInteger, nullable=False),
-#                Column('idSISSede_trasportatore', String(255),
-#                    nullable=False),
-#                Column('flagOperatoreLogistico', Boolean, nullable=False),
-#                Column('versioneSede_trasportatore', BigInteger,
-#                    nullable=True)
-#            )
+        self.metadata_tratta_base = \
+            Table('tratta_base',
+                self.metadata,
+                Column('idTratta', String(255), nullable=False,
+                    primary_key=True),
+                Column('progressivo', BigInteger, nullable=False),
+                Column('idSISSede_trasportatoreFK', String(255),
+                    ForeignKey('sede.idSIS'), nullable=False),
+                Column('flagOperatoreLogistico', Boolean, nullable=False),
+                Column('versioneSede_trasportatore', BigInteger,
+                    nullable=True),
+                Column('movimentazioneFK', String(255),
+                    ForeignKey('movimentazione.idSIS'), nullable=True
+                )
+            )
         self.metadata_veicolo = \
             Table('veicolo',
                 self.metadata,
@@ -448,27 +450,32 @@ class OWTStorage(object):
                 Column('sedeFK', String(255), ForeignKey('sede.idSIS'))
             )
         #XXX: Tabelle molti-a-molti (ordine alafabetico)
-        self.metadata_codiciceriiilivello = \
-            Table('codiciceriiilivello',
+        #Azienda referenzia Sede in sedeLegale e sediSummary (molti-a-molti)
+        self.metadata_azienda_sedisummary = \
+            Table('azienda_sedisummary',
                 self.metadata,
-                Column('veicoloFK', String(255), ForeignKey('veicolo.targa')),
-                Column('codici_cer_iii_livelloFK', String(255),
-                    ForeignKey(\
-                        'codici_cer_iii_livello.id_codice_cer_iii_livello')
-                )
+                Column('aziendaFK', String(255), ForeignKey('azienda.idSIS'),
+                    nullable=False),
+                Column('sedeFK', String(255), ForeignKey('sede.idSIS'),
+                    nullable=False)
             )
         self.metadata_sede_sottocategorie = \
             Table('sede_sottocategorie',
                 self.metadata,
-                Column('sedeFK', String(255), ForeignKey('sede.idSIS')),
+                Column('sedeFK', String(255), ForeignKey('sede.idSIS'),
+                    nullable=False),
                 Column('sottocategorie_starFK', String(255),
-                    ForeignKey('sottocategorie_star.id_sottocategoria_star')
-                )
+                    ForeignKey('sottocategorie_star.id_sottocategoria_star'),
+                    nullable=False)
             )
-        self.metadata_sedisummary = \
-            Table('sedisummary',
+        self.metadata_veicolo_codiciceriii = \
+            Table('veicolo_codiciceriii',
                 self.metadata,
-                Column('aziendaFK', String(255), ForeignKey('azienda.idSIS')),
-                Column('sedeFK', String(255), ForeignKey('sede.idSIS')),
+                Column('veicoloFK', String(255), ForeignKey('veicolo.targa'),
+                    nullable=False),
+                Column('codici_cer_iii_livelloFK', String(255),
+                    ForeignKey(\
+                        'codici_cer_iii_livello.id_codice_cer_iii_livello'),
+                    nullable=False)
             )
         self.metadata.create_all(self.engine)

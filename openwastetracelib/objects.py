@@ -357,10 +357,11 @@ class Sede(object):
             self.__setattr__(key, kwargs[key])
 
 
-class Tratta_Base(object):
-    """ Tratta_Base object with idSIS."""
-    def __init__(self, progressivo, idSISSede_trasportatore,
-            flagOperatoreLogistico, **kwargs):
+class Tratta_base(object):
+    """ Tratta_base object with idSIS."""
+    def __init__(self, idTratta, progressivo,
+            idSISSede_trasportatore, flagOperatoreLogistico, **kwargs):
+        self.idTratta = idTratta
         self.progressivo = progressivo
         self.idSISSede_trasportatore = idSISSede_trasportatore
         self.flagOperatoreLogistico = flagOperatoreLogistico
