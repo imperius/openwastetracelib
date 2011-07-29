@@ -198,6 +198,7 @@ class GettingAziendaRequest(OWTBaseService):
                                 tipoSede = session.query(Tipi_sede).filter(
                                     Tipi_sede.id_tipo_sede == tipoSede.\
                                     id_tipo_sede).first()
+                        #FIXME: Aggiungere memorizzazione sottocategorie
                         sede = Sede(
                             idSIS=sedeSummary.idSIS.__repr__(),
                             nomeSede=sedeSummary.nomeSede.__repr__(),
@@ -211,7 +212,17 @@ class GettingAziendaRequest(OWTBaseService):
                             nrCivico=sedeSummary.nrCivico.__repr__(),
                             cap=sedeSummary.cap.__repr__(),
                             versione=sedeSummary.versione.long,
-                            tipoSede=tipoSede
+                            tipoSede=tipoSede,
+                            nomeRappresentanteLegale=sedeSummary.\
+                                nomeRappresentanteLegale.__repr__(),
+                            cognomeRappresentanteLegale=sedeSummary.\
+                                cognomeRappresentanteLegale.__repr__(),
+                            codFiscaleRappresentanteLegale=sedeSummary.\
+                                codFiscaleRappresentanteLegale.__repr__(),
+                            codicePraticaIscrizione=sedeSummary.\
+                                codicePraticaIscrizione.__repr__(),
+                            ragioneSocialeDichiarata=sedeSummary.\
+                                ragioneSocialeDichiarata.__repr__()
                         )
                         if session.query(Sede).filter(Sede.idSIS == \
                             sede.idSIS).count() > 0:

@@ -174,6 +174,7 @@ class GettingElencoMovimentazioniRequest(OWTBaseService):
                                     tratta_base = res.first()
                                 if tratta_base:
                                     tratteTrasporto.append(tratta_base)
+                        #FIXME: idSISSchedeAssociate
                         movimentazione = Movimentazione(
                             idSIS=idSIS,
                             idSISTRI=idSISTRI,

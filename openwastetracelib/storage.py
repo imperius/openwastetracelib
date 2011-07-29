@@ -414,7 +414,12 @@ class OWTStorage(object):
                 Column('numeroIscrizioneRea', String(255)),
                 Column('numeroUla', Float),
                 Column('latitudine', Float),
-                Column('longitudine', Float)
+                Column('longitudine', Float),
+                Column('nomeRappresentanteLegale', String(255)),
+                Column('cognomeRappresentanteLegale', String(255)),
+                Column('codFiscaleRappresentanteLegale', String(255)),
+                Column('codicePraticaIscrizione', String(255)),
+                Column('ragioneSocialeDichiarata', String(255))
             )
         self.metadata_tratta_base = \
             Table('tratta_base',
